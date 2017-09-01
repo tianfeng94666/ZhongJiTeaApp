@@ -2,4 +2,25 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <!--xlistView-->
+    <dimen name="header_height">60dp</dimen>
+    <dimen name="footer_height">90dp</dimen>
+    <dimen name="footer_padding">10dp</dimen>
+    <dimen name="pad_line_height">62dp</dimen>
+    <dimen name="pad_iv_padding">12dip</dimen>
+    <dimen name="pad_margin_left">8dp</dimen>
+    <dimen name="pad_text_padding">10dp</dimen>
+
+
+    <dimen name="maginTop8">8dp</dimen>
+    <dimen name="marginLeft8">8dp</dimen>
+    <dimen name="margin_bottom8">8dp</dimen>
+    <dimen name="maginTop16">16dp</dimen>
+    <dimen name="marginLeft16">16dp</dimen>
+    <dimen name="margin_bottom16">16dp</dimen>
+    <dimen name="text_normal">14sp</dimen>
+    <dimen name="textview_height">35dp</dimen>
+
 </resources>

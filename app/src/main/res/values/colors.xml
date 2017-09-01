@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="theme_bg">#ffffff</color>
+    <color name="oregon">#ef845c</color>
+    <color name="white">#ffffff</color>
+    <color name="color_line">#dadada</color>
+    <color name="title_color">#333333</color>
+    <color name="transparent_background">#00ffffff</color>
 </resources>
