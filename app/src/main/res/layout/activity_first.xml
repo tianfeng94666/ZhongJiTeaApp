@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/first"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 <com.tianfeng.zhongjiteaapp.viewutils.FlyBanner
     android:id="@+id/flybanner"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"></com.tianfeng.zhongjiteaapp.viewutils.FlyBanner>
 <ImageView
     android:id="@+id/iv_into"
-    android:background="@drawable/frame_bg_gray"
+    android:background="@drawable/board_oregon"
     android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true"
     android:layout_marginBottom="25dp"

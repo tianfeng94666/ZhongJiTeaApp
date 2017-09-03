@@ -15,6 +15,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.ListAdapter;
@@ -24,6 +25,8 @@ import android.widget.ListView;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.tianfeng.zhongjiteaapp.base.BaseApplication;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 
 
@@ -346,6 +349,78 @@ public class UIUtils {
 			tintManager.setNavigationBarTintResource(android.R.color.black);
 		}
 
+	}
+
+	public static  void setBarTint(Activity context){
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			WindowManager.LayoutParams localLayoutParams = context.getWindow().getAttributes();
+			localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+		}
+
+		MIUISetStatusBarLightMode(context.getWindow(), true);
+		FlymeSetStatusBarLightMode(context.getWindow(), true);
+
+	}
+	/**
+	 * 小米状态栏黑色
+	 * @param window
+	 * @param dark
+     * @return
+     */
+	public static boolean MIUISetStatusBarLightMode(Window window, boolean dark) {
+		boolean result = false;
+		if (window != null) {
+			Class clazz = window.getClass();
+			try {
+				int darkModeFlag = 0;
+				Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+				Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+				darkModeFlag = field.getInt(layoutParams);
+				Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+				if (dark) {
+					extraFlagField.invoke(window, darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
+				} else {
+					extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
+				}
+				result = true;
+			} catch (Exception e) {
+
+			}
+		}
+		return result;
+	}
+	/**
+	 * 魅族状态栏黑色
+	 * @param window
+	 * @param dark
+	 * @return
+	 */
+	public static boolean FlymeSetStatusBarLightMode(Window window, boolean dark) {
+		boolean result = false;
+		if (window != null) {
+			try {
+				WindowManager.LayoutParams lp = window.getAttributes();
+				Field darkFlag = WindowManager.LayoutParams.class
+						.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+				Field meizuFlags = WindowManager.LayoutParams.class
+						.getDeclaredField("meizuFlags");
+				darkFlag.setAccessible(true);
+				meizuFlags.setAccessible(true);
+				int bit = darkFlag.getInt(null);
+				int value = meizuFlags.getInt(lp);
+				if (dark) {
+					value |= bit;
+				} else {
+					value &= ~bit;
+				}
+				meizuFlags.setInt(lp, value);
+				window.setAttributes(lp);
+				result = true;
+			} catch (Exception e) {
+
+			}
+		}
+		return result;
 	}
 }
 

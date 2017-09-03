@@ -29,7 +29,7 @@ public class CountTimerButton extends CountDownTimer {
     public void onTick(long millisUntilFinished) {
         button.setClickable(false);  //不可点击
         button.setText(millisUntilFinished / 1000 + " 秒后可重新发送");
-        button.setBackgroundResource(R.drawable.frame_bg_gray);
+        button.setBackgroundResource(R.drawable.board_oregon);
 
         SpannableString spannableString=new SpannableString(button.getText().toString());
         ForegroundColorSpan span=new ForegroundColorSpan(Color.RED);

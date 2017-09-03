@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/theme_bg"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <FrameLayout
+        android:id="@+id/fl_flybanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <com.tianfeng.zhongjiteaapp.viewutils.FlyBanner
+            android:id="@+id/flybanner"
+            android:layout_width="fill_parent"
+            android:layout_height="250dp" />
+
+
+    </FrameLayout>
+    <LinearLayout
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textview_height">
+        <ImageView
+            android:background="@color/color_line"
+            android:layout_width="60dp"
+            android:layout_height="35dp" />
+        <View
+            android:layout_width="1px"
+            android:background="@color/color_line"
+            android:layout_marginLeft="@dimen/margin10"
+            android:layout_marginRight="@dimen/margin10"
+            android:layout_height="match_parent"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_notice"
+                android:gravity="center_vertical"
+                android:text="恭喜xx获得价值5000元的抵用券"
+                android:layout_marginRight="45dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:padding="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@color/color_line"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:descendantFocusability="blocksDescendants"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin10"
+        android:paddingRight="@dimen/margin10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingLeft="@dimen/margin10"
+            android:paddingRight="@dimen/margin10"
+            android:id="@+id/tv_new_tea"
+            android:paddingTop="4dp"
+            android:background="@drawable/board_white"
+            android:paddingBottom="4dp"
+            android:text="新茶上架"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
+            android:id="@+id/lv_new_tea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+        <TextView
+            android:layout_marginTop="@dimen/maginTop8"
+            android:paddingLeft="@dimen/margin10"
+            android:paddingRight="@dimen/margin10"
+            android:id="@+id/tv_hot_tea"
+            android:paddingTop="4dp"
+            android:background="@drawable/board_white"
+            android:paddingBottom="4dp"
+            android:text="热门茶叶"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
+            android:id="@+id/lv_hot_tea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+    </LinearLayout>
+
+</LinearLayout>
+
+</ScrollView>

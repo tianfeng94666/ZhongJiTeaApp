@@ -3,6 +3,7 @@ package com.tianfeng.zhongjiteaapp.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
@@ -28,6 +29,8 @@ import cn.finalteam.okhttpfinal.HttpCycleContext;
 import cn.finalteam.okhttpfinal.HttpTaskHandler;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+import static com.tianfeng.zhongjiteaapp.utils.UIUtils.FlymeSetStatusBarLightMode;
+import static com.tianfeng.zhongjiteaapp.utils.UIUtils.MIUISetStatusBarLightMode;
 
 /**
  * Created by Administrator on 2017/9/1 0001.
@@ -45,6 +48,7 @@ public class BaseActivity extends FragmentActivity implements HttpCycleContext {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+
     }
 
     public void showToastReal(String msg) {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/theme_bg"
+    android:layout_height="match_parent">
+<include layout="@layout/layout_title"/>
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_marginTop="@dimen/maginTop8"
+        android:layout_marginBottom="@dimen/maginTop8"
+        android:layout_marginLeft="@dimen/margin10"
+        android:layout_marginRight="@dimen/margin10"
+        android:background="@drawable/board_white_radio5"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="搜索"
+            android:padding="5dp"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/icon_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
+        android:id="@+id/lv_mall_product"
+        android:divider="@color/theme_bg"
+        android:dividerHeight="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+</LinearLayout>
