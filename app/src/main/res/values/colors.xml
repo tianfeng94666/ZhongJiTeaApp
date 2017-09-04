@@ -20,5 +20,8 @@
     <color name="awesome_red">#CBAC6B</color>
     <color name="awesome_gray">#FDFDFD</color>
     <color name="blue">#5a97f2</color>
+    <color name="light_oregon">#f6a251</color>
+    <color name="gray">#8e8e8e</color>
+    <color name="light_gray">#eeeeee</color>
 
 </resources>

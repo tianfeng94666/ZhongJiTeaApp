@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/theme_bg"
+
     android:layout_height="match_parent">
 <LinearLayout
     android:orientation="vertical"
@@ -16,25 +16,28 @@
 
         <com.tianfeng.zhongjiteaapp.viewutils.FlyBanner
             android:id="@+id/flybanner"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:points_position="RIGHT"
             android:layout_width="fill_parent"
-            android:layout_height="250dp" />
+            android:layout_height="203dp" />
 
 
     </FrameLayout>
     <LinearLayout
-        android:paddingLeft="@dimen/margin10"
-        android:paddingRight="@dimen/margin10"
+
         android:layout_width="match_parent"
         android:layout_height="@dimen/textview_height">
         <ImageView
             android:background="@color/color_line"
+            android:layout_marginLeft="16dp"
+            android:src="@mipmap/notice"
             android:layout_width="60dp"
             android:layout_height="35dp" />
         <View
             android:layout_width="1px"
             android:background="@color/color_line"
-            android:layout_marginLeft="@dimen/margin10"
-            android:layout_marginRight="@dimen/margin10"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
             android:layout_height="match_parent"/>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -46,14 +49,19 @@
                 android:layout_marginRight="45dp"
                 android:singleLine="true"
                 android:ellipsize="end"
+                android:textSize="12sp"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <ImageView
                 android:padding="5dp"
+                android:layout_marginRight="16dp"
+                android:src="@mipmap/icon_right"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:background="@color/color_line"
-                android:layout_width="45dp"
-                android:layout_height="45dp" />
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -63,6 +71,7 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/margin10"
         android:paddingRight="@dimen/margin10"
+        android:background="@color/light_gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -70,30 +79,34 @@
             android:paddingRight="@dimen/margin10"
             android:id="@+id/tv_new_tea"
             android:paddingTop="4dp"
-            android:background="@drawable/board_white"
             android:paddingBottom="4dp"
+            android:background="@drawable/board_white"
             android:text="新茶上架"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
             android:id="@+id/lv_new_tea"
+            android:dividerHeight="5dp"
+            android:divider="@color/light_gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
         <TextView
-            android:layout_marginTop="@dimen/maginTop8"
+            android:layout_marginTop="5dp"
             android:paddingLeft="@dimen/margin10"
             android:paddingRight="@dimen/margin10"
             android:id="@+id/tv_hot_tea"
             android:paddingTop="4dp"
-            android:background="@drawable/board_white"
             android:paddingBottom="4dp"
+            android:background="@drawable/board_white"
             android:text="热门茶叶"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
             android:id="@+id/lv_hot_tea"
+            android:dividerHeight="5dp"
+            android:divider="@color/light_gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

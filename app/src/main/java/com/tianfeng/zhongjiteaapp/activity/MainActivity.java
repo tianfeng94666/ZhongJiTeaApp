@@ -107,7 +107,7 @@ int selectPosition;
         switch (index) {
             case 0:
                 tvHome.setTextColor(getResources().getColor(R.color.theme_color));
-                igHome.setImageResource(R.mipmap.icon_home_down);
+                igHome.setImageResource(R.mipmap.home_choose);
                 if (homeFragment == null) {
                     homeFragment = new HomeFragment();
                     fragTrans.add(R.id.content, homeFragment);
@@ -118,7 +118,7 @@ int selectPosition;
                 break;
             case 1:
                 tvMall.setTextColor(getResources().getColor(R.color.theme_color));
-                igMall.setImageResource(R.mipmap.icon_home_down);
+                igMall.setImageResource(R.mipmap.mall_choose);
                 if (mallFragment == null) {
                     mallFragment = new MallFragment();
                     fragTrans.add(R.id.content, mallFragment);
@@ -130,7 +130,7 @@ int selectPosition;
                 break;
             case 2:
                 tvStorage.setTextColor(getResources().getColor(R.color.theme_color));
-                igStorage.setImageResource(R.mipmap.icon_home_down);
+                igStorage.setImageResource(R.mipmap.storage_choose);
                 if (storageFragment == null) {
                     storageFragment = new StorageFragment();
                     fragTrans.add(R.id.content, storageFragment);
@@ -142,7 +142,7 @@ int selectPosition;
                 break;
             case 3:
                 tvMine.setTextColor(getResources().getColor(R.color.theme_color));
-                ivMine.setImageResource(R.mipmap.icon_home_down);
+                ivMine.setImageResource(R.mipmap.mine_choose);
                 if (mineFrament == null) {
                     mineFrament = new MineFragment();
                     fragTrans.add(R.id.content, mineFrament);
@@ -159,10 +159,10 @@ int selectPosition;
     }
 
     private void resetAllFragmentView() {
-        igHome.setImageResource(R.mipmap.icon_home_nor);
-        igMall.setImageResource(R.mipmap.icon_home_nor);
-        igStorage.setImageResource(R.mipmap.icon_home_nor);
-        ivMine.setImageResource(R.mipmap.icon_home_nor);
+        igHome.setImageResource(R.mipmap.home_unchoose);
+        igMall.setImageResource(R.mipmap.mall_unchoose);
+        igStorage.setImageResource(R.mipmap.storage_unchoose);
+        ivMine.setImageResource(R.mipmap.mine_unchoose);
 
         tvHome.setTextColor(getResources().getColor(R.color.text_color3));
         tvMall.setTextColor(getResources().getColor(R.color.text_color3));

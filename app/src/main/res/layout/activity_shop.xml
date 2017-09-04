@@ -2,33 +2,79 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingLeft="@dimen/margin10"
-    android:paddingRight="@dimen/margin10"
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_login_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin24"
+            android:layout_marginTop="15dp"
+            android:text="取消"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="关联门店"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:background="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="22dp">
+        <TextView
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/margin33"
+            android:text="请选择注册门店"
+            android:textSize="@dimen/text_normal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_choose_shop"
+        android:layout_width="match_parent"
+        android:background="@color/light_gray"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_marginLeft="@dimen/margin33"
+            android:text="门店"
+           android:layout_centerVertical="true"
+            android:textColor="@color/text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/icon_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+<TextView
+    android:id="@+id/tv_next"
+    android:textColor="@color/white"
+    android:layout_marginRight="@dimen/margin33"
+    android:layout_marginLeft="@dimen/margin33"
+    android:layout_marginTop="150dp"
+    android:text="下一步"
+    android:gravity="center"
+    android:textSize="@dimen/text_normal"
+    android:background="@drawable/board_oregon"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/tv_login_cancle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/text_color"
-        android:layout_marginTop="@dimen/maginTop8"
-        android:padding="8dp"
-        android:text="取消"
-        android:textSize="@dimen/text_normal" />
-    <TextView
-        android:text="选择门店"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
-
-
+    android:layout_height="35dp" />
 
 
 

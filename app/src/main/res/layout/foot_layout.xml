@@ -21,7 +21,7 @@
             <ImageView
                 android:id="@+id/id_ig_home"
                 android:layout_marginTop="10dip"
-                android:src="@mipmap/icon_home_nor"
+                android:src="@mipmap/home_unchoose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -72,7 +72,7 @@
             <ImageView
                 android:id="@+id/iv_mall"
                 android:layout_marginTop="10dip"
-                android:src="@mipmap/icon_home_nor"
+                android:src="@mipmap/mall_unchoose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -122,7 +122,7 @@
             <ImageView
                 android:id="@+id/iv_storage"
                 android:layout_marginTop="10dip"
-                android:src="@mipmap/icon_home_nor"
+                android:src="@mipmap/storage_unchoose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -153,7 +153,7 @@
             <ImageView
                 android:id="@+id/iv_mine"
                 android:layout_marginTop="10dip"
-                android:src="@mipmap/icon_home_nor"
+                android:src="@mipmap/mine_unchoose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
