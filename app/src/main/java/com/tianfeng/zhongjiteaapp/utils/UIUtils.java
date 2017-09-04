@@ -305,7 +305,7 @@ public class UIUtils {
         }
         ViewGroup.LayoutParams params = myGridView.getLayoutParams();
         params.height = totalHeight;
-        ((ViewGroup.MarginLayoutParams) params).setMargins(0, 10, 0, 10);
+        ((ViewGroup.MarginLayoutParams) params).setMargins(0, 0, 0, 0);
         myGridView.setLayoutParams(params);
     }
 
