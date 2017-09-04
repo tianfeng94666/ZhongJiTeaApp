@@ -1,6 +1,7 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
 import butterknife.Bind;
@@ -114,5 +116,20 @@ public class LoginAcitivity extends BaseActivity {
         tvLoginTv.setTextColor(getResources().getColor(R.color.oregon));
         llLogin.setVisibility(View.VISIBLE);
         llRegister.setVisibility(View.GONE);
+    }
+
+
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                ToastManager.showToastReal("再按一次退出程序");
+                exitTime = System.currentTimeMillis();
+            } else {
+                moveTaskToBack(true);
+            }
+        }
+        return true;
     }
 }

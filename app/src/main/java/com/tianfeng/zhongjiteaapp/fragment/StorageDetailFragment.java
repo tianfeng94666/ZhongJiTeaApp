@@ -5,11 +5,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CustomLV;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class StorageDetailFragment extends BaseFragment {
     @Bind(R.id.lv_mall_product)
-    CustomLV lvMallProduct;
+    ListView lvMallProduct;
     int type = 0;//0云南仓，1华南仓
 
     @Nullable
@@ -39,7 +41,7 @@ public class StorageDetailFragment extends BaseFragment {
     private void initView(View view) {
 
         List<String> list = new ArrayList<>();
-        for(int i = 0;i<10;i++){
+        for(int i = 0;i<50;i++){
             list.add("1");
         }
         lvMallProduct.setAdapter(new CommonAdapter<String>(list,R.layout.item_product) {
@@ -48,6 +50,7 @@ public class StorageDetailFragment extends BaseFragment {
 
             }
         });
+//        UIUtils.setListViewHeightBasedOnChildren(lvMallProduct);
     }
 
     @Override

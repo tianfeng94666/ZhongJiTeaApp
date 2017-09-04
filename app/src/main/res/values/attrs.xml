@@ -2,6 +2,8 @@
 <resources>
     <declare-styleable name="FlyBanner">
         <attr name="points_visibility" format="boolean" />
+        <attr name="is_auto_play" format="boolean" />
+        <attr name="is_circle" format="boolean" />
         <attr name="points_position" format="enum">
             <enum name="CENTER" value="0" />
             <enum name="LEFT" value="1" />

@@ -20,11 +20,14 @@
     <dimen name="maginTop10">10dp</dimen>
     <dimen name="margin10">10dp</dimen>
     <dimen name="margin_bottom10">10dp</dimen>
-    <dimen name="text_normal">14sp</dimen>
+    <dimen name="text_normal">15sp</dimen>
     <dimen name="textview_height">35dp</dimen>
-    <dimen name="small_text">13sp</dimen>
+    <dimen name="small_text">11sp</dimen>
 
     <dimen name="toolbar_padding_top">0dp</dimen>
     <dimen name="paddingleft32">32dp</dimen>
+    <dimen name="margin24">24dp</dimen>
+    <dimen name="margin33">33dp</dimen>
+    <dimen name="margin16">16dp</dimen>
 
 </resources>

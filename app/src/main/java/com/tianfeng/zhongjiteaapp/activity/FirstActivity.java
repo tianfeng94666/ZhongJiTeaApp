@@ -9,8 +9,12 @@ import android.widget.ImageView;
 
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.utils.SpUtils;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.FlyBanner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +30,7 @@ public class FirstActivity extends BaseActivity {
     FlyBanner flybanner;
     @Bind(R.id.iv_into)
     ImageView ivInto;
-
+private  boolean isFirstCome = SpUtils.getInstace(this).getBoolean("isFirst",true);
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +42,25 @@ public class FirstActivity extends BaseActivity {
     }
 
     private void initView() {
-        ivInto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivity(LoginAcitivity.class, null);
-            }
-        });
+        if(isFirstCome){
+            ivInto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openActivity(LoginAcitivity.class, null);
+                    SpUtils.getInstace(FirstActivity.this).saveBoolean("isFirst",false);
+                    finish();
+                }
+            });
+            List list = new ArrayList();
+            list.add(R.mipmap.one);
+            list.add(R.mipmap.two);
+            list.add(R.mipmap.three);
+            flybanner.setImages(list);
+        }else {
+            openActivity(LoginAcitivity.class, null);
+        }
+
+
     }
 
 

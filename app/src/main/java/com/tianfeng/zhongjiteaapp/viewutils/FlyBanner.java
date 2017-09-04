@@ -56,6 +56,10 @@ public class FlyBanner extends RelativeLayout {
     private boolean mAutoPlayAble = true;
     //是否正在播放
     private boolean mIsAutoPlaying = false;
+    //是否轮播
+    private boolean mIsCircle = true;
+    //是否自动播放
+    private boolean mIsCanAutoPlaying = false;
     //自动播放时间
     private int mAutoPalyTime = 6000;
     //当前页面位置
@@ -102,12 +106,12 @@ public class FlyBanner extends RelativeLayout {
     private void init(Context context, AttributeSet attrs) {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FlyBanner);
-
+        mIsCircle = a.getBoolean(R.styleable.FlyBanner_is_circle, true);
         mPointsIsVisible = a.getBoolean(R.styleable.FlyBanner_points_visibility, true);
         mPointPosition = a.getInt(R.styleable.FlyBanner_points_position, CENTER);
         mPointContainerBackgroundDrawable
                 = a.getDrawable(R.styleable.FlyBanner_points_container_background);
-
+        mIsCanAutoPlaying = a.getBoolean(R.styleable.FlyBanner_is_auto_play, true);
         a.recycle();
 
         setLayout(context);
@@ -161,6 +165,7 @@ public class FlyBanner extends RelativeLayout {
 
     /**
      * 设置本地图片
+     *
      * @param images
      */
     public void setImages(List<Integer> images) {
@@ -175,6 +180,7 @@ public class FlyBanner extends RelativeLayout {
 
     /**
      * 设置网络图片
+     *
      * @param urls
      */
     public void setImagesUrl(List<String> urls) {
@@ -189,6 +195,7 @@ public class FlyBanner extends RelativeLayout {
 
     /**
      * 设置指示点是否可见
+     *
      * @param isVisible
      */
     public void setPointsIsVisible(boolean isVisible) {
@@ -203,6 +210,7 @@ public class FlyBanner extends RelativeLayout {
 
     /**
      * 对应三个位置 CENTER,RIGHT,LEFT
+     *
      * @param position
      */
     public void setPoinstPosition(int position) {
@@ -218,17 +226,21 @@ public class FlyBanner extends RelativeLayout {
 
     private void initViewPager() {
         //当图片多于1张时添加指示点
-        if(!mIsOneImg) {
+        if (!mIsOneImg) {
             addPoints();
         }
         //设置ViewPager
-       FlyPageAdapter adapter = new FlyPageAdapter();
+        FlyPageAdapter adapter = new FlyPageAdapter();
         mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(mOnPageChangeListener);
         //跳转到首页
-        mViewPager.setCurrentItem(1, false);
+        if(mIsCircle){
+            mViewPager.setCurrentItem(1, false);
+        }else {
+            mViewPager.setCurrentItem(0, false);
+        }
         //当图片多于1张时开始轮播
-        if (!mIsOneImg) {
+        if (!mIsOneImg && mIsCanAutoPlaying) {
             startAutoPlay();
         }
     }
@@ -236,19 +248,30 @@ public class FlyBanner extends RelativeLayout {
 
     /**
      * 返回真实的位置
+     *
      * @param position
      * @return
      */
     private int toRealPosition(int position) {
         int realPosition;
         if (mIsImageUrl) {
-            realPosition = (position - 1) % mImageUrls.size();
-            if (realPosition < 0)
-                realPosition += mImageUrls.size();
+            if(mIsCircle){
+                realPosition = (position - 1) % mImageUrls.size();
+                if (realPosition < 0)
+                    realPosition += mImageUrls.size();
+            }else {
+                realPosition = position;
+            }
+
         } else {
-            realPosition = (position - 1) % mImages.size();
-            if (realPosition < 0)
-                realPosition += mImages.size();
+            if(mIsCircle){
+                realPosition = (position - 1) % mImages.size();
+                if (realPosition < 0)
+                    realPosition += mImages.size();
+            }else {
+                realPosition = position ;
+            }
+
         }
 
         return realPosition;
@@ -263,24 +286,37 @@ public class FlyBanner extends RelativeLayout {
         @Override
         public void onPageSelected(int position) {
             if (mIsImageUrl) {
-                mCurrentPositon = position % (mImageUrls.size() + 2);
+                if(mIsCircle){
+                    mCurrentPositon = position % (mImageUrls.size() + 2);
+                }else {
+                    mCurrentPositon = position;
+                }
+
             } else {
-                mCurrentPositon = position % (mImages.size() + 2);
+                if(mIsCircle){
+                    mCurrentPositon = position % (mImages.size() + 2);
+                }else {
+                    mCurrentPositon = position;
+                }
+
             }
             switchToPoint(toRealPosition(mCurrentPositon));
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-            if (state == ViewPager.SCROLL_STATE_IDLE) {
-                int current = mViewPager.getCurrentItem();
-                int lastReal = mViewPager.getAdapter().getCount()-2;
-                if (current == 0) {
-                    mViewPager.setCurrentItem(lastReal, false);
-                } else if (current == lastReal+1) {
-                    mViewPager.setCurrentItem(1, false);
+            if(mIsCircle){
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    int current = mViewPager.getCurrentItem();
+                    int lastReal = mViewPager.getAdapter().getCount() - 2;
+                    if (current == 0) {
+                        mViewPager.setCurrentItem(lastReal, false);
+                    } else if (current == lastReal + 1) {
+                        mViewPager.setCurrentItem(1, false);
+                    }
                 }
             }
+
         }
     };
 
@@ -293,10 +329,21 @@ public class FlyBanner extends RelativeLayout {
                 return 1;
             }
             //当为网络图片，返回网页图片长度
-            if (mIsImageUrl)
-                return mImageUrls.size() + 2;
-            //当为本地图片，返回本地图片长度
-            return mImages.size()+2;
+            if (mIsImageUrl){
+                if(mIsCircle){
+                    return mImageUrls.size() + 2;
+                }else {
+                    return mImageUrls.size();
+                }
+            }else {
+                //当为本地图片，返回本地图片长度
+                if(mIsCircle){
+                    return mImages.size() + 2;
+                }else {
+                    return mImages.size();
+                }
+            }
+
         }
 
         @Override
@@ -328,7 +375,7 @@ public class FlyBanner extends RelativeLayout {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View)object);
+            container.removeView((View) object);
             if (object != null)
                 object = null;
         }
@@ -356,6 +403,7 @@ public class FlyBanner extends RelativeLayout {
 
     /**
      * 切换指示器
+     *
      * @param currentPoint
      */
     private void switchToPoint(final int currentPoint) {
