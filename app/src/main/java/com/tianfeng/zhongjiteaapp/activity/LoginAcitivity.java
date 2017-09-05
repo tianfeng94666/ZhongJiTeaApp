@@ -66,9 +66,8 @@ public class LoginAcitivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        UIUtils.setBarTint(this);
+        UIUtils.setBarTint(this,true);
         ButterKnife.bind(this);
-        UIUtils.barTint(this, R.color.white);
     }
 
     @OnClick({R.id.tv_login_cancle, R.id.tv_login_tv, R.id.tv_regisit_tv, R.id.tv_login_code, R.id.cb_ischeck, R.id.tv_agreement1, R.id.tv_agreement2, R.id.tv_next, R.id.tv_login_forget_password, R.id.tv_login, R.id.iv_weixin, R.id.iv_qq})

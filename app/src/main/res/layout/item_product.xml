@@ -38,7 +38,7 @@
                         android:id="@+id/tv_item_name"
                         android:text="E01231 古御风"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/text_normal"
                         android:gravity="top"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -62,6 +62,7 @@
                 <TextView
                     android:text="云南仓  生茶"
                android:gravity="center_vertical"
+                    android:textSize="11sp"
                     android:textColor="@color/oregon"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
@@ -72,14 +73,14 @@
                 android:src="@mipmap/uncollected"
                 android:layout_marginRight="8dp"
                 android:layout_toLeftOf="@+id/iv_item_share"
-                android:padding="5dp"
+                android:padding="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <ImageView
                 android:layout_alignParentRight="true"
                 android:id="@+id/iv_item_share"
                 android:src="@mipmap/shared"
-                android:padding="5dp"
+                android:padding="3dp"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -91,7 +92,8 @@
             android:text="古御风，产自千米深山，选用百年古树，古御风古茶树产于云南省西双版纳省监利县香茗古茶树"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textColor="@color/text_color"
+            android:textSize="13sp"
+            android:textColor="@color/text_color2"
             android:layout_width="wrap_content"
             android:layout_height="0dp" />
 

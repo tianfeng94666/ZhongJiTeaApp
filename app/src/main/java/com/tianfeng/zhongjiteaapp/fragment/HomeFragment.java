@@ -47,6 +47,7 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getContext(), R.layout.fragment_home, null);
         ButterKnife.bind(this, view);
+        UIUtils.setBarTint(getActivity(),false);
         initView(view);
         return view;
 
@@ -57,6 +58,11 @@ public class HomeFragment extends BaseFragment {
         for(int i = 0;i<5;i++){
             list.add("1");
         }
+        List list2 = new ArrayList();
+        list2.add(R.mipmap.one);
+        list2.add(R.mipmap.two);
+        list2.add(R.mipmap.three);
+        flybanner.setImages(list2);
         lvHotTea.setAdapter(new CommonAdapter<String>(list,R.layout.item_product) {
             @Override
             public void convert(int position, BaseViewHolder helper, String item) {

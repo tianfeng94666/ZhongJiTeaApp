@@ -14,6 +14,7 @@ import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CustomLV;
 
 import java.util.ArrayList;
@@ -45,10 +46,12 @@ public class MallFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getContext(), R.layout.fragment_mall, null);
         ButterKnife.bind(this, view);
+        UIUtils.setBarTint(getActivity(),false);
         initView(view);
         return view;
     }
     private void initView(View view) {
+        idIgBack.setVisibility(View.GONE);
         titleText.setText("商城");
         List<String> list = new ArrayList<>();
         for(int i = 0;i<5;i++){

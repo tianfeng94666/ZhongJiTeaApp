@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class StorageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getContext(), R.layout.fragment_storage, null);
         ButterKnife.bind(this, view);
+        UIUtils.setBarTint(getActivity(),false);
         initView(view);
         return view;
     }

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:background="@drawable/board_white"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/margin16"
+    android:paddingRight="@dimen/margin16">
+
+    <com.tianfeng.zhongjiteaapp.viewutils.CircleImageView
+        android:id="@+id/iv_item_product"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="@dimen/margin10"
+        android:layout_marginTop="@dimen/margin10"
+        android:src="@mipmap/first" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_marginBottom="@dimen/margin10"
+        android:layout_marginTop="@dimen/margin10"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/marginLeft8">
+
+        <RelativeLayout
+            android:id="@+id/ll_"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="81dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_item_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:text="E01231 古御风"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_normal" />
+
+                    <TextView
+                        android:layout_width="31dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_toRightOf="@+id/tv_item_name"
+                        android:background="@drawable/board_oregon_no_padding"
+                        android:ellipsize="end"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:singleLine="true"
+                        android:text="新茶"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="云南仓  生茶"
+                    android:textSize="11sp"
+                    android:textColor="@color/light_oregon" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/iv_item_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="3dp"
+                android:src="@mipmap/shared"
+                android:textSize="11sp"
+                android:text="待审核"
+                android:textColor="@color/oregon" />
+        </RelativeLayout>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="茶叶单价：200元/片"
+            android:textSize="11sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_color2"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="成交量：500片"
+            android:textSize="11sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_color2"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+        <TextView
+            android:id="@+id/tv_total_money"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="成交总金额：200000元"
+            android:textSize="11sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_color2"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="成交量：500片"
+            android:textSize="11sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_color2"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
+
+
+
+    </LinearLayout>
+</LinearLayout>

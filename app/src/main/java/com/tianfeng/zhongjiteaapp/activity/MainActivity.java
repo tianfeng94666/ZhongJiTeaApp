@@ -66,7 +66,6 @@ int selectPosition;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        UIUtils.setBarTint(this);
         ButterKnife.bind(this);
         initView();
 

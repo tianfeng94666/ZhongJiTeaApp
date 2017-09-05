@@ -385,16 +385,16 @@ public class UIUtils {
 
     }
 
-    public static void setBarTint(Activity context) {
+    public static void setBarTint(Activity context,boolean isDark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = context.getWindow().getAttributes();
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         }
         String st = getSystem();
         if (st.equals(SYS_MIUI)) {
-            MIUISetStatusBarLightMode(context.getWindow(), true);
+            MIUISetStatusBarLightMode(context.getWindow(), isDark);
         } else if (st.equals(SYS_FLYME)) {
-            FlymeSetStatusBarLightMode(context.getWindow(), true);
+            FlymeSetStatusBarLightMode(context.getWindow(), isDark);
         }
 
 

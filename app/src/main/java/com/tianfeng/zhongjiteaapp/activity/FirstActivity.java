@@ -35,7 +35,7 @@ private  boolean isFirstCome = SpUtils.getInstace(this).getBoolean("isFirst",tru
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
-        UIUtils.setBarTint(this);
+        UIUtils.setBarTint(this,false);
 
         ButterKnife.bind(this);
         initView();

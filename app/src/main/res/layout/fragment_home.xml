@@ -1,118 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-
-    android:layout_height="match_parent">
-<LinearLayout
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <FrameLayout
-        android:id="@+id/fl_flybanner"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-        <com.tianfeng.zhongjiteaapp.viewutils.FlyBanner
-            android:id="@+id/flybanner"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:points_position="RIGHT"
-            android:layout_width="fill_parent"
-            android:layout_height="203dp" />
-
-
-    </FrameLayout>
-    <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/textview_height">
-        <ImageView
-            android:background="@color/color_line"
-            android:layout_marginLeft="16dp"
-            android:src="@mipmap/notice"
-            android:layout_width="60dp"
-            android:layout_height="35dp" />
-        <View
-            android:layout_width="1px"
-            android:background="@color/color_line"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_height="match_parent"/>
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/fl_flybanner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tv_notice"
-                android:gravity="center_vertical"
-                android:text="恭喜xx获得价值5000元的抵用券"
-                android:layout_marginRight="45dp"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.tianfeng.zhongjiteaapp.viewutils.FlyBanner
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/flybanner"
+                android:layout_width="fill_parent"
+                android:layout_height="203dp"
+                app:points_position="RIGHT" />
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/textview_height"
+            android:background="@color/white">
+
             <ImageView
-                android:padding="5dp"
-                android:layout_marginRight="16dp"
-                android:src="@mipmap/icon_right"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="16dp"
                 android:background="@color/color_line"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
-        </RelativeLayout>
+                android:src="@mipmap/notice" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="@color/color_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="45dp"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="恭喜xx获得价值5000元的抵用券"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/color_line"
+                    android:padding="5dp"
+                    android:src="@mipmap/icon_right" />
+            </RelativeLayout>
+
+        </LinearLayout>
+<View
+    android:background="@color/color_line"
+    android:layout_width="match_parent"
+    android:layout_height="1px"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/light_gray"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin10"
+            android:paddingRight="@dimen/margin10">
+
+            <TextView
+                android:id="@+id/tv_new_tea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/board_white"
+                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/margin10"
+                android:paddingRight="@dimen/margin10"
+                android:paddingTop="4dp"
+                android:text="新茶上架" />
+
+            <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
+                android:id="@+id/lv_new_tea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/light_gray"
+                android:dividerHeight="5dp">
+
+            </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+
+            <TextView
+                android:id="@+id/tv_hot_tea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/board_white"
+                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/margin10"
+                android:paddingRight="@dimen/margin10"
+                android:paddingTop="4dp"
+                android:text="热门茶叶" />
+
+            <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
+                android:id="@+id/lv_hot_tea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/light_gray"
+                android:dividerHeight="5dp">
+
+            </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+        </LinearLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:descendantFocusability="blocksDescendants"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/margin10"
-        android:paddingRight="@dimen/margin10"
-        android:background="@color/light_gray"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:paddingLeft="@dimen/margin10"
-            android:paddingRight="@dimen/margin10"
-            android:id="@+id/tv_new_tea"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:background="@drawable/board_white"
-            android:text="新茶上架"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
-            android:id="@+id/lv_new_tea"
-            android:dividerHeight="5dp"
-            android:divider="@color/light_gray"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
-        <TextView
-            android:layout_marginTop="5dp"
-            android:paddingLeft="@dimen/margin10"
-            android:paddingRight="@dimen/margin10"
-            android:id="@+id/tv_hot_tea"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:background="@drawable/board_white"
-            android:text="热门茶叶"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
-            android:id="@+id/lv_hot_tea"
-            android:dividerHeight="5dp"
-            android:divider="@color/light_gray"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
-    </LinearLayout>
-
-</LinearLayout>
 
 </ScrollView>

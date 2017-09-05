@@ -15,6 +15,6 @@ public class PersonalDataActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_data);
-        UIUtils.setBarTint(this);
+        UIUtils.setBarTint(this,false);
     }
 }

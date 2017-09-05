@@ -14,8 +14,8 @@
     <color name="half_transparent_background">#e0ffffff</color>
     <!--文字颜色-->
     <color name="text_color">#282828</color>
-    <color name="text_color2">#cecece</color>
-    <color name="text_color3">#999999</color>
+    <color name="text_color2">#aaabad</color>
+    <color name="text_color3">#cecece</color>
     <!--主页底部字体颜色变化-->
     <color name="awesome_red">#CBAC6B</color>
     <color name="awesome_gray">#FDFDFD</color>
