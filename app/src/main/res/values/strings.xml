@@ -11,4 +11,9 @@
     <string name="header_hint_refresh_time">Time：</string>
     <string name="footer_hint_load_normal">Load more</string>
     <string name="footer_hint_load_ready">Release to load more</string>
+
+    <string name="shipside_delivery">现提</string>
+    <string name="temporary_storage">暂存</string>
+    <string name="make_over">转让</string>
+    <string name="pledge">质押</string>
 </resources>

@@ -8,11 +8,11 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tl_title"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        app:tabSelectedTextColor="@color/theme_color"
+        android:layout_height="26dp"
+        app:tabSelectedTextColor="#721b06"
         app:tabGravity="fill"
-        app:tabMinWidth="250dp"
-        app:tabIndicatorColor="@android:color/holo_red_light"
+        app:tabMinWidth="230dp"
+        app:tabIndicatorColor="#721b06"
         app:tabTextColor="@color/text_color">
 
     </android.support.design.widget.TabLayout>

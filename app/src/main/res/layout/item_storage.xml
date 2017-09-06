@@ -71,7 +71,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="云南仓  生茶"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:textColor="@color/light_oregon" />
             </LinearLayout>
 
@@ -133,7 +133,7 @@
             android:id="@+id/tv_date"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="成交量：500片"
+            android:text="购买时间：2017年8月25日"
             android:textSize="11sp"
             android:gravity="center_vertical"
             android:textColor="@color/text_color2"

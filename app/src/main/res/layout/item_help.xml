@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:paddingLeft="18dp"
+    android:paddingRight="27dp"
+    android:layout_height="45dp">
+<TextView
+    android:id="@+id/tv_help_name"
+    android:gravity="center_vertical"
+    android:text="小茶宝协议"
+    android:textColor="@color/text_color"
+    android:textSize="@dimen/text_normal"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" />
+    <ImageView
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/icon_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -1,223 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/theme_bg">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#f7f8f8"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/theme_bg"
-        android:layout_weight="0.4"
-        android:layout_height="0dp">
-        <include layout="@layout/layout_title"/>
-<com.tianfeng.zhongjiteaapp.viewutils.CircleImageView
-    android:layout_width="100dp"
-    android:src="@mipmap/first"
-    android:id="@+id/iv_head_photo"
-    android:layout_centerInParent="true"
-    android:layout_height="100dp" />
-        <TextView
-            android:id="@+id/tv_username"
-            android:text="陈二狗"
-            android:layout_marginTop="@dimen/maginTop8"
-            android:layout_below="@+id/iv_head_photo"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
     <LinearLayout
-        android:background="@color/white"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_weight="0.5"
-        android:layout_height="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <RelativeLayout
-            android:id="@+id/rl_shop"
-            android:layout_weight="1"
-            android:paddingLeft="@dimen/paddingleft32"
-           android:paddingRight="@dimen/paddingleft32"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
-<TextView
-    android:drawablePadding="8dp"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
-    android:textSize="@dimen/text_normal"
-    android:drawableLeft="@mipmap/icon_setting_nor"
-    android:text="门店信息"
-    android:gravity="center_vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent" />
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:src="@mipmap/icon_right"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_line"/>
-        <RelativeLayout
-            android:id="@+id/rl_collect"
-            android:layout_weight="1"
-            android:paddingLeft="@dimen/paddingleft32"
-            android:paddingRight="@dimen/paddingleft32"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="266dp"
+            android:background="@mipmap/mine_bg">
+
+            <com.tianfeng.zhongjiteaapp.viewutils.CircleImageView
+                android:id="@+id/iv_head_photo"
+                android:layout_width="91dp"
+                android:layout_height="91dp"
+                android:layout_below="@+id/tv_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@mipmap/first" />
+
             <TextView
-                android:drawablePadding="8dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:drawableLeft="@mipmap/icon_setting_nor"
-                android:text="我的收藏"
-                android:textSize="@dimen/text_normal"
-                android:gravity="center_vertical"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:src="@mipmap/icon_right"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_line"/>
-        <RelativeLayout
-            android:id="@+id/rl_share"
-            android:layout_weight="1"
-            android:paddingLeft="@dimen/paddingleft32"
-            android:paddingRight="@dimen/paddingleft32"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
+                android:layout_height="wrap_content"
+
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="35dp"
+                android:text="个人中心"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_normal" />
+
             <TextView
-                android:drawablePadding="8dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:drawableLeft="@mipmap/icon_setting_nor"
-                android:text="分享小茶宝"
-                android:textSize="@dimen/text_normal"
-                android:gravity="center_vertical"
+                android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:src="@mipmap/icon_right"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_head_photo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="陈二狗"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_normal" />
         </RelativeLayout>
-        <View
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_line"/>
-        <RelativeLayout
-            android:id="@+id/rl_help"
-            android:layout_weight="1"
-            android:paddingLeft="@dimen/paddingleft32"
-            android:paddingRight="@dimen/paddingleft32"
+            android:layout_height="270dp"
+            android:layout_marginTop="@dimen/margin10"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_shop"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/paddingleft32"
+                android:paddingRight="@dimen/margin27">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/shop_information"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="门店信息"
+                    android:textSize="@dimen/text_normal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@mipmap/icon_right" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_line" />
+
+            <RelativeLayout
+                android:id="@+id/rl_collect"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/paddingleft32"
+                android:paddingRight="@dimen/margin27">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/my_collected"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="我的收藏"
+                    android:textSize="@dimen/text_normal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@mipmap/icon_right" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_line" />
+
+            <RelativeLayout
+                android:id="@+id/rl_share"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/paddingleft32"
+                android:paddingRight="@dimen/margin27">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/share_app"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="分享小茶宝"
+                    android:textSize="@dimen/text_normal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@mipmap/icon_right" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_line" />
+
+            <RelativeLayout
+                android:id="@+id/rl_help"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/paddingleft32"
+                android:paddingRight="@dimen/margin27">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/help"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="使用帮助及协议"
+                    android:textSize="@dimen/text_normal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@mipmap/icon_right" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_line" />
+
+            <RelativeLayout
+                android:id="@+id/rl_about"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/paddingleft32"
+                android:paddingRight="@dimen/margin27">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/about"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="关于我们"
+                    android:textSize="@dimen/text_normal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@mipmap/icon_right" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_line" />
+
+            <RelativeLayout
+                android:id="@+id/rl_setting"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/paddingleft32"
+                android:paddingRight="@dimen/margin27">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/setting"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="设置"
+                    android:textSize="@dimen/text_normal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@mipmap/icon_right" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_exit"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
-            <TextView
-                android:drawablePadding="8dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textSize="@dimen/text_normal"
-                android:drawableLeft="@mipmap/icon_setting_nor"
-                android:text="使用帮助及协议"
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:src="@mipmap/icon_right"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_line"/>
-        <RelativeLayout
-            android:id="@+id/rl_about"
-            android:layout_weight="1"
-            android:paddingLeft="@dimen/paddingleft32"
-            android:paddingRight="@dimen/paddingleft32"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
-            <TextView
-                android:drawablePadding="8dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:drawableLeft="@mipmap/icon_setting_nor"
-                android:text="关于我们"
-                android:textSize="@dimen/text_normal"
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:src="@mipmap/icon_right"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_line"/>
-        <RelativeLayout
-            android:id="@+id/rl_setting"
-            android:layout_weight="1"
-            android:paddingLeft="@dimen/paddingleft32"
-            android:paddingRight="@dimen/paddingleft32"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
-            <TextView
-                android:drawablePadding="8dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:drawableLeft="@mipmap/icon_setting_nor"
-                android:text="设置"
-                android:textSize="@dimen/text_normal"
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-            <ImageView
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:src="@mipmap/icon_right"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="5dp"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
+            android:layout_height="46dp"
+            android:layout_marginBottom="@dimen/maginTop10"
+            android:layout_marginTop="@dimen/maginTop10"
+
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="退出登录"
+            android:textColor="@color/oregon"
+            android:textSize="18sp" />
     </LinearLayout>
-    <TextView
-        android:layout_marginBottom="@dimen/maginTop8"
-        android:id="@+id/tv_exit"
-        android:background="@color/white"
-        android:text="退出登录"
-        android:textColor="@color/oregon"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/maginTop8"
-        android:layout_width="match_parent"
-        android:layout_weight="0.1"
-        android:layout_height="0dp" />
-</LinearLayout>
+</ScrollView>

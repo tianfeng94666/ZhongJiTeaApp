@@ -59,7 +59,9 @@ public class BaseActivity extends FragmentActivity implements HttpCycleContext {
         }
         toast.show();
     }
-
+    public void onBack() {
+        finish();
+    }
 
     private LoadingWaitDialog loadingDialog;
 

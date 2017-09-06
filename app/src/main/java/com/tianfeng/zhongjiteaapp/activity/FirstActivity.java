@@ -42,7 +42,7 @@ private  boolean isFirstCome = SpUtils.getInstace(this).getBoolean("isFirst",tru
     }
 
     private void initView() {
-        if(isFirstCome){
+        if(true){
             ivInto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -56,6 +56,7 @@ private  boolean isFirstCome = SpUtils.getInstace(this).getBoolean("isFirst",tru
             list.add(R.mipmap.two);
             list.add(R.mipmap.three);
             flybanner.setImages(list);
+
         }else {
             openActivity(LoginAcitivity.class, null);
         }

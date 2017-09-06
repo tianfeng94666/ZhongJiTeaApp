@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/item_storage"/>
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/tv_shipside_delivery"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/shipside_delivery"
+            android:textSize="@dimen/text_normal"
+            android:textColor="@color/white"
+            android:background="#fe8431"
+            android:layout_height="match_parent" />
+        <View
+            android:background="#d5d5d5"
+            android:layout_width="1px"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/tv_temporary_storage"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/temporary_storage"
+            android:textColor="@color/white"
+            android:background="#fe8431"
+            android:layout_height="match_parent" />
+        <View
+            android:background="#d5d5d5"
+            android:layout_width="1px"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/tv_make_over"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/make_over"
+            android:textColor="@color/white"
+            android:background="#fe8431"
+            android:layout_height="match_parent" />
+        <View
+            android:background="#d5d5d5"
+            android:layout_width="1px"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/tv_pledge"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/pledge"
+            android:textColor="@color/white"
+            android:background="#fe8431"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>

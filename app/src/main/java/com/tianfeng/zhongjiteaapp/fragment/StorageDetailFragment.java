@@ -40,14 +40,18 @@ public class StorageDetailFragment extends BaseFragment {
 
     private void initView(View view) {
 
-        List<String> list = new ArrayList<>();
-        for(int i = 0;i<50;i++){
-            list.add("1");
-        }
-        lvMallProduct.setAdapter(new CommonAdapter<String>(list,R.layout.item_product) {
+        final List<String> list = new ArrayList<>();
+
+        list.add("小茶宝服务协议");
+        list.add("仓储管理服务协议");
+        list.add("仓储类问题");
+        list.add("茶叶质押协议");
+        list.add("茶叶赎回协议");
+
+        lvMallProduct.setAdapter(new CommonAdapter<String>(list,R.layout.item_storage) {
             @Override
             public void convert(int position, BaseViewHolder helper, String item) {
-
+                helper.setText(R.id.tv_help_name,list.get(position));
             }
         });
 //        UIUtils.setListViewHeightBasedOnChildren(lvMallProduct);

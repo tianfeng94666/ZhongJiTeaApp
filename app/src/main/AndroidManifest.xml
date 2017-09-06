@@ -18,6 +18,13 @@
         </activity>
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.LoginAcitivity"/>
+        <activity android:name=".activity.HelpActivity"/>
+        <activity android:name=".activity.ShopInformation"/>
+        <activity android:name=".activity.ChooseShopActivity"/>
+        <activity android:name=".activity.SearchTeaActivity"/>
+        <activity android:name=".activity.AssociatePhoneActivity"/>
+        <activity android:name=".activity.StorageTradeActivity"/>
+        <activity android:name=".activity.PersonalDataActivity"/>
     </application>
 
 </manifest>

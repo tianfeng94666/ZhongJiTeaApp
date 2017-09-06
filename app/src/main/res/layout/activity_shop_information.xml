@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textview_height"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33"
+        android:layout_marginTop="10dp">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:text="门店店名"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin16"
+            android:gravity="bottom"
+            android:text=""
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33"
+        android:background="@color/color_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textview_height"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:text="门店地址"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+
+        <TextView
+            android:id="@+id/tv_shop_address"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin16"
+            android:gravity="bottom"
+            android:text=""
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33"
+        android:background="@color/color_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textview_height"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:text="联系电话"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+
+        <TextView
+            android:id="@+id/tv_shop_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin16"
+            android:gravity="bottom"
+            android:text=""
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33"
+        android:background="@color/color_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textview_height"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:text="营业时间"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+
+        <TextView
+            android:id="@+id/tv_shop_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin16"
+            android:gravity="bottom"
+            android:text=""
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33"
+        android:background="@color/color_line" />
+</LinearLayout>
