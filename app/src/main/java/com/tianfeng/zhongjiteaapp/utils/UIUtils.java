@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -33,6 +34,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class UIUtils {
@@ -514,6 +517,15 @@ public class UIUtils {
         }
         return defaultValue;
     }
+
+
+    //使用正则表达式判断电话号码
+    public static boolean isMobileNO(String tel) {
+        Pattern p = Pattern.compile("^(13[0-9]|15([0-3]|[5-9])|14[5,7,9]|17[1,3,5,6,7,8]|18[0-9])\\d{8}$");
+        Matcher m = p.matcher(tel);
+        System.out.println(m.matches() + "---");
+        return m.matches();
+        }
 }
 
 

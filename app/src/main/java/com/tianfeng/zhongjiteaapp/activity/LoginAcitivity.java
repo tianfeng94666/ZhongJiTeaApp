@@ -10,7 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.BaseApplication;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
@@ -83,6 +85,7 @@ public class LoginAcitivity extends BaseActivity {
                 showRegisit();
                 break;
             case R.id.tv_login_code:
+                getLoginCode();
                 break;
             case R.id.cb_ischeck:
                 break;
@@ -93,6 +96,7 @@ public class LoginAcitivity extends BaseActivity {
             case R.id.tv_next:
                 break;
             case R.id.tv_login_forget_password:
+                openActivity(AssociatePhoneActivity.class,null);
                 break;
             case R.id.tv_login:
                 break;
@@ -101,6 +105,19 @@ public class LoginAcitivity extends BaseActivity {
             case R.id.iv_qq:
                 break;
         }
+    }
+
+    private void getLoginCode() {
+        if(UIUtils.isMobileNO(etLoginPhone.getText().toString())){
+            getCode();
+        }else {
+            showToastReal("手机号码输入错误！");
+        }
+    }
+
+    private void getCode() {
+
+
     }
 
     private void showRegisit() {
@@ -131,4 +148,6 @@ public class LoginAcitivity extends BaseActivity {
         }
         return true;
     }
+
+
 }

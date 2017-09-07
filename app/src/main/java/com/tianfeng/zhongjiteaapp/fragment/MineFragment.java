@@ -9,7 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.activity.AboutActivity;
 import com.tianfeng.zhongjiteaapp.activity.HelpActivity;
+import com.tianfeng.zhongjiteaapp.activity.MyCollectedActivity;
+import com.tianfeng.zhongjiteaapp.activity.SettingActivity;
+import com.tianfeng.zhongjiteaapp.activity.ShopInformationActivity;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
@@ -63,17 +67,22 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_shop:
+                openActivity(ShopInformationActivity.class,null);
                 break;
             case R.id.rl_collect:
+                openActivity(MyCollectedActivity.class,null);
                 break;
             case R.id.rl_share:
+
                 break;
             case R.id.rl_help:
                 openActivity(HelpActivity.class,null);
                 break;
             case R.id.rl_about:
+                openActivity(AboutActivity.class,null);
                 break;
             case R.id.rl_setting:
+                openActivity(SettingActivity.class,null);
                 break;
         }
     }

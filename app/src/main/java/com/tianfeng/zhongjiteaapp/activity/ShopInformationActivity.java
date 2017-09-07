@@ -9,7 +9,7 @@ import com.tianfeng.zhongjiteaapp.base.BaseActivity;
  * Created by Administrator on 2017/9/6 0006.
  */
 
-public class ShopInformation extends BaseActivity {
+public class ShopInformationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

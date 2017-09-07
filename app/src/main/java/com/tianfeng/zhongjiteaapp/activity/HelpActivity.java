@@ -52,7 +52,7 @@ public class HelpActivity extends BaseActivity {
         list.add("茶叶质押协议");
         list.add("茶叶赎回协议");
 
-        lvHelp.setAdapter(new CommonAdapter<String>(list,R.layout.item_storage) {
+        lvHelp.setAdapter(new CommonAdapter<String>(list,R.layout.item_help) {
             @Override
             public void convert(int position, BaseViewHolder helper, String item) {
                 helper.setText(R.id.tv_help_name,list.get(position));

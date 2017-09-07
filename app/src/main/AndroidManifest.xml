@@ -20,7 +20,7 @@
         <activity android:name=".activity.LoginAcitivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".activity.HelpActivity"/>
-        <activity android:name=".activity.ShopInformation"/>
+        <activity android:name=".activity.ShopInformationActivity"/>
         <activity android:name=".activity.ChooseShopActivity"/>
         <activity android:name=".activity.SearchTeaActivity"/>
         <activity android:name=".activity.AssociatePhoneActivity"/>
@@ -29,6 +29,8 @@
         <activity android:name=".activity.ProductActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.DialogActivity" android:theme="@style/Theme.ActivityDialogStyle"/>
+        <activity android:name=".activity.MyCollectedActivity"/>
+        <activity android:name=".activity.AboutActivity"/>
     </application>
 
 </manifest>

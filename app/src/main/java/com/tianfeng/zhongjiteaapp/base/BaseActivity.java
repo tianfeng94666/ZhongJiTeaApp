@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.utils.SpUtils;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.LoadingWaitDialog;
 
 import java.util.Timer;
@@ -48,6 +49,7 @@ public class BaseActivity extends FragmentActivity implements HttpCycleContext {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        UIUtils.setBarTint(this,true);
 
     }
 
