@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="320dp"
+    android:background="@drawable/board_white_radio10"
+    android:layout_gravity="center"
+    android:layout_height="120dp">
+<TextView
+    android:id="@+id/tv_message"
+    android:textSize="@dimen/text_normal"
+    android:gravity="center"
+    android:text="请与客服联系线下取货"
+    android:textColor="@color/text_color"
+    android:layout_width="match_parent"
+
+    android:layout_height="80dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_line"/>
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="match_parent"
+        android:text="确定"
+        android:gravity="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_height="40dp" />
+</LinearLayout>

@@ -5,13 +5,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.activity.ProductActivity;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
+import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CustomLV;
 import com.tianfeng.zhongjiteaapp.viewutils.FlyBanner;
@@ -63,18 +66,43 @@ public class HomeFragment extends BaseFragment {
         list2.add(R.mipmap.two);
         list2.add(R.mipmap.three);
         flybanner.setImages(list2);
+        lvHotTea.setFocusable(false);
+        lvNewTea.setFocusable(false);
         lvHotTea.setAdapter(new CommonAdapter<String>(list,R.layout.item_product) {
             @Override
             public void convert(int position, BaseViewHolder helper, String item) {
-
+                helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ToastManager.showToastReal("搜藏");
+                    }
+                });
+            }
+        });
+        lvHotTea.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                openActivity(ProductActivity.class,null);
             }
         });
         lvNewTea.setAdapter(new CommonAdapter<String>(list,R.layout.item_product) {
             @Override
             public void convert(int position, BaseViewHolder helper, String item) {
-
+                helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ToastManager.showToastReal("搜藏");
+                    }
+                });
             }
         });
+        lvNewTea.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                openActivity(ProductActivity.class,null);
+            }
+        });
+
         UIUtils.setListViewHeightBasedOnChildren(lvHotTea);
         UIUtils.setListViewHeightBasedOnChildren(lvNewTea);
     }

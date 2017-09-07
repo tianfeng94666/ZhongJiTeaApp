@@ -44,16 +44,22 @@ public class HelpActivity extends BaseActivity {
 
     private void initView() {
         idIgBack.setVisibility(View.VISIBLE);
-        List<String> list = new ArrayList<>();
-        for(int i = 0;i<5;i++){
-            list.add("1");
-        }
-        lvHelp.setAdapter(new CommonAdapter<String>(list,R.layout.item_help) {
+        final List<String> list = new ArrayList<>();
+
+        list.add("小茶宝服务协议");
+        list.add("仓储管理服务协议");
+        list.add("仓储类问题");
+        list.add("茶叶质押协议");
+        list.add("茶叶赎回协议");
+
+        lvHelp.setAdapter(new CommonAdapter<String>(list,R.layout.item_storage) {
             @Override
             public void convert(int position, BaseViewHolder helper, String item) {
-
+                helper.setText(R.id.tv_help_name,list.get(position));
             }
         });
+
+
     }
 
     public void onBack() {

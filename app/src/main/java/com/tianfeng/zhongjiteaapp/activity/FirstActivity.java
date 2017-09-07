@@ -42,7 +42,7 @@ private  boolean isFirstCome = SpUtils.getInstace(this).getBoolean("isFirst",tru
     }
 
     private void initView() {
-        if(true){
+        if(isFirstCome){
             ivInto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

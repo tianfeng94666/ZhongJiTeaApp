@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.activity.StorageTradeActivity;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
@@ -51,7 +53,13 @@ public class StorageDetailFragment extends BaseFragment {
         lvMallProduct.setAdapter(new CommonAdapter<String>(list,R.layout.item_storage) {
             @Override
             public void convert(int position, BaseViewHolder helper, String item) {
-                helper.setText(R.id.tv_help_name,list.get(position));
+
+            }
+        });
+        lvMallProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                openActivity(StorageTradeActivity.class,null);
             }
         });
 //        UIUtils.setListViewHeightBasedOnChildren(lvMallProduct);

@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.LoginAcitivity"/>
+        <activity android:name=".activity.LoginAcitivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".activity.HelpActivity"/>
         <activity android:name=".activity.ShopInformation"/>
         <activity android:name=".activity.ChooseShopActivity"/>
@@ -25,6 +26,9 @@
         <activity android:name=".activity.AssociatePhoneActivity"/>
         <activity android:name=".activity.StorageTradeActivity"/>
         <activity android:name=".activity.PersonalDataActivity"/>
+        <activity android:name=".activity.ProductActivity"/>
+        <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.DialogActivity" android:theme="@style/Theme.ActivityDialogStyle"/>
     </application>
 
 </manifest>

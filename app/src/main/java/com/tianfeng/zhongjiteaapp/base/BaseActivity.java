@@ -59,7 +59,7 @@ public class BaseActivity extends FragmentActivity implements HttpCycleContext {
         }
         toast.show();
     }
-    public void onBack() {
+    public void onBack(View view){
         finish();
     }
 

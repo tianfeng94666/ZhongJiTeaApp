@@ -12,20 +12,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:visibility="gone"
+        android:visibility="visible"
         android:onClick="onBack"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="18dp"
-        android:paddingBottom="10dp"
+
         android:src="@mipmap/icon_back" />
 
     <TextView
         android:id="@+id/title_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:gravity="center"
         android:text="商城"
+        android:paddingTop="18dp"
         android:textColor="@color/white"
         android:textSize="@dimen/text_normal" />
 
