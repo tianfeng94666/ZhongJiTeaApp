@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ll_setting"
     android:background="@color/color_line"
     android:orientation="vertical">
 
@@ -70,6 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RelativeLayout
+            android:id="@+id/rl_name"
             android:paddingLeft="@dimen/margin33"
             android:paddingRight="@dimen/margin33"
             android:layout_width="match_parent"
@@ -97,6 +99,7 @@
             android:layout_height="1px"
             android:background="@color/color_line"/>
         <RelativeLayout
+            android:id="@+id/rl_reset_password"
             android:paddingLeft="@dimen/margin33"
             android:paddingRight="@dimen/margin33"
             android:layout_width="match_parent"
