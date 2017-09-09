@@ -13,6 +13,7 @@ import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.BaseApplication;
+import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
@@ -99,12 +100,17 @@ public class LoginAcitivity extends BaseActivity {
                 openActivity(AssociatePhoneActivity.class,null);
                 break;
             case R.id.tv_login:
+                login();
                 break;
             case R.id.iv_weixin:
                 break;
             case R.id.iv_qq:
                 break;
         }
+    }
+
+    private void login() {
+//        VolleyRequestUtils.getInstance().getCookieRequest(this,);
     }
 
     private void getLoginCode() {
