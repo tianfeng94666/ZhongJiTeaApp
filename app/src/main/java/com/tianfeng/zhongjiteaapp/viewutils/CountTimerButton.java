@@ -6,6 +6,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
 
@@ -18,9 +19,9 @@ public class CountTimerButton extends CountDownTimer {
      *                          {@link #onTick(long)} callbacks.
      */
 
-    private Button button;
+    private TextView button;
 
-    public CountTimerButton(Button btn, long millisInFuture, long countDownInterval) {
+    public CountTimerButton(TextView btn, long millisInFuture, long countDownInterval) {
         super(millisInFuture, countDownInterval);
         this.button=btn;
     }

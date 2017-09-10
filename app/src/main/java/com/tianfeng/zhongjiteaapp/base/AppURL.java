@@ -5,11 +5,11 @@ package com.tianfeng.zhongjiteaapp.base;
  */
 
 public class AppURL {
-    private  static  String baseHost = "http://www.bestfeng.xin:81/xcb/";
+    private  static  String baseHost = "http://www.bestfeng.xin:81/xcb";
     /**
      * 登入
      */
-    public static String LOGIN_URL= baseHost+"api/user/login";
+    public static String LOGIN_URL= baseHost+"/api/user/login";
     /**
      * 用户注册,登录名，手机号，密码必输
      * api/user/register/{bizId}/{code}
@@ -18,5 +18,10 @@ public class AppURL {
      code：验证码
 
      */
-    public static String REGISTER_URL= baseHost+"api/user/register/";
+    public static String REGISTER_URL= baseHost+"/api/user/register";
+    /**
+     * 获取短信验证码
+     * api/sms/send
+     */
+    public static String GET_MESSAGE_URL= baseHost+"/api/sms/send";
 }

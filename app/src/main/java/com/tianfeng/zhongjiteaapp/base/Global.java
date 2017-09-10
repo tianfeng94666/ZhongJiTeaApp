@@ -6,4 +6,5 @@ package com.tianfeng.zhongjiteaapp.base;
 
 public class Global {
     public static int selectPosition=0;
+    public static String  RESULT_CODE = "0000";
 }

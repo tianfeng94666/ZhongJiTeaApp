@@ -9,13 +9,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
-import com.tianfeng.zhongjiteaapp.base.BaseApplication;
+import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
+import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
+import com.tianfeng.zhongjiteaapp.viewutils.CountTimerButton;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,6 +71,7 @@ public class LoginAcitivity extends BaseActivity {
     ImageView ivQq;
     @Bind(R.id.ll_login)
     LinearLayout llLogin;
+    private CountTimerButton mCountDownTimerUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,19 +118,46 @@ public class LoginAcitivity extends BaseActivity {
     }
 
     private void login() {
-//        VolleyRequestUtils.getInstance().getCookieRequest(this,);
+//        VolleyRequestUtils.getInstance().getRequestPost(this,);
     }
 
     private void getLoginCode() {
         if(UIUtils.isMobileNO(etLoginPhone.getText().toString())){
-            getCode();
+            mCountDownTimerUtils = new CountTimerButton(tvLoginCode, 60000, 1000);
+            tvLoginCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCountDownTimerUtils.start();
+                    getCode();
+                }
+            });
+
         }else {
             showToastReal("手机号码输入错误！");
         }
     }
 
     private void getCode() {
+        Map map = new HashMap();
+        map.put("phoneNumber",etLoginPhone.getText().toString());
+        String url  = AppURL.GET_MESSAGE_URL;
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result",result);
+                GetCodeResult getCodeResult = new Gson().fromJson(result,GetCodeResult.class);
+                if(Global.RESULT_CODE.equals(getCodeResult.getCode())){
 
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail",fail);
+                showToastReal(fail);
+            }
+        },map);
 
     }
 

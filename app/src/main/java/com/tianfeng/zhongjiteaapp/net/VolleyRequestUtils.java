@@ -12,6 +12,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tianfeng.zhongjiteaapp.base.BaseApplication;
@@ -77,7 +78,7 @@ public class VolleyRequestUtils {
 
 
     //！！！！！！！！get请求为了保证cookie一致  后来不要使用该方法！！！！！！！！！！
-    public void getCookieRequest(Context context, String url, final HttpStringRequsetCallBack callback, Map<String, Object> map) {
+    public void getRequestPost(Context context, String url, final HttpStringRequsetCallBack callback, final Map<String, String> map) {
         JSONObject jsonObject = new JSONObject(map);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, url, jsonObject, new Listener<JSONObject>() {
 
@@ -99,10 +100,13 @@ public class VolleyRequestUtils {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return super.getHeaders();
             }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                return map;
+            }
         };
-
-
-
 
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
                 2,
@@ -111,7 +115,58 @@ public class VolleyRequestUtils {
         BaseApplication.requestQueue.add(jsonObjectRequest);
     }
 
+    public  void getStringPostRequest (Context context, String url,final HttpStringRequsetCallBack callback,final Map<String, String> map){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (callback != null)
+                            callback.onSuccess(response.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (callback != null)
+                    callback.onFail(error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                return map;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setTag(context);
+        BaseApplication.requestQueue.add(stringRequest);
+    }
+    //！！！！！！！！get请求！！！！！！！！！！
+    public  void getRequestGet(Context context, String url, final HttpStringRequsetCallBack callback){
 
+        JsonObjectRequest jsonObjectRequest = new NormalPostRequest( Request.Method.GET, url, null,
+                new Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if(callback!=null)
+                            callback.onSuccess(response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if(callback!=null)
+                    callback.onFail(error.toString());
+            }
+
+        });
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
+                2,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        jsonObjectRequest.setTag(context);
+        BaseApplication.requestQueue.add(jsonObjectRequest);
+    }
     /**
      * 以GET或者POST方式发送jsonObjectRequest
      *
