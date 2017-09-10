@@ -114,7 +114,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/textview_height">
+            android:layout_height="47dp">
 
             <LinearLayout
                 android:id="@+id/ll_code"
@@ -139,11 +139,11 @@
                     android:id="@+id/et_login_code"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin10"
+                    android:layout_marginLeft="@dimen/margin16"
                     android:background="@null"
                     android:gravity="bottom"
                     android:hint="请输入验证码"
-                    android:textColor="@color/color_line"
+                    android:textColor="@color/text_color"
                     android:textColorHint="@color/color_line"
                     android:textSize="@dimen/text_normal" />
             </LinearLayout>
@@ -160,10 +160,11 @@
             <TextView
                 android:id="@+id/tv_login_code"
                 android:layout_width="85dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="30dp"
+                android:gravity="center"
                 android:background="@drawable/board_light_oregon"
                 android:padding="5dp"
                 android:text="获取验证码"
@@ -179,6 +180,7 @@
 
             <CheckBox
                 android:id="@+id/cb_ischeck"
+                android:button="@drawable/check_but"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

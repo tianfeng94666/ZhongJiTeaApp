@@ -21,6 +21,8 @@ import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CountTimerButton;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,12 +74,13 @@ public class LoginAcitivity extends BaseActivity {
     @Bind(R.id.ll_login)
     LinearLayout llLogin;
     private CountTimerButton mCountDownTimerUtils;
+    private String bizId;//验证码请求返回的bizId
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        UIUtils.setBarTint(this,true);
+        UIUtils.setBarTint(this, true);
         ButterKnife.bind(this);
     }
 
@@ -85,7 +88,7 @@ public class LoginAcitivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_login_cancle:
-                openActivity(MainActivity.class,null);
+                openActivity(MainActivity.class, null);
                 break;
             case R.id.tv_login_tv:
                 showLogin();
@@ -103,9 +106,10 @@ public class LoginAcitivity extends BaseActivity {
             case R.id.tv_agreement2:
                 break;
             case R.id.tv_next:
+                goNext();
                 break;
             case R.id.tv_login_forget_password:
-                openActivity(AssociatePhoneActivity.class,null);
+                openActivity(AssociatePhoneActivity.class, null);
                 break;
             case R.id.tv_login:
                 login();
@@ -117,12 +121,43 @@ public class LoginAcitivity extends BaseActivity {
         }
     }
 
+    private void goNext()  {
+        if(cbIscheck.isChecked()){
+            String  bizIdEncode = null ;
+            try {
+                bizIdEncode = URLEncoder.encode(bizId,"utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            String url = AppURL.LOGIN_URL+"/"+bizIdEncode+"/"+etLoginCode.getText().toString();
+            Map map = new HashMap();
+            map.put("phoneNumber", etLoginPhone.getText().toString());
+            VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+                @Override
+                public void onSuccess(String result) {
+                    L.e("result", result);
+
+
+                }
+
+                @Override
+                public void onFail(String fail) {
+                    L.e("fail", fail);
+                    showToastReal(fail);
+                }
+            }, map);
+
+        }else {
+            showToastReal("请勾选是否同意协议");
+        }
+    }
+
     private void login() {
 //        VolleyRequestUtils.getInstance().getRequestPost(this,);
     }
 
     private void getLoginCode() {
-        if(UIUtils.isMobileNO(etLoginPhone.getText().toString())){
+        if (UIUtils.isMobileNO(etLoginPhone.getText().toString())) {
             mCountDownTimerUtils = new CountTimerButton(tvLoginCode, 60000, 1000);
             tvLoginCode.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -132,32 +167,35 @@ public class LoginAcitivity extends BaseActivity {
                 }
             });
 
-        }else {
+        } else {
             showToastReal("手机号码输入错误！");
         }
     }
 
     private void getCode() {
         Map map = new HashMap();
-        map.put("phoneNumber",etLoginPhone.getText().toString());
-        String url  = AppURL.GET_MESSAGE_URL;
+        map.put("phoneNumber", etLoginPhone.getText().toString());
+        String url = AppURL.GET_MESSAGE_URL;
         VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
-                L.e("result",result);
-                GetCodeResult getCodeResult = new Gson().fromJson(result,GetCodeResult.class);
-                if(Global.RESULT_CODE.equals(getCodeResult.getCode())){
-
+                L.e("result", result);
+                GetCodeResult getCodeResult = new Gson().fromJson(result, GetCodeResult.class);
+                if (Global.RESULT_CODE.equals(getCodeResult.getCode())) {
+                    Global.JESSIONID = getCodeResult.getJsessionid();
+                    bizId = getCodeResult.getResult().getBizId();
+                } else {
+                    showToastReal(getCodeResult.getMsg());
                 }
 
             }
 
             @Override
             public void onFail(String fail) {
-                L.e("fail",fail);
+                L.e("fail", fail);
                 showToastReal(fail);
             }
-        },map);
+        }, map);
 
     }
 
@@ -177,6 +215,7 @@ public class LoginAcitivity extends BaseActivity {
 
 
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
