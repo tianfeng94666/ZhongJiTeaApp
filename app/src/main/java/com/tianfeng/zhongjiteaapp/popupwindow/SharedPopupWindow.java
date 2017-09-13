@@ -12,11 +12,21 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
+
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
  * Created by 田丰 on 2017/9/11.
@@ -84,16 +94,116 @@ public class SharedPopupWindow {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_share_weichat:
+                weichatShare();
                 break;
             case R.id.tv_share_friend:
+                friendShare();
                 break;
             case R.id.tv_share_qq:
+                qqShare();
                 break;
             case R.id.tv_share_weibo:
+                weiboShare();
                 break;
             case R.id.tv_share_cancle:
                 closePopupWindow();
                 break;
         }
+    }
+
+    private void weiboShare() {
+        SinaWeibo.ShareParams sp = new SinaWeibo.ShareParams();
+        sp.setText("测试分享的文本");
+        sp.setImagePath("/mnt/sdcard/测试分享的图片.jpg");
+        Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+        weibo.SSOSetting(true);
+        weibo.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                ToastManager.showToastReal("分享成功");
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                ToastManager.showToastReal("分享失败");
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                ToastManager.showToastReal("分享取消");
+            }
+        }); // 设置分享事件回调
+// 执行图文分享
+        weibo.share(sp);
+    }
+
+    private void qqShare() {
+        QQ.ShareParams sp = new QQ.ShareParams();
+        sp.setText("测试分享的文本");
+        sp.setImagePath("/mnt/sdcard/测试分享的图片.jpg");
+        Platform qq = ShareSDK.getPlatform(QQ.NAME);
+        qq.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                popupWindow.dismiss();
+                ToastManager.showToastReal("分享成功");
+            }
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                ToastManager.showToastReal("分享失败");
+            }
+            @Override
+            public void onCancel(Platform platform, int i) {
+                ToastManager.showToastReal("分享取消");
+            }
+        });
+        qq.share(sp);
+    }
+
+    private void friendShare() {
+       Platform.ShareParams sp = new Platform.ShareParams();
+        sp.setText("测试分享的文本");
+        sp.setImagePath("/mnt/sdcard/测试分享的图片.jpg");
+        Platform wechatMoments = ShareSDK.getPlatform(WechatMoments.NAME);
+        wechatMoments.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                popupWindow.dismiss();
+                ToastManager.showToastReal("分享成功");
+            }
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                ToastManager.showToastReal("分享失败");
+            }
+            @Override
+            public void onCancel(Platform platform, int i) {
+                ToastManager.showToastReal("分享取消");
+            }
+        });
+        wechatMoments.share(sp);
+    }
+
+    private void weichatShare() {
+        Wechat.ShareParams sp = new Wechat.ShareParams();
+        sp.setText("测试分享的文本");
+        sp.setImagePath("/mnt/sdcard/测试分享的图片.jpg");
+        Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+        Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
+        wechat.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                popupWindow.dismiss();
+                ToastManager.showToastReal("分享成功");
+            }
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                ToastManager.showToastReal("分享失败");
+            }
+            @Override
+            public void onCancel(Platform platform, int i) {
+                ToastManager.showToastReal("分享取消");
+            }
+        });
+        wechat.share(sp);
     }
 }
