@@ -1,6 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/margin33"
+    android:layout_height="45dp"
+    android:layout_marginTop="5dp"
+    android:background="@color/white">
+
+    <TextView
+        android:text="质押数量    "
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_normal"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical" />
+    <EditText
+        android:id="@+id/et_amount"
+        android:paddingLeft="16dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_normal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_money"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_line"/>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/margin33"
+            android:layout_height="45dp"
+
+            android:background="@color/white">
+
+            <TextView
+                android:text="原成交金额"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_normal"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical" />
+            <EditText
+                android:id="@+id/et_old_money"
+                android:paddingLeft="16dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/margin33"
+            android:layout_height="45dp"
+            android:background="@color/white">
+
+            <TextView
+                android:text="评估金额    "
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_normal"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical" />
+            <EditText
+                android:id="@+id/et_evaluate_money"
+                android:paddingLeft="16dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33"
+        android:background="@drawable/board_oregon"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/text_normal"
+        android:textColor="@color/white"
+        android:text="确定"
+        android:gravity="center"
+        android:layout_height="40dp" />
+    <TextView
+        android:id="@+id/tv_cancle"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="@dimen/margin33"
+        android:layout_marginRight="@dimen/margin33"
+        android:background="@drawable/board_gray"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/text_normal"
+        android:textColor="@color/white"
+        android:text="取消"
+        android:gravity="center"
+        android:layout_height="40dp" />
 
 </LinearLayout>

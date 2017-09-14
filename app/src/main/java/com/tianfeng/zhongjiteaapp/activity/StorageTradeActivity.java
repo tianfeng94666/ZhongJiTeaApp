@@ -78,7 +78,7 @@ public class StorageTradeActivity extends BaseActivity {
                 openActivity(DialogActivity.class, bundle);
                 break;
             case R.id.tv_pledge:
-
+                openActivity(PledgeActivity.class, null);
                 break;
         }
     }
