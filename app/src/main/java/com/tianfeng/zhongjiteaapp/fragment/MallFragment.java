@@ -16,12 +16,17 @@ import com.tianfeng.zhongjiteaapp.activity.ProductActivity;
 import com.tianfeng.zhongjiteaapp.activity.SearchTeaActivity;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
+import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
+import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
+import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CustomLV;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,8 +56,30 @@ public class MallFragment extends BaseFragment {
         View view = View.inflate(getContext(), R.layout.fragment_mall, null);
         ButterKnife.bind(this, view);
         UIUtils.setBarTint(getActivity(), false);
+        netLoad();
         initView(view);
         return view;
+    }
+
+    private void netLoad() {
+        Map map = new HashMap();
+        map.put("index", 0);
+        map.put("pageSize",10);
+        map.put("goodsName","");
+        VolleyRequestUtils.getInstance().getRequestPost(getActivity(), AppURL.GET_PRODUCT_LIST, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+
+            }
+        }, map);
     }
 
     private void initView(View view) {

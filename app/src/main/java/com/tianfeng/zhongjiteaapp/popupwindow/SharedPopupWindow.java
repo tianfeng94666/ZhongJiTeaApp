@@ -70,7 +70,7 @@ public class SharedPopupWindow {
                 return false;
             }
         });
-//        popupWindow.setAnimationStyle(R.style.MyPopupWindow_anim_style);
+        popupWindow.setAnimationStyle(R.style.MyPopupWindow_anim_style);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());     //点击外部消失这句很重要
     }
     public void showPop(View view) {

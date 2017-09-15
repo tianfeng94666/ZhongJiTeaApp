@@ -64,8 +64,8 @@ public class StorageFragment extends BaseFragment {
         tab.addTab(tab.newTab().setText("1"));
         tab.addTab(tab.newTab().setText("2"));
         //添加页卡标题
-        mTitleList.add("云南仓");
         mTitleList.add("华南仓");
+        mTitleList.add("云南仓");
         yunNanStorageFragemnt = new StorageDetailFragment();
         fragmentList.add(yunNanStorageFragemnt);
          huaNanStorageFragment = new StorageDetailFragment();

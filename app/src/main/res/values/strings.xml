@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ZhongJiTeaApp</string>
+    <string name="app_name">小茶宝</string>
     <string name="pull_to_refresh_footer_refreshing_label">加载中\\u2026</string>
 
     <string name="action_settings">Settings</string>

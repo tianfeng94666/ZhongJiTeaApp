@@ -24,4 +24,8 @@ public class AppURL {
      * api/sms/send
      */
     public static String GET_MESSAGE_URL= baseHost+"/api/sms/send";
+    /**
+     * 查询商城商品列表
+     */
+    public static String GET_PRODUCT_LIST =baseHost+"/api/goods/page";
 }

@@ -17,6 +17,7 @@ import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.SpUtils;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CountTimerButton;
@@ -222,7 +223,33 @@ public class LoginAcitivity extends BaseActivity {
     }
 
     private void login() {
-//        VolleyRequestUtils.getInstance().getRequestPost(this,);
+        if(etLoginPhone.getText().toString().isEmpty()){
+            showToastReal("手机号不能为空！");
+            return;
+        }
+        if(etLoginPassword.getText().toString().isEmpty()){
+            showToastReal("密码不能为空！");
+            return;
+        }
+        Map map = new HashMap();
+        map.put("", 0);
+        map.put("",10);
+        map.put("","");
+        VolleyRequestUtils.getInstance().getRequestPost(this, AppURL.GET_PRODUCT_LIST, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+
+                SpUtils.getInstace(LoginAcitivity.this).saveString("phone",etLoginPhone.getText().toString());
+                openActivity(ChooseShopActivity.class,null);
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+
+            }
+        }, map);
     }
 
     private void getLoginCode() {

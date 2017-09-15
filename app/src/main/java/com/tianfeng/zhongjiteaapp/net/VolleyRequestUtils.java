@@ -79,6 +79,7 @@ public class VolleyRequestUtils {
 
     //！！！！！！！！get请求为了保证cookie一致  后来不要使用该方法！！！！！！！！！！
     public void getRequestPost(Context context, String url, final HttpStringRequsetCallBack callback, final Map<String, String> map) {
+
         JSONObject jsonObject = new JSONObject(map);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, url, jsonObject, new Listener<JSONObject>() {
 

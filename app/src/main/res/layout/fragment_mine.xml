@@ -42,7 +42,7 @@
                 android:layout_below="@+id/iv_head_photo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:text="陈政"
+                android:text="周杰伦"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_normal" />
         </RelativeLayout>

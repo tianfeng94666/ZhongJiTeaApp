@@ -105,6 +105,12 @@ public class HomeFragment extends BaseFragment {
                         ToastManager.showToastReal("搜藏");
                     }
                 });
+                helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sharedPopupWindow.showPop(view);
+                    }
+                });
             }
         });
         lvNewTea.setOnItemClickListener(new AdapterView.OnItemClickListener() {

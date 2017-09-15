@@ -35,7 +35,6 @@
                 android:layout_width="60dp"
                 android:layout_height="35dp"
                 android:layout_marginLeft="16dp"
-                android:background="@color/color_line"
                 android:src="@mipmap/notice" />
 
             <View
@@ -67,7 +66,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="16dp"
-                    android:background="@color/color_line"
                     android:padding="5dp"
                     android:src="@mipmap/icon_right" />
             </RelativeLayout>
