@@ -60,6 +60,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/tv_item_type"
                     android:text="云南仓  生茶"
                android:gravity="center_vertical"
                     android:textSize="11sp"

@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin24"
         android:layout_marginTop="15dp"
-        android:text="取消"
+        android:paddingRight="10dp"
+        android:text="暂不登录"
         android:textColor="@color/text_color"
-android:padding="10dp"
         android:textSize="@dimen/text_normal" />
 
     <LinearLayout
@@ -127,13 +127,13 @@ android:padding="10dp"
 
                 <TextView
 
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="bottom"
                     android:text="验证码"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_normal"
-                    android:id="@+id/textView" />
+                    android:textSize="@dimen/text_normal" />
 
                 <EditText
                     android:id="@+id/et_login_code"
@@ -164,8 +164,8 @@ android:padding="10dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="30dp"
-                android:gravity="center"
                 android:background="@drawable/board_light_oregon"
+                android:gravity="center"
                 android:padding="5dp"
                 android:text="获取验证码"
                 android:textColor="@color/white" />
@@ -180,9 +180,11 @@ android:padding="10dp"
 
             <CheckBox
                 android:id="@+id/cb_ischeck"
-                android:button="@drawable/check_but"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:button="@drawable/check_but"
+                android:scaleX="0.6"
+                android:scaleY="0.6" />
 
             <TextView
                 android:layout_width="wrap_content"

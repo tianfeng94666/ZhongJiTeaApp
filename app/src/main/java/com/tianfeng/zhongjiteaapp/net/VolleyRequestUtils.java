@@ -16,10 +16,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tianfeng.zhongjiteaapp.base.BaseApplication;
+import com.tianfeng.zhongjiteaapp.base.Global;
 
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -99,6 +101,8 @@ public class VolleyRequestUtils {
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("jsessionid", Global.JESSIONID);
                 return super.getHeaders();
             }
 
@@ -131,6 +135,13 @@ public class VolleyRequestUtils {
                     callback.onFail(error.toString());
             }
         }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("jsessionid", Global.JESSIONID);
+                return super.getHeaders();
+            }
+
             @Override
             protected Map<String, String> getParams() {
                 return map;

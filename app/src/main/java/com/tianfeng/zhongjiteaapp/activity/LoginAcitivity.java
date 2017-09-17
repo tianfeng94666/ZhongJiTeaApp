@@ -15,9 +15,11 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
+import com.tianfeng.zhongjiteaapp.json.MessageCheckResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.SpUtils;
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CountTimerButton;
@@ -86,8 +88,12 @@ public class LoginAcitivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        UIUtils.setBarTint(this, true);
         ButterKnife.bind(this);
+        initView();
+    }
+
+    private void initView() {
+//        tvNext.setClickable(false);
     }
 
     @OnClick({R.id.tv_login_cancle, R.id.tv_login_tv, R.id.tv_regisit_tv, R.id.tv_login_code, R.id.cb_ischeck, R.id.tv_agreement1, R.id.tv_agreement2, R.id.tv_next, R.id.tv_login_forget_password, R.id.tv_login, R.id.iv_weixin, R.id.iv_qq})
@@ -153,11 +159,11 @@ public class LoginAcitivity extends BaseActivity {
 
             }
         });
-//authorize与showUser单独调用一个即可
+        //authorize与showUser单独调用一个即可
         qq.authorize();//单独授权,OnComplete返回的hashmap是空的
         qq.showUser(null);//授权并获取用户信息
-//移除授权
-//weibo.removeAccount(true);
+        //移除授权
+        //weibo.removeAccount(true);
     }
 
     private void weiChatLogin() {
@@ -192,22 +198,39 @@ public class LoginAcitivity extends BaseActivity {
     }
 
     private void goNext() {
+        //调试使用
+        openActivity(ChooseShopActivity.class,null);
         if (cbIscheck.isChecked()) {
-            String bizIdEncode = null;
-            try {
-                bizIdEncode = URLEncoder.encode(bizId, "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+            if(!StringUtils.isEmpty(etLoginCode.getText().toString())){
+                showToastReal("请输入验证码");
+                return;
             }
-            String url = AppURL.LOGIN_URL + "/" + bizIdEncode + "/" + etLoginCode.getText().toString();
+
+            if(!StringUtils.isEmpty(etLoginPhone.getText().toString())){
+                showToastReal("请输入手机号");
+            }
+//            String bizIdEncode = null;
+//            try {
+//                bizIdEncode = URLEncoder.encode(bizId, "utf-8");
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//            String url = AppURL.LOGIN_URL + "/" + bizIdEncode + "/" + etLoginCode.getText().toString();
+            String url = AppURL.MESSAGE_CHECK ;
             Map map = new HashMap();
             map.put("phoneNumber", etLoginPhone.getText().toString());
+            map.put("bizId",bizId);
+            map.put("code",etLoginCode.getText().toString());
             VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
                 @Override
                 public void onSuccess(String result) {
                     L.e("result", result);
-
-
+                    MessageCheckResult messageCheckResult = new Gson().fromJson(result,MessageCheckResult.class);
+                    if(Global.RESULT_CODE.equals(messageCheckResult.getCode())){
+                        SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber",etLoginPhone.getText().toString());
+                        Global.CODE = etLoginCode.getText().toString();
+                        openActivity(ChooseShopActivity.class,null);
+                    }
                 }
 
                 @Override
@@ -272,6 +295,7 @@ public class LoginAcitivity extends BaseActivity {
         Map map = new HashMap();
         map.put("phoneNumber", etLoginPhone.getText().toString());
         String url = AppURL.GET_MESSAGE_URL;
+        L.e("url",url);
         VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -280,6 +304,7 @@ public class LoginAcitivity extends BaseActivity {
                 if (Global.RESULT_CODE.equals(getCodeResult.getCode())) {
                     Global.JESSIONID = getCodeResult.getJsessionid();
                     bizId = getCodeResult.getResult().getBizId();
+                    Global.BIZID =bizId;
                 } else {
                     showToastReal(getCodeResult.getMsg());
                 }

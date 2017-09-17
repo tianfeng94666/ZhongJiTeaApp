@@ -5,7 +5,7 @@ package com.tianfeng.zhongjiteaapp.base;
  */
 
 public class AppURL {
-    private  static  String baseHost = "http://www.bestfeng.xin:81/xcb";
+    public   static  String baseHost = "http://www.bestfeng.xin:81/xcb";
     /**
      * 登入
      */
@@ -16,9 +16,12 @@ public class AppURL {
      rest风格请求地址
      bizId：验证码请求返回的bizId
      code：验证码
-
      */
     public static String REGISTER_URL= baseHost+"/api/user/register";
+    /**
+     *短信验证
+     */
+    public static String MESSAGE_CHECK =baseHost+"/api/sms/verify";
     /**
      * 获取短信验证码
      * api/sms/send
@@ -28,4 +31,13 @@ public class AppURL {
      * 查询商城商品列表
      */
     public static String GET_PRODUCT_LIST =baseHost+"/api/goods/page";
+    /**
+     * 门店查询
+     */
+    public static String GET_SHOPS_LIST =baseHost+"/api/shop/all";
+    /**
+     * 上传头像
+     */
+    public static String UPLOAD_PIC =baseHost+"/api/user/head_img/upload/";
+
 }

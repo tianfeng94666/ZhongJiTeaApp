@@ -60,13 +60,13 @@ public class SettingActivity extends BaseActivity {
     ImageView tvRe;
     @Bind(R.id.rl_reset_password)
     RelativeLayout rlResetPassword;
-
+    @Bind(R.id.ll_setting)
+    LinearLayout llSetting;
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_PHOTO = 2;
     private static final int CROP_PHOTO = 3;
-    @Bind(R.id.ll_setting)
-    LinearLayout llSetting;
+
     private Uri mImageCaptureUri;
 
     @Override
