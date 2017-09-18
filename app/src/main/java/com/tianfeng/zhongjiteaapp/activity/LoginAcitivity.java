@@ -25,8 +25,6 @@ import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CountTimerButton;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +50,7 @@ public class LoginAcitivity extends BaseActivity {
     TextView tvLoginTv;
     @Bind(R.id.tv_regisit_tv)
     TextView tvRegisitTv;
-    @Bind(R.id.et_login_phone)
+    @Bind(R.id.et_password_confirm)
     EditText etLoginPhone;
     @Bind(R.id.et_login_code)
     EditText etLoginCode;
@@ -126,7 +124,7 @@ public class LoginAcitivity extends BaseActivity {
                 goNext();
                 break;
             case R.id.tv_login_forget_password:
-                openActivity(AssociatePhoneActivity.class, null);
+                openActivity(ResetPasswordActivity.class, null);
                 break;
             case R.id.tv_login:
                 login();

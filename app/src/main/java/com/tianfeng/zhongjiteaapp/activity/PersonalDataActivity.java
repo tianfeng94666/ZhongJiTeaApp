@@ -118,7 +118,7 @@ public class PersonalDataActivity extends BaseActivity {
                 e.printStackTrace();
             }
             String phoneNumber = SpUtils.getInstace(this).getString("phoneNumber");
-            String url = AppURL.REGISTER_URL + "/" + bizIdEncode + "/" + phoneNumber;
+            String url = AppURL.REGISTER_URL + "/" + bizIdEncode + "/" + Global.CODE;
 
         Map map = new HashMap();
         map.put("mobile", phoneNumber);

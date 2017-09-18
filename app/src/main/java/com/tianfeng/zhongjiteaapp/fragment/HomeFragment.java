@@ -75,10 +75,11 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = View.inflate(getContext(), R.layout.fragment_home, null);
+        sharedPopupWindow = new SharedPopupWindow(getActivity());
         ButterKnife.bind(this, view);
         UIUtils.setBarTint(getActivity(), false);
         netLoad();
-        sharedPopupWindow = new SharedPopupWindow(getActivity());
+
         return view;
 
     }
@@ -196,7 +197,7 @@ public class HomeFragment extends BaseFragment {
         lvNewTea.setFocusable(false);
         lvHotTea.setAdapter(new CommonAdapter<Product>(newlist, R.layout.item_product) {
             @Override
-            public void convert(int position, BaseViewHolder helper, Product item) {
+            public void convert(int position, BaseViewHolder helper, final Product item) {
                 helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                 helper.setText(R.id.tv_item_name, item.getGoodsName());
                 helper.setText(R.id.tv_item_type, item.getDeportName());
@@ -204,7 +205,7 @@ public class HomeFragment extends BaseFragment {
                 helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showToastReal("搜藏");
+                        collected(item.getId());
                     }
                 });
                 helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
@@ -220,7 +221,9 @@ public class HomeFragment extends BaseFragment {
         lvHotTea.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                openActivity(ProductActivity.class, null);
+                Bundle bundle =new Bundle();
+                bundle.putString("url",newlist.get(i).getInformationUrl());
+                openActivity(ProductActivity.class, bundle);
             }
         });
 
@@ -252,7 +255,9 @@ public class HomeFragment extends BaseFragment {
         lvNewTea.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                openActivity(ProductActivity.class, null);
+                Bundle bundle =new Bundle();
+                bundle.putString("url",hotlist.get(i).getInformationUrl());
+                openActivity(ProductActivity.class, bundle);
             }
         });
 

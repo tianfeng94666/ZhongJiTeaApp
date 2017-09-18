@@ -11,6 +11,10 @@ public class AppURL {
      */
     public static String LOGIN_URL= baseHost+"/api/user/login";
     /**
+     * 退出登入
+     */
+    public static String LOGOUT_URL= baseHost+"/api/user/logout";
+    /**
      * 用户注册,登录名，手机号，密码必输
      * api/user/register/{bizId}/{code}
      rest风格请求地址
