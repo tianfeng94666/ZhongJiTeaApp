@@ -15,6 +15,7 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
+import com.tianfeng.zhongjiteaapp.json.LoginResult;
 import com.tianfeng.zhongjiteaapp.json.MessageCheckResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
@@ -94,6 +95,10 @@ public class LoginAcitivity extends BaseActivity {
 
     private void initView() {
 //        tvNext.setClickable(false);
+      String phone=  SpUtils.getInstace(this).getString("phoneNumber");
+        if(!StringUtils.isEmpty(phone)){
+            etLoginPhone.setText(phone);
+        }
     }
 
     @OnClick({R.id.tv_login_cancle, R.id.tv_login_tv, R.id.tv_regisit_tv, R.id.tv_login_code, R.id.cb_ischeck, R.id.tv_agreement1, R.id.tv_agreement2, R.id.tv_next, R.id.tv_login_forget_password, R.id.tv_login, R.id.iv_weixin, R.id.iv_qq})
@@ -135,87 +140,21 @@ public class LoginAcitivity extends BaseActivity {
         }
     }
 
-    private void qqLogin() {
-        Platform qq = ShareSDK.getPlatform(QQ.NAME);
-//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
-        qq.setPlatformActionListener(new PlatformActionListener() {
 
-            @Override
-            public void onError(Platform arg0, int arg1, Throwable arg2) {
-                // TODO Auto-generated method stub
-                arg2.printStackTrace();
-            }
-
-            @Override
-            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
-                // TODO Auto-generated method stub
-                //输出所有授权信息
-                arg0.getDb().exportData();
-            }
-
-            @Override
-            public void onCancel(Platform arg0, int arg1) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-        //authorize与showUser单独调用一个即可
-        qq.authorize();//单独授权,OnComplete返回的hashmap是空的
-        qq.showUser(null);//授权并获取用户信息
-        //移除授权
-        //weibo.removeAccount(true);
-    }
-
-    private void weiChatLogin() {
-        Platform weibo = ShareSDK.getPlatform(Wechat.NAME);
-//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
-        weibo.setPlatformActionListener(new PlatformActionListener() {
-
-            @Override
-            public void onError(Platform arg0, int arg1, Throwable arg2) {
-                // TODO Auto-generated method stub
-                arg2.printStackTrace();
-            }
-
-            @Override
-            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
-                // TODO Auto-generated method stub
-                //输出所有授权信息
-                arg0.getDb().exportData();
-            }
-
-            @Override
-            public void onCancel(Platform arg0, int arg1) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-//authorize与showUser单独调用一个即可
-        weibo.authorize();//单独授权,OnComplete返回的hashmap是空的
-        weibo.showUser(null);//授权并获取用户信息
-//移除授权
-//weibo.removeAccount(true);
-    }
 
     private void goNext() {
-        //调试使用
-        openActivity(ChooseShopActivity.class,null);
+
         if (cbIscheck.isChecked()) {
-            if(!StringUtils.isEmpty(etLoginCode.getText().toString())){
+            if(StringUtils.isEmpty(etLoginCode.getText().toString())){
                 showToastReal("请输入验证码");
                 return;
             }
 
-            if(!StringUtils.isEmpty(etLoginPhone.getText().toString())){
+            if(StringUtils.isEmpty(etLoginPhone.getText().toString())){
                 showToastReal("请输入手机号");
+                return;
             }
-//            String bizIdEncode = null;
-//            try {
-//                bizIdEncode = URLEncoder.encode(bizId, "utf-8");
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-//            String url = AppURL.LOGIN_URL + "/" + bizIdEncode + "/" + etLoginCode.getText().toString();
+
             String url = AppURL.MESSAGE_CHECK ;
             Map map = new HashMap();
             map.put("phoneNumber", etLoginPhone.getText().toString());
@@ -243,6 +182,8 @@ public class LoginAcitivity extends BaseActivity {
         } else {
             showToastReal("请勾选是否同意协议");
         }
+        //调试使用
+        openActivity(ChooseShopActivity.class,null);
     }
 
     private void login() {
@@ -255,16 +196,20 @@ public class LoginAcitivity extends BaseActivity {
             return;
         }
         Map map = new HashMap();
-        map.put("", 0);
-        map.put("",10);
-        map.put("","");
-        VolleyRequestUtils.getInstance().getRequestPost(this, AppURL.GET_PRODUCT_LIST, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        map.put("loginName",etLoginPhone.getText().toString());
+        map.put("passwordReal",etLoginPassword.getText().toString());
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, AppURL.LOGIN_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
+                LoginResult loginResult = new Gson().fromJson(result,LoginResult.class);
+                if(Global.RESULT_CODE.equals(loginResult.getCode())){
+                    Global.UserId = loginResult.getResult().getId();
+                    SpUtils.getInstace(LoginAcitivity.this).saveString("phone",etLoginPhone.getText().toString());
+                    openActivity(MainActivity.class,null);
+                }
+//                Global.UserId =
 
-                SpUtils.getInstace(LoginAcitivity.this).saveString("phone",etLoginPhone.getText().toString());
-                openActivity(ChooseShopActivity.class,null);
             }
 
             @Override
@@ -350,5 +295,65 @@ public class LoginAcitivity extends BaseActivity {
         return true;
     }
 
+    private void qqLogin() {
+        Platform qq = ShareSDK.getPlatform(QQ.NAME);
+//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
+        qq.setPlatformActionListener(new PlatformActionListener() {
 
+            @Override
+            public void onError(Platform arg0, int arg1, Throwable arg2) {
+                // TODO Auto-generated method stub
+                arg2.printStackTrace();
+            }
+
+            @Override
+            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                // TODO Auto-generated method stub
+                //输出所有授权信息
+                arg0.getDb().exportData();
+            }
+
+            @Override
+            public void onCancel(Platform arg0, int arg1) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+        //authorize与showUser单独调用一个即可
+        qq.authorize();//单独授权,OnComplete返回的hashmap是空的
+        qq.showUser(null);//授权并获取用户信息
+        //移除授权
+        //weibo.removeAccount(true);
+    }
+
+    private void weiChatLogin() {
+        Platform weibo = ShareSDK.getPlatform(Wechat.NAME);
+//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
+        weibo.setPlatformActionListener(new PlatformActionListener() {
+
+            @Override
+            public void onError(Platform arg0, int arg1, Throwable arg2) {
+                // TODO Auto-generated method stub
+                arg2.printStackTrace();
+            }
+
+            @Override
+            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                // TODO Auto-generated method stub
+                //输出所有授权信息
+                arg0.getDb().exportData();
+            }
+
+            @Override
+            public void onCancel(Platform arg0, int arg1) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+//authorize与showUser单独调用一个即可
+        weibo.authorize();//单独授权,OnComplete返回的hashmap是空的
+        weibo.showUser(null);//授权并获取用户信息
+//移除授权
+//weibo.removeAccount(true);
+    }
 }

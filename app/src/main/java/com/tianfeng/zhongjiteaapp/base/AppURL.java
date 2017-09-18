@@ -32,6 +32,18 @@ public class AppURL {
      */
     public static String GET_PRODUCT_LIST =baseHost+"/api/goods/page";
     /**
+     * 查询单个商品信息
+     */
+    public static String GET_PRODUCT_INFO_URL =baseHost+"/api/goods/";
+    /**
+     * 广告查询
+     */
+    public static String  GET_ADS_URL= baseHost+"/api/ads/page";
+    /**
+     * 公告查询
+     */
+    public static String GET_NOTICE_URL= baseHost+"/api/notice/page";
+    /**
      * 门店查询
      */
     public static String GET_SHOPS_LIST =baseHost+"/api/shop/all";
@@ -40,4 +52,32 @@ public class AppURL {
      */
     public static String UPLOAD_PIC =baseHost+"/api/user/head_img/upload/";
 
+    /**
+     * 收藏
+     */
+    public static String COLLECTED_URL =baseHost+"/api/user/goods/like";
+    /**
+     * 门店查询
+     */
+    public static String SHOPINFO_URL= baseHost+"/api/shop/";
+    /**
+     * 帮助和协议查询
+     */
+    public static String HELP_URL = baseHost+"/api/help/types";
+    /**
+     * app信息
+     */
+    public static String APPINFO_URL =baseHost+"/api/app/info";
+    /**
+     * 查询用户信息
+     */
+    public static String USERINFO_URL= baseHost+"/api/user/info/";
+    /**
+     * 根据分类id查询协议
+     */
+    public static String ITEM_HELP_URL= baseHost+"/api/help/type/";
+    /**
+     * 查询收藏
+     */
+    public static String MY_COLLETED =baseHost+"/api/user/goods/likes/";
 }

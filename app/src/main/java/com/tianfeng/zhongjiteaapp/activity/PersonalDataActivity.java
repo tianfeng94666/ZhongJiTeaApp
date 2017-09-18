@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -35,15 +36,25 @@ import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.BaseApplication;
+import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.json.MessageCheckResult;
+import com.tianfeng.zhongjiteaapp.json.UploadImageResult;
 import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
+import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.popupwindow.ImageInitiDialog;
 import com.tianfeng.zhongjiteaapp.utils.BimpUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.SpUtils;
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -76,6 +87,7 @@ public class PersonalDataActivity extends BaseActivity {
     TextView tvRegisit;
     @Bind(R.id.ll_rootview)
     LinearLayout llRootview;
+    private String imgurl="";
 
 
     @Override
@@ -99,6 +111,39 @@ public class PersonalDataActivity extends BaseActivity {
     }
 
     private void regisit() {
+            String bizIdEncode = null;
+            try {
+                bizIdEncode = URLEncoder.encode(Global.BIZID, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            String phoneNumber = SpUtils.getInstace(this).getString("phoneNumber");
+            String url = AppURL.REGISTER_URL + "/" + bizIdEncode + "/" + phoneNumber;
+
+        Map map = new HashMap();
+        map.put("mobile", phoneNumber);
+        map.put("bizId",Global.BIZID);
+        map.put("code",Global.CODE);
+        map.put("shopId",Global.shopId);
+        map.put("loginName",etUsername.getText().toString());
+        map.put("passwordReal",etPassword.getText().toString());
+        if(!StringUtils.isEmpty(imgurl)){
+            map.put("imgUrl",imgurl);
+        }
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
+
 
     }
 
@@ -192,7 +237,8 @@ public class PersonalDataActivity extends BaseActivity {
         HttpUtils http = new HttpUtils();
         HttpRequest.HttpMethod method = HttpRequest.HttpMethod.POST;
         RequestParams params = new RequestParams();
-        params.addBodyParameter("attachment", file, "multipart/form-data");
+        params.addBodyParameter("file", file, "multipart/form-data");
+        params.addHeader("jsessionid", Global.JESSIONID);
         L.e("上传URL" + url);
         http.send(method, url, params, new RequestCallBack<String>() {
             @Override
@@ -204,6 +250,11 @@ public class PersonalDataActivity extends BaseActivity {
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String result = responseInfo.result;
                 L.e("submitToServer" + result);
+                UploadImageResult uploadImageResult = new Gson().fromJson(result,UploadImageResult.class);
+                if(Global.RESULT_CODE.equals(uploadImageResult.getCode())){
+                    imgurl = uploadImageResult.getResult().getImgUrl();
+                    ImageLoader.getInstance().displayImage(AppURL.baseHost+imgurl,ivHeadPhoto,ImageLoadOptions.getOptionsHight());
+                }
 
             }
 
@@ -228,7 +279,7 @@ public class PersonalDataActivity extends BaseActivity {
         return result;
     }
 
-    public class CropOption {
+     class CropOption {
         public CharSequence title;
         public Drawable icon;
         public Intent appIntent;

@@ -95,6 +95,7 @@ public class ChooseShopActivity extends BaseActivity {
         shopPopup.setLvShop(shops, new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Global.shopId = shops.get(position).getId();
                 tvShopName.setText(shops.get(position).getShopName());
                 shopPopup.closePopupWindow();
             }

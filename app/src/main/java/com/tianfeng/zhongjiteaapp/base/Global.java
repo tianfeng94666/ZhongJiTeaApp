@@ -10,4 +10,6 @@ public class Global {
     public static String JESSIONID;
     public static String BIZID;
     public static String CODE;//验证码
+    public static String shopId;
+    public static String UserId;
 }

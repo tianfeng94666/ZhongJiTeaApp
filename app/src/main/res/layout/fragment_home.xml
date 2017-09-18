@@ -103,6 +103,16 @@
                 android:dividerHeight="5dp">
 
             </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+            <TextView
+                android:id="@+id/tv_loadmore"
+                android:text="加载更多"
+                android:visibility="gone"
+                android:textSize="@dimen/text_normal"
+                android:textColor="@color/text_color"
+                android:background="@color/white"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textview_height" />
 
             <TextView
                 android:id="@+id/tv_hot_tea"
