@@ -165,6 +165,7 @@ public class LoginAcitivity extends BaseActivity {
                     MessageCheckResult messageCheckResult = new Gson().fromJson(result,MessageCheckResult.class);
                     if(Global.RESULT_CODE.equals(messageCheckResult.getCode())){
                         SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber",etLoginPhone.getText().toString());
+                        Global.PhoneNumber =etLoginPhone.getText().toString();
                         Global.CODE = etLoginCode.getText().toString();
                         openActivity(ChooseShopActivity.class,null);
                     }
@@ -185,6 +186,7 @@ public class LoginAcitivity extends BaseActivity {
     }
 
     private void login() {
+        tvLogin.setClickable(false);
         if(etLoginPhone.getText().toString().isEmpty()){
             showToastReal("手机号不能为空！");
             return;
@@ -199,11 +201,13 @@ public class LoginAcitivity extends BaseActivity {
         VolleyRequestUtils.getInstance().getStringPostRequest(this, AppURL.LOGIN_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
+                tvLogin.setClickable(true);
                 L.e("result", result);
                 LoginResult loginResult = new Gson().fromJson(result,LoginResult.class);
                 if(Global.RESULT_CODE.equals(loginResult.getCode())){
+                    Global.JESSIONID = loginResult.getJsessionid();
                     Global.UserId = loginResult.getResult().getId();
-                    SpUtils.getInstace(LoginAcitivity.this).saveString("phone",etLoginPhone.getText().toString());
+                    SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber",etLoginPhone.getText().toString());
                     openActivity(MainActivity.class,null);
                 }
 //                Global.UserId =
@@ -212,6 +216,7 @@ public class LoginAcitivity extends BaseActivity {
 
             @Override
             public void onFail(String fail) {
+                tvLogin.setClickable(true);
                 L.e("fail", fail);
 
             }
@@ -245,7 +250,6 @@ public class LoginAcitivity extends BaseActivity {
                 L.e("result", result);
                 GetCodeResult getCodeResult = new Gson().fromJson(result, GetCodeResult.class);
                 if (Global.RESULT_CODE.equals(getCodeResult.getCode())) {
-                    Global.JESSIONID = getCodeResult.getJsessionid();
                     bizId = getCodeResult.getResult().getBizId();
                     Global.BIZID =bizId;
                 } else {

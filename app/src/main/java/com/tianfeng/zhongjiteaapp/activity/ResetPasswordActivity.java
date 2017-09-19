@@ -17,6 +17,7 @@ import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.SpUtils;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CountTimerButton;
 
 import java.io.UnsupportedEncodingException;
@@ -41,8 +42,8 @@ public class ResetPasswordActivity extends BaseActivity {
     ImageView tvRight;
     @Bind(R.id.id_rel_title)
     RelativeLayout idRelTitle;
-    @Bind(R.id.tv_phonenumber)
-    TextView tvPhonenumber;
+    @Bind(R.id.et_phonenumber)
+    EditText etPhonenumber;
     @Bind(R.id.textView)
     TextView textView;
     @Bind(R.id.et_login_code)
@@ -65,7 +66,14 @@ public class ResetPasswordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reste_password);
+        UIUtils.setBarTint(this, false);
         ButterKnife.bind(this);
+        initView();
+    }
+
+    private void initView() {
+        phone = SpUtils.getInstace(this).getString("phoneNumber");
+        etPhonenumber.setText(phone);
     }
 
 
@@ -76,17 +84,17 @@ public class ResetPasswordActivity extends BaseActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String phoneNumber = SpUtils.getInstace(this).getString("phoneNumber");
-        String url = AppURL.REGISTER_URL + "/" + bizIdEncode + "/" + Global.CODE;
-
+        String phoneNumber = etPhonenumber.getText().toString();
+        String url = AppURL.REGISTER_URL + "/" + bizIdEncode + "/" + etLoginCode.getText().toString();
+        L.e("url=", url);
         Map map = new HashMap();
-        map.put("mobile", phoneNumber);
-        map.put("bizId",Global.BIZID);
-        map.put("code",Global.CODE);
-        map.put("password",etReset.getText().toString());
-        map.put("rePassword",etPasswordConfirm.getText().toString());
-
-        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        map.put("phoneNumber", phoneNumber);
+        map.put("bizId", Global.BIZID);
+        map.put("code",etLoginCode.getText().toString());
+        map.put("password", etReset.getText().toString());
+        map.put("rePassword", etPasswordConfirm.getText().toString());
+        L.e("map=", map.toString());
+        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
@@ -102,16 +110,16 @@ public class ResetPasswordActivity extends BaseActivity {
     }
 
     private void getLoginCode() {
-         phone = SpUtils.getInstace(this).getString("phoneNumber");
 
-            mCountDownTimerUtils = new CountTimerButton(tvLoginCode, 60000, 1000);
-            tvLoginCode.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mCountDownTimerUtils.start();
-                    getCode();
-                }
-            });
+
+        mCountDownTimerUtils = new CountTimerButton(tvLoginCode, 60000, 1000);
+        tvLoginCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCountDownTimerUtils.start();
+                getCode();
+            }
+        });
 
 
     }
@@ -123,13 +131,14 @@ public class ResetPasswordActivity extends BaseActivity {
                 getLoginCode();
                 break;
             case R.id.tv_confirm:
+                resetPassword();
                 break;
         }
     }
 
     private void getCode() {
         Map map = new HashMap();
-        map.put("phoneNumber",phone);
+        map.put("phoneNumber", etPhonenumber.getText().toString());
         String url = AppURL.GET_MESSAGE_URL;
         L.e("url", url);
         VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
@@ -138,7 +147,7 @@ public class ResetPasswordActivity extends BaseActivity {
                 L.e("result", result);
                 GetCodeResult getCodeResult = new Gson().fromJson(result, GetCodeResult.class);
                 if (Global.RESULT_CODE.equals(getCodeResult.getCode())) {
-                    Global.JESSIONID = getCodeResult.getJsessionid();
+//                    Global.JESSIONID = getCodeResult.getJsessionid();
                     bizId = getCodeResult.getResult().getBizId();
                     Global.BIZID = bizId;
                 } else {

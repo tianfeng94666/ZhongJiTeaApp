@@ -37,6 +37,7 @@ import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.HelpResult;
 import com.tianfeng.zhongjiteaapp.json.UploadImageResult;
+import com.tianfeng.zhongjiteaapp.json.UserInfoResult;
 import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.popupwindow.ImageInitiDialog;
@@ -95,7 +96,12 @@ public class SettingActivity extends BaseActivity {
         setContentView(R.layout.activity_setting);
         UIUtils.setBarTint(this,false);
         ButterKnife.bind(this);
+        initView();
         getData();
+    }
+
+    private void initView() {
+        titleText.setText("设置");
     }
 
     private void getData() {
@@ -106,18 +112,17 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
-//                HelpResult helpResult = new Gson().fromJson(result, HelpResult.class);
-//                if (Global.RESULT_CODE.equals(helpResult.getCode())) {
-//                    if (helpResult.getResult() != null) {
-//                        helpList = helpResult.getResult();
-//                        if (helpList.size() > 0) {
-//                            initView();
-//                        }
-//                    }
-//
-//                } else {
-//                    showToastReal(helpResult.getMsg());
-//                }
+                UserInfoResult userinfoResult = new Gson().fromJson(result, UserInfoResult.class);
+                if (Global.RESULT_CODE.equals(userinfoResult.getCode())) {
+                    if (userinfoResult.getResult() != null) {
+                        ImageLoader.getInstance().displayImage(AppURL.baseHost+"/"+userinfoResult.getResult().getImgUrl(),ivHeadPhoto);
+                        tvPhone.setText(userinfoResult.getResult().getMobile());
+                        tvUsername.setText(userinfoResult.getResult().getNickName());
+                    }
+
+                } else {
+                    showToastReal(userinfoResult.getMsg());
+                }
 
             }
 
@@ -138,6 +143,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.rl_name:
                 break;
             case R.id.rl_reset_password:
+                openActivity(ResetPasswordActivity.class,null);
                 break;
         }
     }

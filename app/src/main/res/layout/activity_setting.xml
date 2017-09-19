@@ -89,6 +89,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/text_normal"
+                android:drawablePadding="5dp"
                 android:drawableRight="@mipmap/icon_right"
                 android:textColor="@color/text_color"
                 android:layout_width="wrap_content"

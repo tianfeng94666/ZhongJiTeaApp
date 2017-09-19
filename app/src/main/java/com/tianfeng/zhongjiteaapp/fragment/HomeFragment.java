@@ -18,6 +18,7 @@ import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
+import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.AdResult;
 import com.tianfeng.zhongjiteaapp.json.CollectedResult;
@@ -96,9 +97,9 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         /**
          * 获取广告轮播
          */
-        ViewGroup.LayoutParams lp = flFlybanner.getLayoutParams();
-        lp.height = (int) (UIUtils.getWindowWidth() / 1.89);
-        flFlybanner.setLayoutParams(lp);
+//        ViewGroup.LayoutParams lp = flFlybanner.getLayoutParams();
+//        lp.height = (int) (UIUtils.getWindowWidth() / 1.89);
+//        flFlybanner.setLayoutParams(lp);
         getAd();
         //获取公告
         getNotice();
@@ -292,7 +293,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        collected(item.getId());
+                        CommMethod.collected(getActivity(),item.getId());
                     }
                 });
                 helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
@@ -323,7 +324,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        collected(item.getId());
+                        CommMethod.collected(getActivity(),item.getId());
                     }
                 });
                 helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
@@ -337,37 +338,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         lvHotTea.setAdapter(hotAdapter);
     }
 
-    /**
-     * 收藏
-     *
-     * @param id
-     */
-    private void collected(String id) {
-        Map map = new HashMap();
-        if (StringUtils.isEmpty(Global.shopId)) {
 
-        }
-        map.put("userId", Global.UserId);
-        map.put("goodsId", id);
-
-        VolleyRequestUtils.getInstance().getStringPostRequest(getActivity(), AppURL.COLLECTED_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
-            @Override
-            public void onSuccess(String result) {
-                L.e("result", result);
-                CollectedResult collectedResult = new Gson().fromJson(result, CollectedResult.class);
-                if (Global.RESULT_CODE.equals(collectedResult.getCode())) {
-
-                }
-            }
-
-            @Override
-            public void onFail(String fail) {
-                L.e("fail", fail);
-                showToastReal(fail);
-            }
-        }, map);
-
-    }
 
 
     @Override

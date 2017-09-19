@@ -128,7 +128,7 @@ public class PersonalDataActivity extends BaseActivity {
         map.put("bizId",Global.BIZID);
         map.put("code",Global.CODE);
         map.put("shopId",Global.shopId);
-        map.put("loginName",etUsername.getText().toString());
+        map.put("nickName",etUsername.getText().toString());
         map.put("passwordReal",etPassword.getText().toString());
         if(!StringUtils.isEmpty(imgurl)){
             map.put("imgUrl",imgurl);

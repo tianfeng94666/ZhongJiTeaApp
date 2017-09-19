@@ -13,6 +13,7 @@ import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.ShopInfoResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +48,7 @@ public class ShopInformationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_information);
+        UIUtils.setBarTint(this,false);
         ButterKnife.bind(this);
         netload();
     }

@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tianfeng.zhongjiteaapp.base.BaseApplication;
 import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.utils.L;
 
 
 import org.json.JSONObject;
@@ -102,8 +103,9 @@ public class VolleyRequestUtils {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<>();
-                headers.put("jsessionid", Global.JESSIONID);
-                return super.getHeaders();
+                headers.put("Set-Cookie","JSESSIONID="+ Global.JESSIONID);
+                L.e("cookie=",headers.toString());
+                return headers;
             }
 
             @Override
@@ -138,8 +140,9 @@ public class VolleyRequestUtils {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<>();
-                headers.put("jsessionid", Global.JESSIONID);
-                return super.getHeaders();
+                headers.put("Cookie","JSESSIONID="+ Global.JESSIONID);
+                L.e("cookie=",headers.toString());
+                return headers;
             }
 
             @Override
@@ -172,7 +175,15 @@ public class VolleyRequestUtils {
                     callback.onFail(error.toString());
             }
 
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Cookie","JSESSIONID="+ Global.JESSIONID);
+                L.e("cookie=",headers.toString());
+                return headers;
+            }
+        };
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
                 2,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

@@ -167,7 +167,7 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
         map.put("userId", Global.UserId);
         map.put("goodsId", id);
 
-        VolleyRequestUtils.getInstance().getStringPostRequest(this, AppURL.COLLECTED_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        VolleyRequestUtils.getInstance().getRequestPost(this, AppURL.COLLECTED_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);

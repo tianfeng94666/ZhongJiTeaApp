@@ -164,7 +164,7 @@ public class MallFragment extends BaseFragment {
         map.put("userId", Global.UserId);
         map.put("goodsId", id);
 
-        VolleyRequestUtils.getInstance().getStringPostRequest(getActivity(), AppURL.COLLECTED_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        VolleyRequestUtils.getInstance().getRequestPost(getActivity(), AppURL.COLLECTED_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);

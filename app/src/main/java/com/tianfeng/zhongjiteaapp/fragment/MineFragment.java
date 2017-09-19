@@ -8,19 +8,32 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.activity.AboutActivity;
 import com.tianfeng.zhongjiteaapp.activity.HelpActivity;
+import com.tianfeng.zhongjiteaapp.activity.LoginAcitivity;
 import com.tianfeng.zhongjiteaapp.activity.MyCollectedActivity;
 import com.tianfeng.zhongjiteaapp.activity.SettingActivity;
 import com.tianfeng.zhongjiteaapp.activity.ShopInformationActivity;
+import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
+import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.json.HelpResult;
+import com.tianfeng.zhongjiteaapp.json.LogoutResult;
+import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
+import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.tianfeng.zhongjiteaapp.utils.ToastManager.showToastReal;
 
 /**
  * Created by 田丰 on 2017/9/2.
@@ -63,7 +76,7 @@ public class MineFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.rl_shop, R.id.rl_collect, R.id.rl_share, R.id.rl_help, R.id.rl_about, R.id.rl_setting})
+    @OnClick({R.id.rl_shop, R.id.rl_collect, R.id.rl_share, R.id.rl_help, R.id.rl_about, R.id.rl_setting,R.id.tv_exit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_shop:
@@ -84,6 +97,36 @@ public class MineFragment extends BaseFragment {
             case R.id.rl_setting:
                 openActivity(SettingActivity.class,null);
                 break;
+            case R.id.tv_exit:
+                logout();
+                break;
         }
+    }
+
+    private void logout() {
+        Map map = new HashMap();
+        String url = AppURL.LOGOUT_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(getActivity(), url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                LogoutResult logoutResult = new Gson().fromJson(result, LogoutResult.class);
+                if (Global.RESULT_CODE.equals(logoutResult.getCode())) {
+                    openActivity(LoginAcitivity.class,null);
+                   getActivity().finish();
+
+                } else {
+                    showToastReal(logoutResult.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
     }
 }
