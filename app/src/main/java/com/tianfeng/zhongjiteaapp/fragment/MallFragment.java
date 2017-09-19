@@ -118,6 +118,12 @@ public class MallFragment extends BaseFragment {
                 helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                 helper.setText(R.id.tv_item_name, item.getGoodsName());
                 helper.setText(R.id.tv_item_type, item.getDeportName());
+                if(StringUtils.isEmpty(item.getTagName())){
+                    helper.getView(R.id.tv_item_tag).setVisibility(View.GONE);
+                }else {
+                    helper.getView(R.id.tv_item_tag).setVisibility(View.VISIBLE);
+                }
+                helper.setText(R.id.tv_item_tag,item.getTagName());
                 helper.setText(R.id.tv_product_item_information, item.getIntroduction().replace(System.getProperty("line.separator"), " "));
                 helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
                     @Override

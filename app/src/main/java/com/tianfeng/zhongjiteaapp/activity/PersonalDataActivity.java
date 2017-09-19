@@ -37,6 +37,7 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.BaseApplication;
 import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.json.LoginResult;
 import com.tianfeng.zhongjiteaapp.json.MessageCheckResult;
 import com.tianfeng.zhongjiteaapp.json.UploadImageResult;
 import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
@@ -48,6 +49,7 @@ import com.tianfeng.zhongjiteaapp.utils.SpUtils;
 import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
+import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -78,7 +80,7 @@ public class PersonalDataActivity extends BaseActivity {
     @Bind(R.id.id_rel_title)
     RelativeLayout idRelTitle;
     @Bind(R.id.iv_head_photo)
-    ImageView ivHeadPhoto;
+    CircleImageView ivHeadPhoto;
     @Bind(R.id.et_username)
     EditText etUsername;
     @Bind(R.id.et_password)
@@ -88,6 +90,7 @@ public class PersonalDataActivity extends BaseActivity {
     @Bind(R.id.ll_rootview)
     LinearLayout llRootview;
     private String imgurl="";
+    private LoginResult loginResult;
 
 
     @Override
@@ -130,11 +133,16 @@ public class PersonalDataActivity extends BaseActivity {
         if(!StringUtils.isEmpty(imgurl)){
             map.put("imgUrl",imgurl);
         }
-        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
-
+                 loginResult = new Gson().fromJson(result,LoginResult.class);
+                if(Global.RESULT_CODE.equals(loginResult.getCode())){
+                    Global.UserId = loginResult.getResult().getId();
+                    openActivity(MainActivity.class,null);
+                    finish();
+                }
             }
 
             @Override

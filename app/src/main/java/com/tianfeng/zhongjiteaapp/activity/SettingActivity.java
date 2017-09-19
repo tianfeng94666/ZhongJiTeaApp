@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,14 +23,32 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.json.HelpResult;
+import com.tianfeng.zhongjiteaapp.json.UploadImageResult;
+import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
+import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.popupwindow.ImageInitiDialog;
 import com.tianfeng.zhongjiteaapp.utils.BimpUtils;
+import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -68,12 +87,46 @@ public class SettingActivity extends BaseActivity {
     private static final int CROP_PHOTO = 3;
 
     private Uri mImageCaptureUri;
+    private String imgurl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        UIUtils.setBarTint(this,false);
         ButterKnife.bind(this);
+        getData();
+    }
+
+    private void getData() {
+        Map map = new HashMap();
+        String url = AppURL.USERINFO_URL+Global.UserId;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+//                HelpResult helpResult = new Gson().fromJson(result, HelpResult.class);
+//                if (Global.RESULT_CODE.equals(helpResult.getCode())) {
+//                    if (helpResult.getResult() != null) {
+//                        helpList = helpResult.getResult();
+//                        if (helpList.size() > 0) {
+//                            initView();
+//                        }
+//                    }
+//
+//                } else {
+//                    showToastReal(helpResult.getMsg());
+//                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
     }
 
     @OnClick({R.id.iv_head_photo, R.id.rl_name, R.id.rl_reset_password})
@@ -162,12 +215,45 @@ public class SettingActivity extends BaseActivity {
                 if (f.exists() && photo != null) {
                       /*图片路径压缩*/
                     final File file = new File(BimpUtils.getInstace().savebitmap(photo));
-//                    submitToServer(file);
+                    submitToServer(file);
                 } else {
                     Toast.makeText(this, "the file doesnt exist", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
+    }
+
+    private void submitToServer(File file) {
+        String url = AppURL.UPLOAD_PIC+"/"+Global.UserId;
+        HttpUtils http = new HttpUtils();
+        HttpRequest.HttpMethod method = HttpRequest.HttpMethod.POST;
+        RequestParams params = new RequestParams();
+        params.addBodyParameter("file", file, "multipart/form-data");
+        params.addHeader("jsessionid", Global.JESSIONID);
+        L.e("上传URL" + url);
+        http.send(method, url, params, new RequestCallBack<String>() {
+            @Override
+            public void onLoading(long total, long current, boolean isUploading) {
+                Log.i("wcl", "current process -->" + current + "/" + total);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                String result = responseInfo.result;
+                L.e("submitToServer" + result);
+                UploadImageResult uploadImageResult = new Gson().fromJson(result,UploadImageResult.class);
+                if(Global.RESULT_CODE.equals(uploadImageResult.getCode())){
+                    imgurl = uploadImageResult.getResult().getImgUrl();
+                    ImageLoader.getInstance().displayImage(AppURL.baseHost+imgurl,ivHeadPhoto, ImageLoadOptions.getOptionsHight());
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                showToastReal("数据获取失败");
+            }
+        });
     }
 
     private String getRealPathFromURI(Uri contentURI) {

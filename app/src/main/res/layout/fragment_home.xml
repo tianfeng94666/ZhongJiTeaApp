@@ -20,13 +20,14 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/flybanner"
                 android:layout_width="fill_parent"
-                android:layout_height="203dp"
+                android:layout_height="204dp"
                 app:points_position="RIGHT" />
 
 
         </FrameLayout>
 
         <LinearLayout
+            android:id="@+id/ll_notice"
             android:layout_width="match_parent"
             android:layout_height="@dimen/textview_height"
             android:background="@color/white">
@@ -126,14 +127,14 @@
                 android:paddingTop="4dp"
                 android:text="热门茶叶" />
 
-            <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
+            <com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView
                 android:id="@+id/lv_hot_tea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@color/light_gray"
                 android:dividerHeight="5dp">
 
-            </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+            </com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView>
         </LinearLayout>
 
     </LinearLayout>

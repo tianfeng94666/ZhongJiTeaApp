@@ -8,7 +8,7 @@
         android:layout_marginTop="@dimen/margin16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
+        <com.tianfeng.zhongjiteaapp.viewutils.CircleImageView
             android:id="@+id/iv_head_photo"
             android:layout_centerHorizontal="true"
             android:src="@mipmap/head_photo"
@@ -40,7 +40,7 @@
             android:background="@null"
             android:gravity="bottom"
             android:hint="1-6位中文、字母或数字"
-            android:inputType="phone"
+            android:maxEms="6"
             android:textColor="@color/text_color"
             android:textColorHint="@color/color_line"
             android:textSize="@dimen/text_normal" />
