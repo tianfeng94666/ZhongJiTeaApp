@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -158,7 +159,8 @@ public class SettingActivity extends BaseActivity {
                         /*拍    照*/
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         /*给拍的照片随机取名*/
-                mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "tmp_avatar_"
+
+                mImageCaptureUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(Environment.getExternalStorageDirectory(), "xcb"
                         + String.valueOf(System.currentTimeMillis())
                         + ".jpg"));
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);

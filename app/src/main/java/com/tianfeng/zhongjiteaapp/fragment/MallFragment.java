@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.activity.ProductActivity;
 import com.tianfeng.zhongjiteaapp.activity.SearchTeaActivity;
@@ -86,10 +87,14 @@ private int maxIndex;
         VolleyRequestUtils.getInstance().getRequestPost(getActivity(), AppURL.GET_PRODUCT_LIST, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
-                lvMallProduct.stopLoadMore();
-                lvMallProduct.stopRefresh();
+
                 L.e("result--" + tag + "  ", result);
-                getProductResult = new Gson().fromJson(result, GetProductResult.class);
+
+                try {
+                    getProductResult = new Gson().fromJson(result, GetProductResult.class);
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                }
                 if (Global.RESULT_CODE.equals(getProductResult.getCode())) {
                     maxIndex = getProductResult.getResult().getTotalPage();
                     List temp = getProductResult.getResult().getResult();
@@ -105,7 +110,8 @@ private int maxIndex;
                 } else {
                     showToastReal(getProductResult.getMsg());
                 }
-
+                lvMallProduct.stopLoadMore();
+                lvMallProduct.stopRefresh();
             }
 
             @Override
@@ -122,8 +128,8 @@ private int maxIndex;
         titleText.setText("商城");
 
         lvMallProduct.setXListViewListener(this);
-        lvMallProduct.setAutoLoadEnable(true);
-        lvMallProduct.setPullRefreshEnable(true);
+        lvMallProduct.setAutoLoadEnable(false);
+        lvMallProduct.setPullRefreshEnable(false);
         lvMallProduct.setPullLoadEnable(true);
 
         setViewData();

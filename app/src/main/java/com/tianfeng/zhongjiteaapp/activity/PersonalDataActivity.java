@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -133,7 +134,7 @@ public class PersonalDataActivity extends BaseActivity {
         map.put("bizId",Global.BIZID);
         map.put("code",Global.CODE);
         map.put("shopId",Global.shopId);
-        map.put("loginName",etUsername.getText().toString());
+        map.put("loginName",phoneNumber);
         map.put("nickName",etUsername.getText().toString());
         map.put("password",etPassword.getText().toString());
         if(!StringUtils.isEmpty(imgurl)){
@@ -147,6 +148,7 @@ public class PersonalDataActivity extends BaseActivity {
                 if(Global.RESULT_CODE.equals(loginResult.getCode())){
                     Global.UserId = loginResult.getResult().getId();
                     Global.JESSIONID=loginResult.getJsessionid();
+                    Global.shopId = loginResult.getResult().getShopId();
                     Global.isLogin =true;
                     openActivity(MainActivity.class,null);
                     finish();
@@ -179,7 +181,7 @@ public class PersonalDataActivity extends BaseActivity {
                         /*拍    照*/
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         /*给拍的照片随机取名*/
-                mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "tmp_avatar_"
+                mImageCaptureUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(Environment.getExternalStorageDirectory(), "xcb"
                         + String.valueOf(System.currentTimeMillis())
                         + ".jpg"));
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);

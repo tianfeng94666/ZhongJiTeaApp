@@ -24,6 +24,7 @@
     <EditText
         android:id="@+id/et_amount"
         android:paddingLeft="16dp"
+        android:background="@null"
         android:gravity="center_vertical"
         android:textColor="@color/text_color"
         android:textSize="@dimen/text_normal"

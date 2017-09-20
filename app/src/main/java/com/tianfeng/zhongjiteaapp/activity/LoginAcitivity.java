@@ -212,6 +212,8 @@ public class LoginAcitivity extends BaseActivity {
                 if (Global.RESULT_CODE.equals(loginResult.getCode())) {
                     Global.JESSIONID = loginResult.getJsessionid();
                     Global.UserId = loginResult.getResult().getId();
+                    Global.shopId = loginResult.getResult().getShopId();
+//                    Global.HeadView=
                     Global.isLogin = true;
                     SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
                     SpUtils.getInstace(LoginAcitivity.this).saveString("password", etLoginPassword.getText().toString());

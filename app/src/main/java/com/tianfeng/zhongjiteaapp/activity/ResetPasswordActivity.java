@@ -72,6 +72,7 @@ public class ResetPasswordActivity extends BaseActivity {
     }
 
     private void initView() {
+        titleText.setText("重置密码");
         phone = SpUtils.getInstace(this).getString("phoneNumber");
         etPhonenumber.setText(phone);
     }

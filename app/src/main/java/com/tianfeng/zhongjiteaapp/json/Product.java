@@ -35,7 +35,7 @@ public  class Product {
     private String informationUrl;
     private String imgUrl;
     private String unit;
-    private int price;
+    private String price;
     private String deportName;
     private String id;
     private String tag;
@@ -116,11 +116,11 @@ public  class Product {
         this.unit = unit;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

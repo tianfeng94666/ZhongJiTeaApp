@@ -39,7 +39,7 @@ public class CommMethod {
                 CollectedResult collectedResult = new Gson().fromJson(result, CollectedResult.class);
                 if (Global.RESULT_CODE.equals(collectedResult.getCode())) {
                     ToastManager.showToastReal("收藏成功");
-                }else {
+                } else {
                     ToastManager.showToastReal(collectedResult.getMsg());
                 }
             }
@@ -51,6 +51,7 @@ public class CommMethod {
             }
         }, map);
     }
+
     /**
      * 取消收藏
      */
@@ -68,7 +69,7 @@ public class CommMethod {
                 CollectedResult collectedResult = new Gson().fromJson(result, CollectedResult.class);
                 if (Global.RESULT_CODE.equals(collectedResult.getCode())) {
                     ToastManager.showToastReal("取消收藏成功");
-                }else {
+                } else {
                     ToastManager.showToastReal(collectedResult.getMsg());
                 }
             }
@@ -80,14 +81,41 @@ public class CommMethod {
             }
         }, map);
     }
+
     /**
      * 判断是否登入
      */
-    public static void isLogin(Activity context){
-        if(!Global.isLogin){
+    public static void isLogin(Activity context) {
+        if (!Global.isLogin) {
             ToastManager.showToastReal("请先注册登录！");
             Intent intent = new Intent(context, LoginAcitivity.class);
             context.startActivity(intent);
+        }
+    }
+
+    public static String getState(String st) {
+        if ("0".equals(st)) {
+            return "质押待审核";
+        } else if ("1".equals(st)) {
+            return "质押审核通过";
+        } else if ("2".equals(st)) {
+            return "质押审核不通过";
+        } else if ("3".equals(st)) {
+            return "已质押";
+        } else if ("4".equals(st)) {
+            return "质押取消";
+        } else if ("5".equals(st)) {
+            return "赎回待审核";
+        } else if ("6".equals(st)) {
+            return "赎回审核通过";
+        } else if ("7".equals(st)) {
+            return "已赎回";
+        }else if ("8".equals(st)) {
+            return "已暂存";
+        }else if ("9".equals(st)) {
+            return "已提现";
+        }else {
+            return "已转让";
         }
     }
 }

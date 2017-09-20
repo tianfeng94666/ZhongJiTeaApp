@@ -10,18 +10,23 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.activity.PledgeActivity;
 import com.tianfeng.zhongjiteaapp.activity.StorageTradeActivity;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
+import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.CollectedResult;
+import com.tianfeng.zhongjiteaapp.json.OrderBean;
+import com.tianfeng.zhongjiteaapp.json.StorageResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CustomLV;
+import com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,11 +40,15 @@ import butterknife.ButterKnife;
  * Created by 田丰 on 2017/9/3.
  */
 
-public class StorageDetailFragment extends BaseFragment {
+public class StorageDetailFragment extends BaseFragment implements XListView.IXListViewListener{
     @Bind(R.id.lv_mall_product)
-    ListView lvMallProduct;
+    XListView lvMallProduct;
     int type = 0;//1云南仓，0华南仓
-    private int index;
+    private int index=1;
+    int maxIndex;
+    private StorageResult storageResult;
+    private List<OrderBean> storageList=new ArrayList<>();
+    private CommonAdapter<OrderBean> storageAdapter;
 
     public StorageDetailFragment(int i) {
         this.type =i;
@@ -59,10 +68,10 @@ public class StorageDetailFragment extends BaseFragment {
         Map map = new HashMap();
         map.put("index", index);
         map.put("pageSize", 10);
-        if(type==0){
-            map.put("deportId", "0001");
+        if(type==1){
+            map.put("storeType", "0001");
         }else {
-            map.put("deportId", "0000");
+            map.put("storeType", "0002");
         }
 
         L.e("map", map.toString());
@@ -71,10 +80,21 @@ public class StorageDetailFragment extends BaseFragment {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
-//                CollectedResult collectedResult = new Gson().fromJson(result, CollectedResult.class);
-//                if (Global.RESULT_CODE.equals(collectedResult.getCode())) {
-//
-//                }
+                 storageResult = new Gson().fromJson(result, StorageResult.class);
+                if (Global.RESULT_CODE.equals(storageResult.getCode())) {
+                        if(storageResult.getResult()!=null&&storageResult.getResult().getResult()!=null){
+                            List<OrderBean>    temp = storageResult.getResult().getResult();
+                            maxIndex =storageResult.getResult().getTotalPage();
+                            if(temp.size()>0){
+                                if(maxIndex>= index){
+                                    storageList.addAll(temp);
+                                    setData();
+                                }
+                            }
+                        }
+                }else {
+                    ToastManager.showToastReal(storageResult.getMsg());
+                }
             }
 
             @Override
@@ -85,28 +105,56 @@ public class StorageDetailFragment extends BaseFragment {
         }, map);
     }
 
+    private void setData() {
+        if(storageAdapter==null){
+            storageAdapter = new CommonAdapter<OrderBean>(storageList,R.layout.item_storage) {
+                @Override
+                public void convert(int position, BaseViewHolder helper, final OrderBean item) {
+                    helper.setText(R.id.tv_item_name,item.getGoodsName());
+                    helper.setText(R.id.tv_item_tag,item.getTagName());
+                    helper.setText(R.id.tv_item_type,item.getTypeName());
+                    helper.setText(R.id.tv_price,"茶叶单价："+item.getPrice());
+                    helper.setText(R.id.tv_amount,"成交量："+item.getQuantity());
+                    helper.setText(R.id.tv_total_money,"成交总金额："+item.getTotal());
+                    helper.setText(R.id.tv_date,"购买时间："+item.getEndTime());
+                    helper.setText(R.id.iv_item_state, CommMethod.getState(item.getTransStatus()));
+                    helper.setImageBitmap(R.id.iv_item_product,AppURL.baseHost+"/"+item.getImgUrl());
+
+                    helper.getView(R.id.iv_item_state).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("storageItem",item);
+                            openActivity(PledgeActivity.class,bundle);
+                        }
+                    });
+                }
+
+
+            };
+            lvMallProduct.setAdapter(storageAdapter);
+            lvMallProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("storageItem",storageList.get(i-1));
+                    openActivity(StorageTradeActivity.class,bundle);
+                }
+            });
+        }else {
+            storageAdapter.notifyDataSetChanged();
+        }
+
+    }
+
     private void initView(View view) {
 
-        final List<String> list = new ArrayList<>();
+        lvMallProduct.setXListViewListener(this);
+        lvMallProduct.setAutoLoadEnable(false);
+        lvMallProduct.setPullRefreshEnable(false);
+        lvMallProduct.setPullLoadEnable(true);
 
-        list.add("小茶宝服务协议");
-        list.add("仓储管理服务协议");
-        list.add("仓储类问题");
-        list.add("茶叶质押协议");
-        list.add("茶叶赎回协议");
 
-        lvMallProduct.setAdapter(new CommonAdapter<String>(list,R.layout.item_storage) {
-            @Override
-            public void convert(int position, BaseViewHolder helper, String item) {
-
-            }
-        });
-        lvMallProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                openActivity(StorageTradeActivity.class,null);
-            }
-        });
 //        UIUtils.setListViewHeightBasedOnChildren(lvMallProduct);
     }
 
@@ -114,5 +162,16 @@ public class StorageDetailFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+        index++;
+        getData();
     }
 }

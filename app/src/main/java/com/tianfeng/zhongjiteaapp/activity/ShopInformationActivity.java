@@ -64,8 +64,8 @@ public class ShopInformationActivity extends BaseActivity {
 
     public void netload() {
         Map map = new HashMap();
-        map.put("userId", Global.UserId);
-        String url = AppURL.SHOPINFO_URL + "/" + Global.UserId;
+        map.put("shopId", Global.shopId);
+        String url = AppURL.SHOPINFO_URL + "/" + Global.shopId;
         L.e("url", url);
         VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override

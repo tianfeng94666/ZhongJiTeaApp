@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public class GetProductResult {
+
     /**
      * code : 0000
      * msg : 查询成功

@@ -2,13 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <include layout="@layout/layout_title" />
-        <include layout="@layout/item_storage" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_alignParentBottom="true"
@@ -63,5 +56,16 @@
             android:textColor="@color/white"
             android:background="#fe8431"
             android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <include layout="@layout/layout_title" />
+        <include layout="@layout/item_storage" />
     </LinearLayout>
 </RelativeLayout>

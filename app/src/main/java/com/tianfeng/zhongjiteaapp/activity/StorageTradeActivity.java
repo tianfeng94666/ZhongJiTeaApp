@@ -6,8 +6,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.CommMethod;
+import com.tianfeng.zhongjiteaapp.json.OrderBean;
+import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
 import butterknife.Bind;
@@ -53,12 +58,39 @@ public class StorageTradeActivity extends BaseActivity {
     TextView tvMakeOver;
     @Bind(R.id.tv_pledge)
     TextView tvPledge;
+    @Bind(R.id.tv_item_tag)
+    TextView tvItemTag;
+    @Bind(R.id.tv_item_type)
+    TextView tvItemType;
+    private OrderBean item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storage_trade);
         ButterKnife.bind(this);
+        geData();
+
+    }
+
+    private void initView() {
+        tvItemName.setText(item.getGoodsName());
+        tvItemTag.setText(item.getTagName());
+        tvItemType.setText(item.getTypeName());
+        tvPrice.setText( "茶叶单价：" + item.getPrice());
+        tvAmount.setText("成交量：" + item.getQuantity());
+        tvTotalMoney.setText("成交总金额：" + item.getTotal());
+        tvDate.setText("购买时间：" + item.getEndTime());
+        ivItemState.setText(CommMethod.getState(item.getTransStatus()));
+        ImageLoader.getInstance().displayImage(AppURL.baseHost + "/" + item.getImgUrl(),ivItemProduct, ImageLoadOptions.getOptionsHight());
+    }
+
+    private void geData() {
+        Bundle bundle = getIntent().getExtras();
+        item = (OrderBean) bundle.getSerializable("storageItem");
+        if(item!=null){
+            initView();
+        }
     }
 
     @OnClick({R.id.tv_shipside_delivery, R.id.tv_temporary_storage, R.id.tv_make_over, R.id.tv_pledge})
