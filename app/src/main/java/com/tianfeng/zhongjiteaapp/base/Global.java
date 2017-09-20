@@ -14,4 +14,6 @@ public class Global {
     public static String UserId;
     public static String PhoneNumber;
     public static boolean isLogin =false;
+    public static String HeadView;
+    public static String nickName;
 }

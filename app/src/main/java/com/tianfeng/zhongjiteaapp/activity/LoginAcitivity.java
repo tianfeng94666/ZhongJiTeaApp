@@ -213,7 +213,8 @@ public class LoginAcitivity extends BaseActivity {
                     Global.JESSIONID = loginResult.getJsessionid();
                     Global.UserId = loginResult.getResult().getId();
                     Global.shopId = loginResult.getResult().getShopId();
-//                    Global.HeadView=
+                    Global.HeadView=AppURL.baseHost+loginResult.getResult().getImgUrl();
+                    Global.nickName =loginResult.getResult().getNickName();
                     Global.isLogin = true;
                     SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
                     SpUtils.getInstace(LoginAcitivity.this).saveString("password", etLoginPassword.getText().toString());

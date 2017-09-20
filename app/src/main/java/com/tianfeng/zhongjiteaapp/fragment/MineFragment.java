@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.activity.AboutActivity;
 import com.tianfeng.zhongjiteaapp.activity.HelpActivity;
@@ -21,6 +22,7 @@ import com.tianfeng.zhongjiteaapp.base.BaseFragment;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.HelpResult;
 import com.tianfeng.zhongjiteaapp.json.LogoutResult;
+import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
@@ -67,7 +69,13 @@ public class MineFragment extends BaseFragment {
         View view = View.inflate(getContext(), R.layout.fragment_mine, null);
         UIUtils.setBarTint(getActivity(), false);
         ButterKnife.bind(this, view);
+        initView(view);
         return view;
+    }
+
+    private void initView(View view) {
+        ImageLoader.getInstance().displayImage(Global.HeadView,ivHeadPhoto, ImageLoadOptions.getOptionsHight());
+        tvUsername.setText(Global.nickName);
     }
 
     @Override
