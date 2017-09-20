@@ -1,8 +1,11 @@
 package com.tianfeng.zhongjiteaapp.base;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.gson.Gson;
+import com.tianfeng.zhongjiteaapp.activity.LoginAcitivity;
 import com.tianfeng.zhongjiteaapp.json.CollectedResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
@@ -22,18 +25,22 @@ public class CommMethod {
      *
      * @param id
      */
-    public static void collected(Context context, String id) {
+    public static void collected(Activity context, String id) {
+        CommMethod.isLogin(context);
         Map map = new HashMap();
         map.put("userId", Global.UserId);
         map.put("goodsId", id);
         L.e("map", map.toString());
+        L.e("url=", AppURL.COLLECTED_URL);
         VolleyRequestUtils.getInstance().getRequestPost(context, AppURL.COLLECTED_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
                 CollectedResult collectedResult = new Gson().fromJson(result, CollectedResult.class);
                 if (Global.RESULT_CODE.equals(collectedResult.getCode())) {
-
+                    ToastManager.showToastReal("收藏成功");
+                }else {
+                    ToastManager.showToastReal(collectedResult.getMsg());
                 }
             }
 
@@ -43,5 +50,44 @@ public class CommMethod {
                 ToastManager.showToastReal(fail);
             }
         }, map);
+    }
+    /**
+     * 取消收藏
+     */
+    public static void uncollected(Activity context, String id) {
+        CommMethod.isLogin(context);
+        Map map = new HashMap();
+        map.put("userId", Global.UserId);
+        map.put("goodsId", id);
+        L.e("map", map.toString());
+        L.e("url=", AppURL.UNCOLLECTED_URL);
+        VolleyRequestUtils.getInstance().getRequestPost(context, AppURL.UNCOLLECTED_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                CollectedResult collectedResult = new Gson().fromJson(result, CollectedResult.class);
+                if (Global.RESULT_CODE.equals(collectedResult.getCode())) {
+                    ToastManager.showToastReal("取消收藏成功");
+                }else {
+                    ToastManager.showToastReal(collectedResult.getMsg());
+                }
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                ToastManager.showToastReal(fail);
+            }
+        }, map);
+    }
+    /**
+     * 判断是否登入
+     */
+    public static void isLogin(Activity context){
+        if(!Global.isLogin){
+            ToastManager.showToastReal("请先注册登录！");
+            Intent intent = new Intent(context, LoginAcitivity.class);
+            context.startActivity(intent);
+        }
     }
 }

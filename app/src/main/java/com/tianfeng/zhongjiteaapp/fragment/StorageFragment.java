@@ -66,9 +66,9 @@ public class StorageFragment extends BaseFragment {
         //添加页卡标题
         mTitleList.add("华南仓");
         mTitleList.add("云南仓");
-        yunNanStorageFragemnt = new StorageDetailFragment();
+        yunNanStorageFragemnt = new StorageDetailFragment(1);
         fragmentList.add(yunNanStorageFragemnt);
-         huaNanStorageFragment = new StorageDetailFragment();
+         huaNanStorageFragment = new StorageDetailFragment(2);
         fragmentList.add(huaNanStorageFragment);
         pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), fragmentList);
         viewpager.setAdapter(pagerAdapter);

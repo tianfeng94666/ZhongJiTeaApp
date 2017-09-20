@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.fragment.HomeFragment;
 import com.tianfeng.zhongjiteaapp.fragment.MallFragment;
@@ -73,8 +74,13 @@ int selectPosition;
     }
 
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!Global.isLogin){
+            setChioceFragment(0);
+        }
+    }
 
     private void initView() {
 
@@ -188,6 +194,7 @@ int selectPosition;
 
     @Override
     public void onClick(View v) {
+        CommMethod.isLogin(this);
         switch (v.getId()) {
             case R.id.id_fl_tab1:
                 setChioceFragment(0);

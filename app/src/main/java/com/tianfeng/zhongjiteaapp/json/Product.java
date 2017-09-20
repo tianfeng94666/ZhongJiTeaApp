@@ -42,6 +42,15 @@ public  class Product {
     private String goodsName;
     private String introduction;
     private long createTime;
+    private String isStored;
+
+    public String getIsStored() {
+        return isStored ==null?"0": isStored;
+    }
+
+    public void setIsStored(String isStored) {
+        this.isStored = isStored;
+    }
 
     public String getUnitName() {
         return unitName;

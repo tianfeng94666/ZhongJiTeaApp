@@ -113,6 +113,7 @@ public class MineFragment extends BaseFragment {
                 L.e("result", result);
                 LogoutResult logoutResult = new Gson().fromJson(result, LogoutResult.class);
                 if (Global.RESULT_CODE.equals(logoutResult.getCode())) {
+                    Global.isLogin =false;
                     openActivity(LoginAcitivity.class,null);
                    getActivity().finish();
 

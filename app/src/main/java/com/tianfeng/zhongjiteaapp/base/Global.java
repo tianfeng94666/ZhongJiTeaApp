@@ -13,4 +13,5 @@ public class Global {
     public static String shopId;
     public static String UserId;
     public static String PhoneNumber;
+    public static boolean isLogin =false;
 }

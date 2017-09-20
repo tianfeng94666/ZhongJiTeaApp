@@ -9,7 +9,7 @@
     <string name="header_hint_refresh_ready">Release to refresh</string>
     <string name="header_hint_refresh_loading">Refreshing&#8230;</string>
     <string name="header_hint_refresh_time">Time：</string>
-    <string name="footer_hint_load_normal">Load more</string>
+    <string name="footer_hint_load_normal">加载更多</string>
     <string name="footer_hint_load_ready">Release to load more</string>
 
     <string name="shipside_delivery">现提</string>

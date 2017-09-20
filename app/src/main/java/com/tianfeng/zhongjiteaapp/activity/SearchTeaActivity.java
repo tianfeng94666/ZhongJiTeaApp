@@ -14,6 +14,7 @@ import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.CollectedResult;
 import com.tianfeng.zhongjiteaapp.json.GetProductResult;
@@ -34,6 +35,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.tianfeng.zhongjiteaapp.utils.ToastManager.showToastReal;
+
 /**
  * Created by Administrator on 2017/9/5 0005.
  */
@@ -50,6 +53,7 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
     private GetProductResult getProductResult;
     private List<Product> productList = new ArrayList<>();
     private int index;
+    private int maxIndex;
     SharedPopupWindow sharedPopupWindow;
     private CommonAdapter productAdapter;
 
@@ -66,8 +70,8 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
     private void initView() {
         initListener();
         lvSeachTea.setXListViewListener(this);
-        lvSeachTea.setAutoLoadEnable(true);
-        lvSeachTea.setPullRefreshEnable(true);
+        lvSeachTea.setAutoLoadEnable(false);
+        lvSeachTea.setPullRefreshEnable(false);
         lvSeachTea.setPullLoadEnable(true);
     }
 
@@ -99,7 +103,11 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
                 getProductResult = new Gson().fromJson(result, GetProductResult.class);
                 if (Global.RESULT_CODE.equals(getProductResult.getCode())) {
                     List temp = getProductResult.getResult().getResult();
-                    productList.addAll(temp);
+                    if(maxIndex>=index){
+                        productList.addAll(temp);
+                    }else {
+                        showToastReal("已经是全部数据了");
+                    }
                     setLv();
                 } else {
                     showToastReal(getProductResult.getMsg());
@@ -121,7 +129,7 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
         if (productAdapter == null) {
             productAdapter = new CommonAdapter<Product>(productList, R.layout.item_product) {
                 @Override
-                public void convert(int position, BaseViewHolder helper, final Product item) {
+                public void convert(int position, final BaseViewHolder helper, final Product item) {
                     helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                     helper.setText(R.id.tv_item_name, item.getGoodsName());
                     helper.setText(R.id.tv_item_type, item.getDeportName());
@@ -135,7 +143,15 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
                     helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            collected(item.getId());
+                            if("0".equals(item.getIsStored())){
+                                item.setIsStored("1");
+                                helper.setImageResource(R.id.iv_item_collection,R.mipmap.collected);
+                                CommMethod.collected(SearchTeaActivity.this,item.getId());
+                            }else {
+                                item.setIsStored("0");
+                                helper.setImageResource(R.id.iv_item_collection,R.mipmap.uncollected);
+                                CommMethod.uncollected(SearchTeaActivity.this,item.getId());
+                            }
                         }
                     });
                     helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
@@ -154,37 +170,7 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
         lvSeachTea.setAdapter(productAdapter);
     }
 
-    /**
-     * 收藏
-     *
-     * @param id
-     */
-    private void collected(String id) {
-        Map map = new HashMap();
-        if (StringUtils.isEmpty(Global.shopId)) {
 
-        }
-        map.put("userId", Global.UserId);
-        map.put("goodsId", id);
-
-        VolleyRequestUtils.getInstance().getRequestPost(this, AppURL.COLLECTED_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
-            @Override
-            public void onSuccess(String result) {
-                L.e("result", result);
-                CollectedResult collectedResult = new Gson().fromJson(result, CollectedResult.class);
-                if (Global.RESULT_CODE.equals(collectedResult.getCode())) {
-
-                }
-            }
-
-            @Override
-            public void onFail(String fail) {
-                L.e("fail", fail);
-                showToastReal(fail);
-            }
-        }, map);
-
-    }
 
     @OnClick(R.id.tv_cancle)
     public void onClick() {

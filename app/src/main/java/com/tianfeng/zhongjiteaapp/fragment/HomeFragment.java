@@ -21,7 +21,6 @@ import com.tianfeng.zhongjiteaapp.base.BaseFragment;
 import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.AdResult;
-import com.tianfeng.zhongjiteaapp.json.CollectedResult;
 import com.tianfeng.zhongjiteaapp.json.GetProductResult;
 import com.tianfeng.zhongjiteaapp.json.NoticeResult;
 import com.tianfeng.zhongjiteaapp.json.Product;
@@ -72,6 +71,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     private GetProductResult getProductResult;
     List<Product> newlist = new ArrayList<>();
     private int newTeaIndex=1, hotTeaIndex=1;
+    private int maxNewTeaIndex,maxHotTeaIndex;
     private List<Product> hotlist = new ArrayList<>();
     private NoticeResult noticeResult;
     private AdResult adResult;
@@ -175,7 +175,6 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         Map map = new HashMap();
         map.put("index", index + "");
         map.put("pageSize", 10);
-        map.put("goodsName", "");
         map.put("tag", tag);
         L.e("map",map.toString());
         VolleyRequestUtils.getInstance().getRequestPost(getActivity(), AppURL.GET_PRODUCT_LIST, new VolleyRequestUtils.HttpStringRequsetCallBack() {
@@ -186,14 +185,20 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 if (Global.RESULT_CODE.equals(getProductResult.getCode())) {
                     List temp = getProductResult.getResult().getResult();
                     if (("02").equals(tag)) {
-                        if (temp.size() == 10) {
-                            tvLoadmore.setVisibility(View.VISIBLE);
-                        } else {
-                            tvLoadmore.setVisibility(View.GONE);
+                            maxNewTeaIndex = getProductResult.getResult().getTotalPage();
+
+                        if(maxNewTeaIndex>=newTeaIndex){
+                            newlist.addAll(temp);
+                        }else {
+                            showToastReal("已经是全部数据了");
                         }
-                        newlist.addAll(temp);
                     } else {
-                        hotlist.addAll(temp);
+                        maxHotTeaIndex = getProductResult.getResult().getTotalPage();
+                        if(maxHotTeaIndex>=hotTeaIndex){
+                            hotlist.addAll(temp);
+                        }else {
+                            showToastReal("已经是全部数据了");
+                        }
                         lvHotTea.stopLoadMore();
                     }
 
@@ -279,7 +284,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     private void setNewTeaAdapter() {
         newAdapter = new CommonAdapter<Product>(newlist, R.layout.item_product) {
             @Override
-            public void convert(int position, BaseViewHolder helper, final Product item) {
+            public void convert(int position, final BaseViewHolder helper, final Product item) {
                 helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                 helper.setText(R.id.tv_item_name, item.getGoodsName());
                 helper.setText(R.id.tv_item_type, item.getDeportName());
@@ -288,12 +293,27 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 }else {
                     helper.getView(R.id.tv_item_tag).setVisibility(View.VISIBLE);
                 }
+                if("0".equals(item.getIsStored())){
+                    helper.setImageResource(R.id.iv_item_collection,R.mipmap.uncollected);
+                }else {
+                    helper.setImageResource(R.id.iv_item_collection,R.mipmap.collected);
+                }
                 helper.setText(R.id.tv_item_tag,item.getTagName());
                 helper.setText(R.id.tv_product_item_information, item.getIntroduction().replace(System.getProperty("line.separator"), " "));
                 helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CommMethod.collected(getActivity(),item.getId());
+                        if("0".equals(item.getIsStored())){
+                            item.setIsStored("1");
+                            helper.setImageResource(R.id.iv_item_collection,R.mipmap.collected);
+                            CommMethod.collected(getActivity(),item.getId());
+                        }else {
+                            item.setIsStored("0");
+                            helper.setImageResource(R.id.iv_item_collection,R.mipmap.uncollected);
+                            CommMethod.uncollected(getActivity(),item.getId());
+                        }
+
+
                     }
                 });
                 helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
@@ -310,7 +330,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     private void setHotTeaAdapter() {
         hotAdapter = new CommonAdapter<Product>(hotlist, R.layout.item_product) {
             @Override
-            public void convert(int position, BaseViewHolder helper, final Product item) {
+            public void convert(int position, final BaseViewHolder helper, final Product item) {
                 helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                 helper.setText(R.id.tv_item_name, item.getGoodsName());
                 helper.setText(R.id.tv_item_type, item.getDeportName());
@@ -319,12 +339,25 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 }else {
                     helper.getView(R.id.tv_item_tag).setVisibility(View.VISIBLE);
                 }
+                if("0".equals(item.getIsStored())){
+                    helper.setImageResource(R.id.iv_item_collection,R.mipmap.uncollected);
+                }else {
+                    helper.setImageResource(R.id.iv_item_collection,R.mipmap.collected);
+                }
                 helper.setText(R.id.tv_item_tag,item.getTagName());
                 helper.setText(R.id.tv_product_item_information, item.getIntroduction().replace(System.getProperty("line.separator"), " "));
                 helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CommMethod.collected(getActivity(),item.getId());
+                        if("0".equals(item.getIsStored())){
+                            item.setIsStored("1");
+                            helper.setImageResource(R.id.iv_item_collection,R.mipmap.collected);
+                            CommMethod.collected(getActivity(),item.getId());
+                        }else {
+                            item.setIsStored("0");
+                            helper.setImageResource(R.id.iv_item_collection,R.mipmap.uncollected);
+                            CommMethod.uncollected(getActivity(),item.getId());
+                        }
                     }
                 });
                 helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
@@ -354,6 +387,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
     @Override
     public void onLoadMore() {
+
         hotTeaIndex++;
         getProduct(hotTeaIndex, "01");
     }

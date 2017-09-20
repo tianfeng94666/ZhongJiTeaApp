@@ -93,9 +93,13 @@ public class LoginAcitivity extends BaseActivity {
 
     private void initView() {
 //        tvNext.setClickable(false);
-      String phone=  SpUtils.getInstace(this).getString("phoneNumber");
-        if(!StringUtils.isEmpty(phone)){
+        String phone = SpUtils.getInstace(this).getString("phoneNumber");
+        String password = SpUtils.getInstace(this).getString("password");
+        if (!StringUtils.isEmpty(phone)) {
             etLoginPhone.setText(phone);
+        }
+        if(!StringUtils.isEmpty(password)){
+            etLoginPassword.setText(password);
         }
     }
 
@@ -139,35 +143,36 @@ public class LoginAcitivity extends BaseActivity {
     }
 
 
-
     private void goNext() {
 
         if (cbIscheck.isChecked()) {
-            if(StringUtils.isEmpty(etLoginCode.getText().toString())){
+            if (StringUtils.isEmpty(etLoginCode.getText().toString())) {
                 showToastReal("请输入验证码");
                 return;
             }
 
-            if(StringUtils.isEmpty(etLoginPhone.getText().toString())){
+            if (StringUtils.isEmpty(etLoginPhone.getText().toString())) {
                 showToastReal("请输入手机号");
                 return;
             }
 
-            String url = AppURL.MESSAGE_CHECK ;
+            String url = AppURL.MESSAGE_CHECK;
             Map map = new HashMap();
             map.put("phoneNumber", etLoginPhone.getText().toString());
-            map.put("bizId",bizId);
-            map.put("code",etLoginCode.getText().toString());
+            map.put("bizId", bizId);
+            map.put("code", etLoginCode.getText().toString());
             VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
                 @Override
                 public void onSuccess(String result) {
                     L.e("result", result);
-                    MessageCheckResult messageCheckResult = new Gson().fromJson(result,MessageCheckResult.class);
-                    if(Global.RESULT_CODE.equals(messageCheckResult.getCode())){
-                        SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber",etLoginPhone.getText().toString());
-                        Global.PhoneNumber =etLoginPhone.getText().toString();
+                    MessageCheckResult messageCheckResult = new Gson().fromJson(result, MessageCheckResult.class);
+                    if(Global.RESULT_CODE.equals(messageCheckResult.getCode())) {
+                        SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
+                        Global.PhoneNumber = etLoginPhone.getText().toString();
                         Global.CODE = etLoginCode.getText().toString();
-                        openActivity(ChooseShopActivity.class,null);
+                        openActivity(ChooseShopActivity.class, null);
+                    }else {
+                        showToastReal(messageCheckResult.getMsg());
                     }
                 }
 
@@ -182,33 +187,37 @@ public class LoginAcitivity extends BaseActivity {
             showToastReal("请勾选是否同意协议");
         }
         //调试使用
-        openActivity(ChooseShopActivity.class,null);
+        openActivity(ChooseShopActivity.class, null);
     }
 
     private void login() {
         tvLogin.setClickable(false);
-        if(etLoginPhone.getText().toString().isEmpty()){
+        if (etLoginPhone.getText().toString().isEmpty()) {
             showToastReal("手机号不能为空！");
             return;
         }
-        if(etLoginPassword.getText().toString().isEmpty()){
+        if (etLoginPassword.getText().toString().isEmpty()) {
             showToastReal("密码不能为空！");
             return;
         }
         Map map = new HashMap();
-        map.put("loginName",etLoginPhone.getText().toString());
-        map.put("passwordReal",etLoginPassword.getText().toString());
+        map.put("loginName", etLoginPhone.getText().toString());
+        map.put("password", etLoginPassword.getText().toString());
         VolleyRequestUtils.getInstance().getStringPostRequest(this, AppURL.LOGIN_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 tvLogin.setClickable(true);
                 L.e("result", result);
-                LoginResult loginResult = new Gson().fromJson(result,LoginResult.class);
-                if(Global.RESULT_CODE.equals(loginResult.getCode())){
+                LoginResult loginResult = new Gson().fromJson(result, LoginResult.class);
+                if (Global.RESULT_CODE.equals(loginResult.getCode())) {
                     Global.JESSIONID = loginResult.getJsessionid();
                     Global.UserId = loginResult.getResult().getId();
-                    SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber",etLoginPhone.getText().toString());
-                    openActivity(MainActivity.class,null);
+                    Global.isLogin = true;
+                    SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
+                    SpUtils.getInstace(LoginAcitivity.this).saveString("password", etLoginPassword.getText().toString());
+                    openActivity(MainActivity.class, null);
+                }else {
+                    showToastReal(loginResult.getMsg());
                 }
 //                Global.UserId =
 
@@ -243,7 +252,7 @@ public class LoginAcitivity extends BaseActivity {
         Map map = new HashMap();
         map.put("phoneNumber", etLoginPhone.getText().toString());
         String url = AppURL.GET_MESSAGE_URL;
-        L.e("url",url);
+        L.e("url", url);
         VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -251,7 +260,7 @@ public class LoginAcitivity extends BaseActivity {
                 GetCodeResult getCodeResult = new Gson().fromJson(result, GetCodeResult.class);
                 if (Global.RESULT_CODE.equals(getCodeResult.getCode())) {
                     bizId = getCodeResult.getResult().getBizId();
-                    Global.BIZID =bizId;
+                    Global.BIZID = bizId;
                 } else {
                     showToastReal(getCodeResult.getMsg());
                 }

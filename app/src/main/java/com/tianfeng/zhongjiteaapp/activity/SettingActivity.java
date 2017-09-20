@@ -251,6 +251,8 @@ public class SettingActivity extends BaseActivity {
                 if(Global.RESULT_CODE.equals(uploadImageResult.getCode())){
                     imgurl = uploadImageResult.getResult().getImgUrl();
                     ImageLoader.getInstance().displayImage(AppURL.baseHost+imgurl,ivHeadPhoto, ImageLoadOptions.getOptionsHight());
+                }else {
+                    showToastReal(uploadImageResult.getMsg());
                 }
 
             }

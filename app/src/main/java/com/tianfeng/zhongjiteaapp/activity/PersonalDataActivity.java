@@ -99,6 +99,11 @@ public class PersonalDataActivity extends BaseActivity {
         setContentView(R.layout.activity_personal_data);
         ButterKnife.bind(this);
         UIUtils.setBarTint(this, false);
+        initView();
+    }
+
+    private void initView() {
+        titleText.setText("个人资料");
     }
 
     @OnClick({R.id.iv_head_photo, R.id.tv_regisit})
@@ -128,8 +133,9 @@ public class PersonalDataActivity extends BaseActivity {
         map.put("bizId",Global.BIZID);
         map.put("code",Global.CODE);
         map.put("shopId",Global.shopId);
+        map.put("loginName",etUsername.getText().toString());
         map.put("nickName",etUsername.getText().toString());
-        map.put("passwordReal",etPassword.getText().toString());
+        map.put("password",etPassword.getText().toString());
         if(!StringUtils.isEmpty(imgurl)){
             map.put("imgUrl",imgurl);
         }
@@ -140,8 +146,12 @@ public class PersonalDataActivity extends BaseActivity {
                  loginResult = new Gson().fromJson(result,LoginResult.class);
                 if(Global.RESULT_CODE.equals(loginResult.getCode())){
                     Global.UserId = loginResult.getResult().getId();
+                    Global.JESSIONID=loginResult.getJsessionid();
+                    Global.isLogin =true;
                     openActivity(MainActivity.class,null);
                     finish();
+                }else {
+                    showToastReal(loginResult.getMsg());
                 }
             }
 
@@ -262,6 +272,8 @@ public class PersonalDataActivity extends BaseActivity {
                 if(Global.RESULT_CODE.equals(uploadImageResult.getCode())){
                     imgurl = uploadImageResult.getResult().getImgUrl();
                     ImageLoader.getInstance().displayImage(AppURL.baseHost+imgurl,ivHeadPhoto,ImageLoadOptions.getOptionsHight());
+                }else {
+                    showToastReal(uploadImageResult.getMsg());
                 }
 
             }

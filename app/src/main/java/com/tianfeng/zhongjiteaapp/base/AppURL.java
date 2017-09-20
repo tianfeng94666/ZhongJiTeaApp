@@ -5,7 +5,7 @@ package com.tianfeng.zhongjiteaapp.base;
  */
 
 public class AppURL {
-    public   static  String baseHost = "http://www.bestfeng.xin:81/xcb";
+    public   static  String baseHost = "http://119.23.209.140:81/xcb";
     /**
      * 登入
      */
@@ -61,6 +61,10 @@ public class AppURL {
      */
     public static String COLLECTED_URL =baseHost+"/api/user/goods/like";
     /**
+     *取消收藏
+     */
+    public static String UNCOLLECTED_URL =baseHost+"/api/user/goods/unlike";
+    /**
      * 门店查询
      */
     public static String SHOPINFO_URL= baseHost+"/api/shop/";
@@ -84,4 +88,36 @@ public class AppURL {
      * 查询收藏
      */
     public static String MY_COLLETED =baseHost+"/api/user/goods/likes/";
+    /**
+     * 仓储数据查询
+     */
+    public static String STORAGE_LIST_URL=baseHost+"/api/store/list";
+    /**
+     * 质押申请
+     */
+    public static String PLEDGE_URL =baseHost+"/api/store/zy/apply";
+    /**
+     * 质押确定
+     */
+    public static String PLEDGE_CONFIRM_URL = baseHost+"/api/store/zy/confirm";
+    /**
+     * 质押取消
+     */
+    public static String PLEDGE_CANCLE_URL = baseHost+"/api/store/zy/cancel";
+    /**
+     * 赎回申请
+     */
+    public static String RETURN_URL = baseHost+"/api/store/sh/apply";
+    /**
+     * 赎回确认
+     */
+    public static String RETURN_CONFIRM = baseHost+"/api/store/sh/confirm";
+    /**
+     * 赎回取消
+     */
+    public static String RETURN_CANCLE = baseHost+"/api/store/sh/cancel";
+    /**
+     * 订单查询
+     */
+    public static String ORDER_SEARCH= baseHost+"/api/order/list";
 }

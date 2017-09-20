@@ -15,9 +15,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.BaseApplication;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.viewutils.LoadingWaitDialog;
 
 
 import org.json.JSONObject;
@@ -41,6 +43,24 @@ public class VolleyRequestUtils {
 
     }
 
+    private LoadingWaitDialog loadingDialog;
+
+    protected void baseShowWatLoading(Context context) {
+        if (loadingDialog == null) {
+            loadingDialog = new LoadingWaitDialog(context, "加载中");
+            loadingDialog.show();
+        }
+        //SystemClock.sleep(1000);
+    }
+
+    public void baseHideWatLoading() {
+        if (loadingDialog == null) return;
+        if (loadingDialog != null || loadingDialog.isShowing()) {
+            loadingDialog.cancel();
+            loadingDialog = null;
+        }
+    }
+
     static VolleyRequestUtils mInstance;
 
     public static VolleyRequestUtils getInstance() {
@@ -57,6 +77,7 @@ public class VolleyRequestUtils {
 
     //获取网页或者特殊数据的时候
     public static void GetCookieRequestPurePage(Context context, String url, final HttpStringRequsetCallBack callBack) {
+
         CookieStringtRequest jsonObjectRequest = new CookieStringtRequest(Method.GET, url, null, new Listener<String>() {
 
             @Override
@@ -82,12 +103,13 @@ public class VolleyRequestUtils {
 
     //！！！！！！！！get请求为了保证cookie一致  后来不要使用该方法！！！！！！！！！！
     public void getRequestPost(Context context, String url, final HttpStringRequsetCallBack callback, final Map<String, String> map) {
-
+        baseShowWatLoading(context);
         JSONObject jsonObject = new JSONObject(map);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, url, jsonObject, new Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
+                baseHideWatLoading();
                 if (callback != null)
                     callback.onSuccess(response.toString());
             }
@@ -95,16 +117,18 @@ public class VolleyRequestUtils {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                baseHideWatLoading();
                 if (callback != null)
                     callback.onFail(error.toString());
             }
 
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put("Set-Cookie","JSESSIONID="+ Global.JESSIONID);
-                L.e("cookie=",headers.toString());
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json, text/javascript, */*; q=0.01");
+                headers.put("Cookie", "JSESSIONID=" + Global.JESSIONID);
+                L.e("cookie=", headers.toString());
                 return headers;
             }
 
@@ -122,26 +146,29 @@ public class VolleyRequestUtils {
         BaseApplication.requestQueue.add(jsonObjectRequest);
     }
 
-    public  void getStringPostRequest (Context context, String url,final HttpStringRequsetCallBack callback,final Map<String, String> map){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,url,
+    public void getStringPostRequest(Context context, String url, final HttpStringRequsetCallBack callback, final Map<String, String> map) {
+        baseShowWatLoading(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        baseHideWatLoading();
                         if (callback != null)
                             callback.onSuccess(response.toString());
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                baseHideWatLoading();
                 if (callback != null)
                     callback.onFail(error.toString());
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put("Cookie","JSESSIONID="+ Global.JESSIONID);
-                L.e("cookie=",headers.toString());
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cookie", "JSESSIONID=" + Global.JESSIONID);
+                L.e("cookie=", headers.toString());
                 return headers;
             }
 
@@ -156,31 +183,34 @@ public class VolleyRequestUtils {
         stringRequest.setTag(context);
         BaseApplication.requestQueue.add(stringRequest);
     }
-    //！！！！！！！！get请求！！！！！！！！！！
-    public  void getRequestGet(Context context, String url, final HttpStringRequsetCallBack callback){
 
-        JsonObjectRequest jsonObjectRequest = new NormalPostRequest( Request.Method.GET, url, null,
+    //！！！！！！！！get请求！！！！！！！！！！
+    public void getRequestGet(Context context, String url, final HttpStringRequsetCallBack callback) {
+        baseShowWatLoading(context);
+        JsonObjectRequest jsonObjectRequest = new NormalPostRequest(Request.Method.GET, url, null,
                 new Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        if(callback!=null)
+                        baseHideWatLoading();
+                        if (callback != null)
                             callback.onSuccess(response.toString());
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(callback!=null)
+                baseHideWatLoading();
+                if (callback != null)
                     callback.onFail(error.toString());
             }
 
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put("Cookie","JSESSIONID="+ Global.JESSIONID);
-                L.e("cookie=",headers.toString());
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cookie", "JSESSIONID=" + Global.JESSIONID);
+                L.e("cookie=", headers.toString());
                 return headers;
             }
         };
@@ -190,6 +220,7 @@ public class VolleyRequestUtils {
         jsonObjectRequest.setTag(context);
         BaseApplication.requestQueue.add(jsonObjectRequest);
     }
+
     /**
      * 以GET或者POST方式发送jsonObjectRequest
      *

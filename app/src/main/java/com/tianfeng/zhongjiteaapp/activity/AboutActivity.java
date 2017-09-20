@@ -67,6 +67,8 @@ public class AboutActivity extends BaseActivity {
                         tvDescript.setText("关于小茶宝：" + aboutResult.getResult().getApp_introduction());
                         tvVersion.setText("版本号：" + aboutResult.getResult().getApp_android_version());
                         tvAppPhone.setText("客服电话：" + aboutResult.getResult().getCustomer_service_phone());
+                    }else {
+                        showToastReal(aboutResult.getMsg());
                     }
 
                 } else {

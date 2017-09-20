@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 

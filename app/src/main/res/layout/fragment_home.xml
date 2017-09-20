@@ -107,7 +107,8 @@
             <TextView
                 android:id="@+id/tv_loadmore"
                 android:text="加载更多"
-                android:visibility="gone"
+                android:visibility="visible"
+                android:layout_marginTop="5dp"
                 android:textSize="@dimen/text_normal"
                 android:textColor="@color/text_color"
                 android:background="@color/white"

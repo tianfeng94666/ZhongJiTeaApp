@@ -24,12 +24,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
+    <com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView
         android:id="@+id/lv_mall_product"
         android:divider="@color/theme_bg"
         android:dividerHeight="4dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+    </com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView>
 </LinearLayout>
