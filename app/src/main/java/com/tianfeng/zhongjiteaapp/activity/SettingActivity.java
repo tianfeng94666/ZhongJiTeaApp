@@ -2,6 +2,7 @@ package com.tianfeng.zhongjiteaapp.activity;
 
 import android.Manifest;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -17,7 +18,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -48,6 +52,7 @@ import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -160,12 +165,12 @@ public class SettingActivity extends BaseActivity {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         /*给拍的照片随机取名*/
 
-                mImageCaptureUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(Environment.getExternalStorageDirectory(), "xcb"
+                mImageCaptureUri =   FileProvider.getUriForFile(SettingActivity.this, getApplicationContext().getPackageName() + ".provider", new File(Environment.getExternalStorageDirectory(), "xcb"
                         + String.valueOf(System.currentTimeMillis())
                         + ".jpg"));
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
                 intent.putExtra("return-data", true);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
+                startActivityForResult(intent, PICK_FROM_PHOTO);
                 //设置切换动画，从右边进入，左边退出
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
@@ -284,7 +289,33 @@ public class SettingActivity extends BaseActivity {
         public Drawable icon;
         public Intent appIntent;
     }
+    public class CropOptionAdapter extends ArrayAdapter<CropOption> {
+        private ArrayList<CropOption> mOptions;
+        private LayoutInflater mInflater;
 
+        public CropOptionAdapter(Context context, ArrayList<CropOption> options) {
+            super(context, R.layout.crop_selector, options);
+            mOptions = options;
+            mInflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup group) {
+            if (convertView == null)
+                convertView = mInflater.inflate(R.layout.crop_selector, null);
+            CropOption item = mOptions.get(position);
+            if (item != null) {
+                ((ImageView) convertView.findViewById(R.id.iv_icon))
+                        .setImageDrawable(item.icon);
+                ((TextView) convertView.findViewById(R.id.tv_name))
+                        .setText(item.title);
+
+                return convertView;
+            }
+
+            return null;
+        }
+    }
 
     private void doCrop() {
         Intent intent = new Intent("com.android.camera.action.CROP");

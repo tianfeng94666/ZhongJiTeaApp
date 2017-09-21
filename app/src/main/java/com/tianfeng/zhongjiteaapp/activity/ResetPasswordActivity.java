@@ -145,7 +145,7 @@ public class ResetPasswordActivity extends BaseActivity {
     private void getCode() {
         Map map = new HashMap();
         map.put("phoneNumber", etPhonenumber.getText().toString());
-        String url = AppURL.GET_MESSAGE_URL;
+        String url = AppURL.GET_MESSAGE_PASSWORD_URL;
         L.e("url", url);
         VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override

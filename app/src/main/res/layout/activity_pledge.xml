@@ -62,11 +62,12 @@
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_normal" />
 
-            <EditText
-                android:id="@+id/et_old_money"
+            <TextView
+                android:id="@+id/tv_old_money"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
+                android:background="@null"
                 android:paddingLeft="16dp"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_normal" />
@@ -93,11 +94,12 @@
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_normal" />
 
-            <EditText
-                android:id="@+id/et_evaluate_money"
+            <TextView
+                android:id="@+id/tv_evaluate_money"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
+                android:background="@null"
                 android:paddingLeft="16dp"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_normal" />

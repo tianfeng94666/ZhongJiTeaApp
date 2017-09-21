@@ -254,7 +254,7 @@ public class LoginAcitivity extends BaseActivity {
     private void getCode() {
         Map map = new HashMap();
         map.put("phoneNumber", etLoginPhone.getText().toString());
-        String url = AppURL.GET_MESSAGE_URL;
+        String url = AppURL.GET_MESSAGE_REGISTER_URL;
         L.e("url", url);
         VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override

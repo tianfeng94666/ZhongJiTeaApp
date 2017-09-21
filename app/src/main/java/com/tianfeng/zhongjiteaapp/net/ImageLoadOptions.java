@@ -13,9 +13,9 @@ public class ImageLoadOptions {
 	public static DisplayImageOptions getOptions() {
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
 		// // 设置图片在下载期间显示的图片
-		 .showImageOnLoading(R.mipmap.no_pic)
+		 .showImageOnLoading(R.mipmap.icon_loading)
 		// // 设置图片Uri为空或是错误的时候显示的图片
-		 .showImageForEmptyUri(R.mipmap.no_pic)
+		 .showImageForEmptyUri(R.mipmap.icon_fail)
 		// // 设置图片加载/解码过程中错误时候显示的图片
 		// .showImageOnFail(R.drawable.no_image)
 				.cacheInMemory(true)
@@ -44,9 +44,9 @@ public class ImageLoadOptions {
 	public static DisplayImageOptions getOptionsHight() {
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
 				// // 设置图片在下载期间显示的图片
-				.showImageOnLoading(R.mipmap.no_pic)
+				.showImageOnLoading(R.mipmap.icon_loading)
 				// // 设置图片Uri为空或是错误的时候显示的图片
-				.showImageForEmptyUri(R.mipmap.no_pic)
+				.showImageForEmptyUri(R.mipmap.icon_fail)
 				// // 设置图片加载/解码过程中错误时候显示的图片
 				// .showImageOnFail(R.drawable.no_image)
 				.cacheInMemory(true)

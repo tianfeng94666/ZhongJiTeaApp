@@ -31,10 +31,15 @@ public class AppURL {
      */
     public static String MESSAGE_CHECK =baseHost+"/api/sms/verify";
     /**
-     * 获取短信验证码
+     * 注册获取短信验证码
      * api/sms/send
      */
-    public static String GET_MESSAGE_URL= baseHost+"/api/sms/send";
+    public static String GET_MESSAGE_REGISTER_URL= baseHost+"/api/sms/send/register/";
+    /**
+     * 密码找回获取短信验证码
+     * api/sms/send
+     */
+    public static String GET_MESSAGE_PASSWORD_URL= baseHost+"/api/sms/send/password/";
     /**
      * 查询商城商品列表
      */

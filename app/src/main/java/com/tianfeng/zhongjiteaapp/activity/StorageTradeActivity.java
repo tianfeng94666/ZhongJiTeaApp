@@ -13,6 +13,7 @@ import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.json.OrderBean;
 import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
 import butterknife.Bind;
@@ -68,12 +69,14 @@ public class StorageTradeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storage_trade);
+        UIUtils.setBarTint(this,false);
         ButterKnife.bind(this);
         geData();
 
     }
 
     private void initView() {
+        titleText.setText(item.getGoodsName());
         tvItemName.setText(item.getGoodsName());
         tvItemTag.setText(item.getTagName());
         tvItemType.setText(item.getTypeName());

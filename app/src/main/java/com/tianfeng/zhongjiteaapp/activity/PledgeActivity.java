@@ -41,10 +41,10 @@ public class PledgeActivity extends BaseActivity {
     RelativeLayout idRelTitle;
     @Bind(R.id.et_amount)
     EditText etAmount;
-    @Bind(R.id.et_old_money)
-    EditText etOldMoney;
-    @Bind(R.id.et_evaluate_money)
-    EditText etEvaluateMoney;
+    @Bind(R.id.tv_old_money)
+    TextView tvOldMoney;
+    @Bind(R.id.tv_evaluate_money)
+    TextView tvEvaluateMoney;
     @Bind(R.id.ll_money)
     LinearLayout llMoney;
     @Bind(R.id.tv_confirm)
@@ -80,20 +80,148 @@ public class PledgeActivity extends BaseActivity {
     private void initView() {
         int state = Integer.parseInt(item.getTransStatus());
         switch (state) {
+            //可以进行确认或取消
+            case 1:
+                init1();
+                break;
+            //可以进行赎回
+            case 3:
+                init3();
+                break;
+            //进行赎回确认或取消
+            case 6:
+                init6();
+                break;
             //已暂存
             case 8:
                 init8();
                 break;
-            //质押待审核
-            case 0:
-                init0();
-                break;
-            //质押审核通过
-            case 1:
-                init1();
-                break;
 
         }
+    }
+
+    private void init6() {
+        tvConfirm.setText("确认赎回");
+        tvCancle.setText("取消赎回");
+        tvConfirm.setVisibility(View.VISIBLE);
+        tvCancle.setVisibility(View.VISIBLE);
+        llMoney.setVisibility(View.VISIBLE);
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmReback();
+            }
+        });
+
+        tvCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancleReback();
+            }
+        });
+    }
+
+    private void cancleReback() {
+        Map map = new HashMap();
+
+        map.put("id", item.getId());
+        String url = AppURL.RETURN_CANCLE;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                PledgeResult getData = new Gson().fromJson(result, PledgeResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", "已提交申请，等待后台审核");
+                    openActivity(DialogActivity.class, bundle);
+
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
+    }
+
+    private void confirmReback() {
+        Map map = new HashMap();
+
+        map.put("id", item.getId());
+        String url = AppURL.RETURN_CONFIRM;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                PledgeResult getData = new Gson().fromJson(result, PledgeResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", "已提交申请，等待后台审核");
+                    openActivity(DialogActivity.class, bundle);
+
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
+    }
+
+    private void init3() {
+        tvConfirm.setText("申请赎回");
+        tvConfirm.setVisibility(View.VISIBLE);
+        tvCancle.setVisibility(View.GONE);
+        llMoney.setVisibility(View.VISIBLE);
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reBack();
+            }
+        });
+    }
+
+    private void reBack() {
+        Map map = new HashMap();
+
+        map.put("id", item.getId());
+        String url = AppURL.RETURN_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                PledgeResult getData = new Gson().fromJson(result, PledgeResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", "已提交申请，等待后台审核");
+                    openActivity(DialogActivity.class, bundle);
+
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
     }
 
     private void init1() {

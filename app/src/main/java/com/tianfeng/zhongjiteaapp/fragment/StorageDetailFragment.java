@@ -36,18 +36,18 @@ import butterknife.ButterKnife;
  * Created by 田丰 on 2017/9/3.
  */
 
-public class StorageDetailFragment extends BaseFragment implements XListView.IXListViewListener{
+public class StorageDetailFragment extends BaseFragment implements XListView.IXListViewListener {
     @Bind(R.id.lv_mall_product)
     XListView lvMallProduct;
     int type = 0;//1云南仓，0华南仓
-    private int index=1;
+    private int index = 1;
     int maxIndex;
     private StorageResult storageResult;
-    private List<OrderBean> storageList=new ArrayList<>();
+    private List<OrderBean> storageList = new ArrayList<>();
     private CommonAdapter<OrderBean> storageAdapter;
 
     public StorageDetailFragment(int i) {
-        this.type =i;
+        this.type = i;
     }
 
     @Nullable
@@ -64,9 +64,9 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
         Map map = new HashMap();
         map.put("index", index);
         map.put("pageSize", 10);
-        if(type==1){
+        if (type == 1) {
             map.put("storeType", "0001");
-        }else {
+        } else {
             map.put("storeType", "0002");
         }
 
@@ -76,50 +76,53 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
-                 storageResult = new Gson().fromJson(result, StorageResult.class);
+                storageResult = new Gson().fromJson(result, StorageResult.class);
                 if (Global.RESULT_CODE.equals(storageResult.getCode())) {
-                        if(storageResult.getResult()!=null&&storageResult.getResult().getResult()!=null){
-                            List<OrderBean>    temp = storageResult.getResult().getResult();
-                            maxIndex =storageResult.getResult().getTotalPage();
-                            if(temp.size()>0){
-                                if(maxIndex>= index){
-                                    storageList.addAll(temp);
-                                    setData();
-                                }
+                    if (storageResult.getResult() != null && storageResult.getResult().getResult() != null) {
+                        List<OrderBean> temp = storageResult.getResult().getResult();
+                        maxIndex = storageResult.getResult().getTotalPage();
+                        if (temp.size() > 0) {
+                            if (maxIndex >= index) {
+                                storageList.addAll(temp);
+                                setData();
                             }
                         }
-                }else {
+                    }
+                } else {
                     ToastManager.showToastReal(storageResult.getMsg());
                 }
+                lvMallProduct.stopLoadMore();
+                lvMallProduct.stopRefresh();
             }
 
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
                 ToastManager.showToastReal(fail);
+                lvMallProduct.stopLoadMore();
+                lvMallProduct.stopRefresh();
             }
         }, map);
     }
 
     private void setData() {
-        if(storageAdapter==null){
-            storageAdapter = new CommonAdapter<OrderBean>(storageList,R.layout.item_storage) {
+        if (storageAdapter == null) {
+            storageAdapter = new CommonAdapter<OrderBean>(storageList, R.layout.item_storage) {
                 @Override
                 public void convert(int position, BaseViewHolder helper, final OrderBean item) {
-                    helper.setText(R.id.tv_item_name,item.getGoodsName());
-                    helper.setText(R.id.tv_item_tag,item.getTagName());
-                    helper.setText(R.id.tv_item_type,item.getTypeName());
-                    helper.setText(R.id.tv_item_price,"茶叶单价："+item.getPrice());
-                    helper.setText(R.id.tv_amount,"成交量："+item.getQuantity());
-                    helper.setText(R.id.tv_total_money,"成交总金额："+item.getTotal());
-                    helper.setText(R.id.tv_date,"购买时间："+item.getEndTime());
+                    helper.setText(R.id.tv_item_name, item.getGoodsName());
+                    helper.setText(R.id.tv_item_tag, item.getTagName());
+                    helper.setText(R.id.tv_item_type, item.getTypeName());
+                    helper.setText(R.id.tv_item_price, "茶叶单价：" + item.getPrice());
+                    helper.setText(R.id.tv_amount, "成交量：" + item.getQuantity());
+                    helper.setText(R.id.tv_total_money, "成交总金额：" + item.getTotal());
+                    helper.setText(R.id.tv_date, "购买时间：" + item.getEndTime());
                     helper.setText(R.id.iv_item_state, CommMethod.getState(item.getTransStatus()));
-                    helper.setImageBitmap(R.id.iv_item_product,AppURL.baseHost+"/"+item.getImgUrl());
+                    helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
 
                     helper.getView(R.id.iv_item_state).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            judge(item);
 
                         }
                     });
@@ -131,12 +134,10 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
             lvMallProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("storageItem",storageList.get(i-1));
-                    openActivity(StorageTradeActivity.class,bundle);
+                    judge(storageList.get(i - 1));
                 }
             });
-        }else {
+        } else {
             storageAdapter.notifyDataSetChanged();
         }
 
@@ -145,15 +146,18 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
     private void judge(OrderBean item) {
         int state = Integer.parseInt(item.getTransStatus());
         Bundle bundle = new Bundle();
+        L.e("state", "=" + state);
         switch (state) {
             //已暂存
-            case 1:case 3 :case 6:
-                bundle.putSerializable("storageItem",item);
-                openActivity(PledgeActivity.class,bundle);
+            case 1:
+            case 3:
+            case 6:
+                bundle.putSerializable("storageItem", item);
+                openActivity(PledgeActivity.class, bundle);
                 break;
             case 8:
-                bundle.putSerializable("storageItem",item);
-                openActivity(StorageTradeActivity.class,bundle);
+                bundle.putSerializable("storageItem", item);
+                openActivity(StorageTradeActivity.class, bundle);
                 break;
             default:
                 ToastManager.showToastReal("该状态订单不能操作");
@@ -165,7 +169,7 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
 
         lvMallProduct.setXListViewListener(this);
         lvMallProduct.setAutoLoadEnable(false);
-        lvMallProduct.setPullRefreshEnable(false);
+        lvMallProduct.setPullRefreshEnable(true);
         lvMallProduct.setPullLoadEnable(true);
 
 
@@ -180,7 +184,9 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
 
     @Override
     public void onRefresh() {
-
+        index = 1;
+        storageList.clear();
+        getData();
     }
 
     @Override

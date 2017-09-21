@@ -89,9 +89,13 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         ButterKnife.bind(this, view);
         UIUtils.setBarTint(getActivity(), false);
         netLoad();
-
         return view;
 
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
     }
 
     private void netLoad() {
@@ -229,6 +233,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         lvHotTea.setAutoLoadEnable(true);
         lvHotTea.setPullRefreshEnable(false);
         lvHotTea.setPullLoadEnable(true);
+        lvHotTea.setHeaderDividersEnabled(false);
         if (hotAdapter == null) {
             setHotTeaAdapter();
         } else {

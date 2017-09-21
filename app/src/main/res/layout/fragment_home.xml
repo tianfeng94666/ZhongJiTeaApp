@@ -130,6 +130,8 @@
 
             <com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView
                 android:id="@+id/lv_hot_tea"
+                android:headerDividersEnabled="false"
+                android:footerDividersEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@color/light_gray"
