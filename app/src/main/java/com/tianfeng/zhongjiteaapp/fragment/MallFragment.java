@@ -22,6 +22,7 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
 import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.bean.ShareContent;
 import com.tianfeng.zhongjiteaapp.json.GetProductResult;
 import com.tianfeng.zhongjiteaapp.json.Product;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
@@ -181,7 +182,12 @@ private int maxIndex;
                 helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        sharedPopupWindow.showPop(view);
+                        ShareContent shareContent = new ShareContent();
+                        shareContent.setImagUrl(AppURL.baseHost + "/" + item.getImgUrl());
+                        shareContent.setUrl(AppURL.baseHost + "/" + item.getInformationUrl());
+                        shareContent.setTitle(item.getGoodsName());
+                        shareContent.setText(item.getIntroduction().replace(System.getProperty("line.separator"), " "));
+                        sharedPopupWindow.showPop(view,shareContent);
                     }
                 });
             }

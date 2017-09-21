@@ -23,6 +23,10 @@ public class AppURL {
      */
     public static String REGISTER_URL= baseHost+"/api/user/register";
     /**
+     * 修改密码
+     */
+    public static String RESETPASSWORD_URL =baseHost+"/api/user/reset_password";
+    /**
      *短信验证
      */
     public static String MESSAGE_CHECK =baseHost+"/api/sms/verify";

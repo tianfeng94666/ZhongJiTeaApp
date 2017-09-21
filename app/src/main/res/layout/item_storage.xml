@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         >
         <TextView
-            android:id="@+id/tv_price"
+            android:id="@+id/tv_item_price"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="茶叶单价：200元/片"

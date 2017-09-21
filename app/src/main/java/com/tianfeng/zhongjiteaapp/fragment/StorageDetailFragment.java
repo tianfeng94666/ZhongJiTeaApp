@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
@@ -18,14 +17,11 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
 import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
-import com.tianfeng.zhongjiteaapp.json.CollectedResult;
 import com.tianfeng.zhongjiteaapp.json.OrderBean;
 import com.tianfeng.zhongjiteaapp.json.StorageResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
-import com.tianfeng.zhongjiteaapp.utils.UIUtils;
-import com.tianfeng.zhongjiteaapp.viewutils.CustomLV;
 import com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView;
 
 import java.util.ArrayList;
@@ -113,7 +109,7 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
                     helper.setText(R.id.tv_item_name,item.getGoodsName());
                     helper.setText(R.id.tv_item_tag,item.getTagName());
                     helper.setText(R.id.tv_item_type,item.getTypeName());
-                    helper.setText(R.id.tv_price,"茶叶单价："+item.getPrice());
+                    helper.setText(R.id.tv_item_price,"茶叶单价："+item.getPrice());
                     helper.setText(R.id.tv_amount,"成交量："+item.getQuantity());
                     helper.setText(R.id.tv_total_money,"成交总金额："+item.getTotal());
                     helper.setText(R.id.tv_date,"购买时间："+item.getEndTime());
@@ -123,9 +119,8 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
                     helper.getView(R.id.iv_item_state).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("storageItem",item);
-                            openActivity(PledgeActivity.class,bundle);
+                            judge(item);
+
                         }
                     });
                 }
@@ -145,6 +140,25 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
             storageAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    private void judge(OrderBean item) {
+        int state = Integer.parseInt(item.getTransStatus());
+        Bundle bundle = new Bundle();
+        switch (state) {
+            //已暂存
+            case 1:case 3 :case 6:
+                bundle.putSerializable("storageItem",item);
+                openActivity(PledgeActivity.class,bundle);
+                break;
+            case 8:
+                bundle.putSerializable("storageItem",item);
+                openActivity(StorageTradeActivity.class,bundle);
+                break;
+            default:
+                ToastManager.showToastReal("该状态订单不能操作");
+                break;
+        }
     }
 
     private void initView(View view) {

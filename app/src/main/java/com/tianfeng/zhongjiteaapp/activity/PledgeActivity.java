@@ -1,15 +1,27 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.OrderBean;
+import com.tianfeng.zhongjiteaapp.json.PledgeResult;
+import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
+import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,13 +51,21 @@ public class PledgeActivity extends BaseActivity {
     TextView tvConfirm;
     @Bind(R.id.tv_cancle)
     TextView tvCancle;
+    @Bind(R.id.ll_old_money)
+    LinearLayout llOldMoney;
+    @Bind(R.id.ll_real_money)
+    LinearLayout llRealMoney;
     private OrderBean item;
+    static BaseActivity instance;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pledge);
         ButterKnife.bind(this);
+        UIUtils.setBarTint(this, false);
+        instance = this;
         getData();
     }
 
@@ -58,13 +78,161 @@ public class PledgeActivity extends BaseActivity {
     }
 
     private void initView() {
-        int state= Integer.parseInt(item.getTransStatus());
-        switch (state){
+        int state = Integer.parseInt(item.getTransStatus());
+        switch (state) {
             //已暂存
             case 8:
+                init8();
                 break;
-            //
+            //质押待审核
+            case 0:
+                init0();
+                break;
+            //质押审核通过
+            case 1:
+                init1();
+                break;
 
         }
     }
+
+    private void init1() {
+        tvConfirm.setText("确认质押");
+        tvCancle.setText("取消质押");
+        tvConfirm.setVisibility(View.VISIBLE);
+        tvCancle.setVisibility(View.VISIBLE);
+        llMoney.setVisibility(View.VISIBLE);
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmPledge();
+            }
+        });
+
+        tvCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                canclePledge();
+            }
+        });
+    }
+
+    private void canclePledge() {
+        Map map = new HashMap();
+
+        map.put("id", item.getId());
+        String url = AppURL.PLEDGE_CANCLE_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                PledgeResult getData = new Gson().fromJson(result, PledgeResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", "已提交申请，等待后台审核");
+                    openActivity(DialogActivity.class, bundle);
+
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
+    }
+
+    private void confirmPledge() {
+        Map map = new HashMap();
+
+        map.put("id", item.getId());
+        String url = AppURL.PLEDGE_CONFIRM_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                PledgeResult getData = new Gson().fromJson(result, PledgeResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", "已提交申请，等待后台审核");
+                    openActivity(DialogActivity.class, bundle);
+
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
+    }
+
+    //质押待审核
+    private void init0() {
+        Bundle bundle = new Bundle();
+        bundle.putString("key", "已提交申请，等待后台审核");
+        openActivity(DialogActivity.class, bundle);
+    }
+
+    /**
+     * 暂存，可提交质押
+     */
+    private void init8() {
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pledge();
+            }
+        });
+    }
+
+    /**
+     * 进行质押申请
+     */
+    private void pledge() {
+        if (StringUtils.isEmpty(etAmount.getText().toString())) {
+            showToastReal("请填写数量！");
+            return;
+        }
+        Map map = new HashMap();
+        map.put("goodsId", item.getGoodsId());
+        map.put("quantity", etAmount.getText().toString());
+        map.put("id", item.getId());
+        String url = AppURL.PLEDGE_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                PledgeResult getData = new Gson().fromJson(result, PledgeResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", "已提交申请，等待后台审核");
+                    openActivity(DialogActivity.class, bundle);
+
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
+
+    }
+
 }

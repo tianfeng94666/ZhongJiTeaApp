@@ -42,7 +42,7 @@ public class StorageTradeActivity extends BaseActivity {
     TextView ivItemState;
     @Bind(R.id.ll_)
     RelativeLayout ll;
-    @Bind(R.id.tv_price)
+    @Bind(R.id.tv_item_price)
     TextView tvPrice;
     @Bind(R.id.tv_amount)
     TextView tvAmount;
@@ -110,7 +110,8 @@ public class StorageTradeActivity extends BaseActivity {
                 openActivity(DialogActivity.class, bundle);
                 break;
             case R.id.tv_pledge:
-                openActivity(PledgeActivity.class, null);
+                bundle.putSerializable("storageItem",item);
+                openActivity(PledgeActivity.class,bundle);
                 break;
         }
     }

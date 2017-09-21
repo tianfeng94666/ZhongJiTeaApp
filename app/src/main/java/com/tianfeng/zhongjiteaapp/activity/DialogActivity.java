@@ -1,5 +1,6 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Window;
@@ -23,6 +24,16 @@ public class DialogActivity extends BaseActivity {
     TextView tvMessage;
     @Bind(R.id.tv_confirm)
     TextView tvConfirm;
+    Activity activity;
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +46,16 @@ public class DialogActivity extends BaseActivity {
     }
 
     private void getData() {
-        tvMessage.setText(getIntent().getExtras().get("key").toString());
+        Bundle bundle = getIntent().getExtras();
+        tvMessage.setText(bundle.get("key").toString());
+        activity = (Activity) bundle.getSerializable("activity");
     }
 
     @OnClick(R.id.tv_confirm)
     public void onClick() {
         finish();
+        if(PledgeActivity.instance!=null){
+            PledgeActivity.instance.finish();
+        }
     }
 }

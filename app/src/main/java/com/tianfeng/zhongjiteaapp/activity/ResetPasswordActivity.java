@@ -14,6 +14,7 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
+import com.tianfeng.zhongjiteaapp.json.ResetPasswordResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.SpUtils;
@@ -81,25 +82,29 @@ public class ResetPasswordActivity extends BaseActivity {
     private void resetPassword() {
         String bizIdEncode = null;
         try {
-            bizIdEncode = URLEncoder.encode(Global.BIZID, "utf-8");
+            bizIdEncode = URLEncoder.encode(bizId, "utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         String phoneNumber = etPhonenumber.getText().toString();
-        String url = AppURL.REGISTER_URL + "/" + bizIdEncode + "/" + etLoginCode.getText().toString();
+        String url = AppURL.RESETPASSWORD_URL + "/" + bizIdEncode + "/" + etLoginCode.getText().toString();
         L.e("url=", url);
         Map map = new HashMap();
         map.put("phoneNumber", phoneNumber);
-        map.put("bizId", Global.BIZID);
-        map.put("code",etLoginCode.getText().toString());
         map.put("password", etReset.getText().toString());
         map.put("rePassword", etPasswordConfirm.getText().toString());
         L.e("map=", map.toString());
-        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
-
+                ResetPasswordResult resetPasswordResult = new Gson().fromJson(result,ResetPasswordResult.class);
+                if(Global.RESULT_CODE.equals(resetPasswordResult.getCode())){
+                    showToastReal(resetPasswordResult.getMsg());
+                    openActivity(LoginAcitivity.class,null);
+                }else {
+                    showToastReal(resetPasswordResult.getMsg());
+                }
             }
 
             @Override

@@ -168,6 +168,7 @@ public class VolleyRequestUtils {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Cookie", "JSESSIONID=" + Global.JESSIONID);
+//                headers.put("content-type","application/json");
                 L.e("cookie=", headers.toString());
                 return headers;
             }

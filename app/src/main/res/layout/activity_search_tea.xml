@@ -55,5 +55,5 @@
     <com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView
         android:id="@+id/lv_seach_tea"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView>
+        android:layout_height="wrap_content"></com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView>
 </LinearLayout>

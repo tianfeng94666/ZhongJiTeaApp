@@ -12,6 +12,8 @@ import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -117,5 +119,11 @@ public class CommMethod {
         }else {
             return "已转让";
         }
+    }
+
+    public static String getFormatedDateTime( long dateTime) {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat sDateFormat = new SimpleDateFormat(pattern);
+        return sDateFormat.format(new Date(dateTime + 0));
     }
 }

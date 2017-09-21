@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/ll_rootview"
+    android:layout_width="match_parent"
+    android:background="@color/theme_bg"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_title"/>
+
+    <com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView
+        android:layout_marginTop="5dp"
+        android:id="@+id/lv_order"
+        android:divider="@color/theme_bg"
+        android:dividerHeight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView>
+</LinearLayout>

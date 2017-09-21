@@ -61,6 +61,7 @@ public class StorageFragment extends BaseFragment {
 
     private void initView(View view) {
         titleText.setText("仓储管理");
+        idIgBack.setVisibility(View.GONE);
         tab.addTab(tab.newTab().setText("1"));
         tab.addTab(tab.newTab().setText("2"));
         //添加页卡标题

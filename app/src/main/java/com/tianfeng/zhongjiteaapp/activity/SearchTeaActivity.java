@@ -16,6 +16,7 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.bean.ShareContent;
 import com.tianfeng.zhongjiteaapp.json.CollectedResult;
 import com.tianfeng.zhongjiteaapp.json.GetProductResult;
 import com.tianfeng.zhongjiteaapp.json.Product;
@@ -157,25 +158,28 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
                     helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            sharedPopupWindow.showPop(llRootview);
+                            ShareContent shareContent = new ShareContent();
+                            shareContent.setImagUrl(AppURL.baseHost + "/" + item.getImgUrl());
+                            shareContent.setUrl(AppURL.baseHost + "/" + item.getInformationUrl());
+                            shareContent.setTitle(item.getGoodsName());
+                            shareContent.setText(item.getIntroduction().replace(System.getProperty("line.separator"), " "));
+                            sharedPopupWindow.showPop(llRootview,shareContent);
                         }
                     });
                 }
 
 
             };
+            lvSeachTea.setAdapter(productAdapter);
         } else {
             productAdapter.notifyDataSetChanged();
         }
-        lvSeachTea.setAdapter(productAdapter);
+
     }
 
 
 
-    @OnClick(R.id.tv_cancle)
-    public void onClick() {
-        finish();
-    }
+
 
     @Override
     public void onRefresh() {
@@ -188,5 +192,9 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
     public void onLoadMore() {
         index++;
         getProduct();
+    }
+    @OnClick(R.id.tv_cancle)
+    public void onClick() {
+        finish();
     }
 }
