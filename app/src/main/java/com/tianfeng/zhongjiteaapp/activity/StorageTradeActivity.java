@@ -13,6 +13,7 @@ import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.json.OrderBean;
 import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
@@ -79,11 +80,16 @@ public class StorageTradeActivity extends BaseActivity {
         titleText.setText(item.getGoodsName());
         tvItemName.setText(item.getGoodsName());
         tvItemTag.setText(item.getTagName());
-        tvItemType.setText(item.getTypeName());
-        tvPrice.setText( "茶叶单价：" + item.getPrice());
+        tvItemType.setText(item.getDeportName()+" "+item.getTypeName());
+        if (StringUtils.isEmpty(item.getTagName())) {
+            tvItemTag.setVisibility(View.GONE);
+        } else {
+            tvItemTag.setVisibility(View.VISIBLE);
+        }
+        tvPrice.setText( "茶叶单价：" + item.getPrice()+"/"+item.getUnitName());
         tvAmount.setText("成交量：" + item.getQuantity());
         tvTotalMoney.setText("成交总金额：" + item.getTotal());
-        tvDate.setText("购买时间：" + item.getEndTime());
+        tvDate.setText("购买时间：" + CommMethod.getFormatedDateTime(item.getCreateTime()));
         ivItemState.setText(CommMethod.getState(item.getTransStatus()));
         ImageLoader.getInstance().displayImage(AppURL.baseHost + "/" + item.getImgUrl(),ivItemProduct, ImageLoadOptions.getOptionsHight());
     }

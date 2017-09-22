@@ -1,10 +1,12 @@
 package com.tianfeng.zhongjiteaapp.json;
 
+import java.io.Serializable;
+
 /**
  * Created by 田丰 on 2017/9/17.
  */
 
-public  class Product {
+public  class Product implements Serializable{
     /**
      * unitName : 提
      * deportId : 0002

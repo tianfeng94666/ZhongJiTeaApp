@@ -21,6 +21,7 @@ import com.tianfeng.zhongjiteaapp.json.OrderBean;
 import com.tianfeng.zhongjiteaapp.json.StorageResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView;
 
@@ -111,12 +112,17 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
                 @Override
                 public void convert(int position, BaseViewHolder helper, final OrderBean item) {
                     helper.setText(R.id.tv_item_name, item.getGoodsName());
+                    if (StringUtils.isEmpty(item.getTagName())) {
+                        helper.getView(R.id.tv_item_tag).setVisibility(View.GONE);
+                    } else {
+                        helper.getView(R.id.tv_item_tag).setVisibility(View.VISIBLE);
+                    }
                     helper.setText(R.id.tv_item_tag, item.getTagName());
-                    helper.setText(R.id.tv_item_type, item.getTypeName());
-                    helper.setText(R.id.tv_item_price, "茶叶单价：" + item.getPrice());
+                    helper.setText(R.id.tv_item_type,item.getDeportName()+" "+ item.getTypeName());
+                    helper.setText(R.id.tv_item_price, "茶叶单价：" + item.getPrice()+"/"+item.getUnitName());
                     helper.setText(R.id.tv_amount, "成交量：" + item.getQuantity());
                     helper.setText(R.id.tv_total_money, "成交总金额：" + item.getTotal());
-                    helper.setText(R.id.tv_date, "购买时间：" + item.getEndTime());
+                    helper.setText(R.id.tv_date, "购买时间：" + CommMethod.getFormatedDateTime(item.getCreateTime()));
                     helper.setText(R.id.iv_item_state, CommMethod.getState(item.getTransStatus()));
                     helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
 

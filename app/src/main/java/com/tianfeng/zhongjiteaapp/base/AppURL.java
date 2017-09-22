@@ -64,7 +64,10 @@ public class AppURL {
      * 上传头像
      */
     public static String UPLOAD_PIC =baseHost+"/api/user/head_img/upload/";
-
+    /**
+     * 修改昵称
+     */
+    public static String CHANGE_NAME_URL =baseHost+"/api/user/nick_update/";
     /**
      * 收藏
      */

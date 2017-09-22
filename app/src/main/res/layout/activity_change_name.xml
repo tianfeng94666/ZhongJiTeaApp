@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/id_rel_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:background="@mipmap/title_bg"
+        android:orientation="horizontal"
+        android:paddingTop="18dp">
+
+    <ImageView
+        android:id="@+id/id_ig_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:visibility="visible"
+        android:onClick="onBack"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="18dp"
+
+        android:src="@mipmap/icon_back" />
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="设置昵称"
+        android:paddingTop="18dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal" />
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:text="保存"
+        android:paddingRight="10dp"
+        android:paddingTop="18dp"
+        android:paddingLeft="20dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_normal"
+        />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_nick_name"
+        android:textSize="@dimen/text_normal"
+        android:hint="输入昵称"
+        android:textColor="@color/text_color"
+        android:background="@color/light_gray"
+        android:textColorHint="@color/text_color2"
+        android:paddingLeft="@dimen/margin33"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+</LinearLayout>

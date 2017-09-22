@@ -71,11 +71,17 @@ public class MineFragment extends BaseFragment {
         View view = View.inflate(getContext(), R.layout.fragment_mine, null);
         UIUtils.setBarTint(getActivity(), false);
         ButterKnife.bind(this, view);
-        initView(view);
+        initView();
         return view;
     }
-
-    private void initView(View view) {
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            initView();
+        }
+    }
+    private void initView() {
         ImageLoader.getInstance().displayImage(Global.HeadView,ivHeadPhoto, ImageLoadOptions.getOptionsHight());
         tvUsername.setText(Global.nickName);
     }

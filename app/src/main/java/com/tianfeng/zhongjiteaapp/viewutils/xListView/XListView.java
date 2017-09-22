@@ -93,6 +93,7 @@ public class XListView extends ListView implements OnScrollListener {
         mScroller = new Scroller(context, new DecelerateInterpolator());
         super.setOnScrollListener(this);
 
+
         // init header view
         mHeader = new XHeaderView(context);
         mHeaderContent = (RelativeLayout) mHeader.findViewById(R.id.header_content);

@@ -67,7 +67,8 @@ public class MallFragment extends BaseFragment implements XListView.IXListViewLi
     SharedPopupWindow sharedPopupWindow;
     private View view;
     private CommonAdapter<Product> productAdapter;
-private int maxIndex;
+    private int maxIndex;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,6 +79,14 @@ private int maxIndex;
         netLoad();
         initView();
         return view;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            netLoad();
+        }
     }
 
     private void netLoad() {
@@ -99,9 +108,9 @@ private int maxIndex;
                 if (Global.RESULT_CODE.equals(getProductResult.getCode())) {
                     maxIndex = getProductResult.getResult().getTotalPage();
                     List temp = getProductResult.getResult().getResult();
-                    if(maxIndex>=index){
+                    if (maxIndex >= index) {
                         list.addAll(temp);
-                    }else {
+                    } else {
                         showToastReal("已经是全部数据了");
                     }
 
@@ -139,20 +148,20 @@ private int maxIndex;
     }
 
     private void setViewData() {
-        if(productAdapter==null){
+        if (productAdapter == null) {
             setAdapter();
-        }else {
+        } else {
             productAdapter.notifyDataSetChanged();
         }
     }
 
     private void setAdapter() {
-        productAdapter =new CommonAdapter<Product>(list, R.layout.item_product) {
+        productAdapter = new CommonAdapter<Product>(list, R.layout.item_product) {
             @Override
             public void convert(int position, final BaseViewHolder helper, final Product item) {
                 helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                 helper.setText(R.id.tv_item_name, item.getGoodsName());
-                helper.setText(R.id.tv_item_type, item.getDeportName());
+                helper.setText(R.id.tv_item_type, item.getDeportName() + " " + item.getTypeName());
                 if (StringUtils.isEmpty(item.getTagName())) {
                     helper.getView(R.id.tv_item_tag).setVisibility(View.GONE);
                 } else {
@@ -168,14 +177,14 @@ private int maxIndex;
                 helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if("0".equals(item.getIsStored())){
+                        if ("0".equals(item.getIsStored())) {
                             item.setIsStored("1");
-                            helper.setImageResource(R.id.iv_item_collection,R.mipmap.collected);
-                            CommMethod.collected(getActivity(),item.getId());
-                        }else {
+                            helper.setImageResource(R.id.iv_item_collection, R.mipmap.collected);
+                            CommMethod.collected(getActivity(), item.getId());
+                        } else {
                             item.setIsStored("0");
-                            helper.setImageResource(R.id.iv_item_collection,R.mipmap.uncollected);
-                            CommMethod.uncollected(getActivity(),item.getId());
+                            helper.setImageResource(R.id.iv_item_collection, R.mipmap.uncollected);
+                            CommMethod.uncollected(getActivity(), item.getId());
                         }
                     }
                 });
@@ -187,7 +196,7 @@ private int maxIndex;
                         shareContent.setUrl(AppURL.baseHost + "/" + item.getInformationUrl());
                         shareContent.setTitle(item.getGoodsName());
                         shareContent.setText(item.getIntroduction().replace(System.getProperty("line.separator"), " "));
-                        sharedPopupWindow.showPop(view,shareContent);
+                        sharedPopupWindow.showPop(view, shareContent);
                     }
                 });
             }
@@ -197,7 +206,7 @@ private int maxIndex;
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle bundle = new Bundle();
-                bundle.putString("url", list.get(i).getInformationUrl());
+                bundle.putSerializable("product", list.get(i));
                 openActivity(ProductActivity.class, bundle);
             }
         });

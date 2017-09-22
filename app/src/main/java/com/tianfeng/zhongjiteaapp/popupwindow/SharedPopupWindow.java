@@ -59,19 +59,19 @@ public class SharedPopupWindow {
         popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(191));
 //        llIsshow = (LinearLayout) view.findViewById(R.id.ll_isshow);
         popupWindow.setFocusable(false);
-        popupWindow.setOutsideTouchable(false);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE && !popupWindow.isFocusable()) {
-                    //如果焦点不在popupWindow上，且点击了外面，不再往下dispatch事件：
-                    //不做任何响应,不 dismiss popupWindow
-                    return true;
-                }
-                //否则default，往下dispatch事件:关掉popupWindow，
-                return false;
-            }
-        });
+        popupWindow.setOutsideTouchable(true);
+//        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_OUTSIDE && !popupWindow.isFocusable()) {
+//                    //如果焦点不在popupWindow上，且点击了外面，不再往下dispatch事件：
+//                    //不做任何响应,不 dismiss popupWindow
+//                    return true;
+//                }
+//                //否则default，往下dispatch事件:关掉popupWindow，
+//                return false;
+//            }
+//        });
         popupWindow.setAnimationStyle(R.style.MyPopupWindow_anim_style);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());     //点击外部消失这句很重要
     }

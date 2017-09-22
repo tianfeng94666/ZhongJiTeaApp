@@ -41,6 +41,7 @@
                         android:textSize="@dimen/text_normal"
                         android:gravity="top"
                         android:singleLine="true"
+                        android:maxWidth="120dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView

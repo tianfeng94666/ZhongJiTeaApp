@@ -15,7 +15,7 @@ public class PledgeResult {
 
     private String code;
     private String msg;
-    private Object result;
+    private String result;
     private String jsessionid;
 
     public String getCode() {
@@ -34,11 +34,11 @@ public class PledgeResult {
         this.msg = msg;
     }
 
-    public Object getResult() {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(Object result) {
+    public void setResult(String result) {
         this.result = result;
     }
 

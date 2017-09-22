@@ -12,6 +12,7 @@
     <!-- 增加文件存储和访问摄像头的权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
@@ -44,7 +45,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.FirstActivity"
+        <activity
+            android:name=".activity.FirstActivity"
+            android:theme="@style/SplashTheme"
             android:alwaysRetainTaskState="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,8 +56,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".base.BaseActivity"
-            android:alwaysRetainTaskState="true"/>
+        <activity
+            android:name=".base.BaseActivity"
+            android:alwaysRetainTaskState="true" />
         <activity
             android:name=".activity.LoginAcitivity"
             android:launchMode="singleTask"
@@ -76,8 +80,8 @@
         <activity android:name=".activity.PledgeActivity" />
         <activity android:name=".activity.ResetPasswordActivity" />
         <activity android:name=".activity.TextActivity" />
-        <activity android:name=".activity.OrderActivity"/>
-
+        <activity android:name=".activity.OrderActivity" />
+        <activity android:name=".activity.ChangeNickNameActivity" />
 
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -123,7 +127,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
 
     </application>

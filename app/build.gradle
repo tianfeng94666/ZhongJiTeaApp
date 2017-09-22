@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+
     compileSdkVersion 24
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.tianfeng.zhongjiteaapp"
-        minSdkVersion 15
-        targetSdkVersion 25
+        multiDexEnabled true
+        minSdkVersion 16    //示向下低至android API 14，即androd 4.0和4.0以上的版本都可以运行该工程
+        targetSdkVersion 23  //表示采用的目标android API是 API 21即 android 5.0。
         versionCode 1
         versionName "1.0"
         useLibrary'org.apache.http.legacy'

@@ -181,7 +181,7 @@ public class PersonalDataActivity extends BaseActivity {
                         /*拍    照*/
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         /*给拍的照片随机取名*/
-                mImageCaptureUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(Environment.getExternalStorageDirectory(), "xcb"
+                mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "tmp_avatar_"
                         + String.valueOf(System.currentTimeMillis())
                         + ".jpg"));
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);

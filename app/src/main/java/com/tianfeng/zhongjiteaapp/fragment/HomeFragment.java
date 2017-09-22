@@ -62,12 +62,14 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     @Bind(R.id.tv_hot_tea)
     TextView tvHotTea;
     @Bind(R.id.lv_hot_tea)
-    XListView lvHotTea;
+    CustomLV lvHotTea;
     SharedPopupWindow sharedPopupWindow;
     @Bind(R.id.ll_notice)
     LinearLayout llNotice;
     @Bind(R.id.tv_loadmore)
     TextView tvLoadmore;
+    @Bind(R.id.tv_hotloadmore)
+    TextView tvHotloadmore;
     private View view;
     private GetProductResult getProductResult;
     List<Product> newlist = new ArrayList<>();
@@ -93,10 +95,6 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-    }
 
     private void netLoad() {
         /**
@@ -193,14 +191,10 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                         maxNewTeaIndex = getProductResult.getResult().getTotalPage();
                         if (temp.size() == 0) {
                             tvNewTea.setVisibility(View.GONE);
-                        }else{
+                        } else {
                             newlist.addAll(temp);
                         }
-//                        if(maxNewTeaIndex>=newTeaIndex){
-//                            newlist.addAll(temp);
-//                        }else {
-//                            showToastReal("已经是全部数据了");
-//                        }
+
                     } else {
                         maxHotTeaIndex = getProductResult.getResult().getTotalPage();
                         if (maxHotTeaIndex >= hotTeaIndex) {
@@ -208,7 +202,12 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                         } else {
                             showToastReal("已经是全部数据了");
                         }
-                        lvHotTea.stopLoadMore();
+                        if(hotlist.size()==0){
+                            tvHotloadmore.setVisibility(View.GONE);
+                        }else {
+                            tvHotloadmore.setVisibility(View.VISIBLE);
+                        }
+//                        lvHotTea.stopLoadMore();
                     }
 
                     initView(view);
@@ -229,10 +228,10 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     private void initView(final View view) {
         lvHotTea.setFocusable(false);
         lvNewTea.setFocusable(false);
-        lvHotTea.setXListViewListener(this);
-        lvHotTea.setAutoLoadEnable(true);
-        lvHotTea.setPullRefreshEnable(false);
-        lvHotTea.setPullLoadEnable(true);
+//        lvHotTea.setXListViewListener(this);
+//        lvHotTea.setAutoLoadEnable(true);
+//        lvHotTea.setPullRefreshEnable(false);
+//        lvHotTea.setPullLoadEnable(true);
         lvHotTea.setHeaderDividersEnabled(false);
         if (hotAdapter == null) {
             setHotTeaAdapter();
@@ -245,7 +244,8 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle bundle = new Bundle();
-                bundle.putString("url", newlist.get(i).getInformationUrl());
+                //Xlistview 添加了一个头部
+                bundle.putSerializable("product", hotlist.get(i));
                 openActivity(ProductActivity.class, bundle);
             }
         });
@@ -260,7 +260,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle bundle = new Bundle();
-                bundle.putString("url", hotlist.get(i).getInformationUrl());
+                bundle.putSerializable("product", newlist.get(i));
                 openActivity(ProductActivity.class, bundle);
             }
         });
@@ -268,11 +268,11 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         UIUtils.setListViewHeightBasedOnChildren(lvHotTea);
         UIUtils.setListViewHeightBasedOnChildren(lvNewTea);
 
-        tvLoadmore.setOnClickListener(new View.OnClickListener() {
+        tvHotloadmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newTeaIndex++;
-                getProduct(newTeaIndex, "02");
+                hotTeaIndex++;
+                getProduct(hotTeaIndex, "01");
             }
         });
         llNotice.setOnClickListener(new View.OnClickListener() {
@@ -297,7 +297,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
             public void convert(int position, final BaseViewHolder helper, final Product item) {
                 helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                 helper.setText(R.id.tv_item_name, item.getGoodsName());
-                helper.setText(R.id.tv_item_type, item.getDeportName());
+                helper.setText(R.id.tv_item_type, item.getDeportName() + " " + item.getTypeName());
                 if (StringUtils.isEmpty(item.getTagName())) {
                     helper.getView(R.id.tv_item_tag).setVisibility(View.GONE);
                 } else {
@@ -348,7 +348,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
             public void convert(int position, final BaseViewHolder helper, final Product item) {
                 helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                 helper.setText(R.id.tv_item_name, item.getGoodsName());
-                helper.setText(R.id.tv_item_type, item.getDeportName());
+                helper.setText(R.id.tv_item_type, item.getDeportName() + " " + item.getTypeName());
                 if (StringUtils.isEmpty(item.getTagName())) {
                     helper.getView(R.id.tv_item_tag).setVisibility(View.GONE);
                 } else {

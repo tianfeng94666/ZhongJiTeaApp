@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.json.Product;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
 import butterknife.Bind;
@@ -36,6 +37,7 @@ public class ProductActivity extends BaseActivity {
     @Bind(R.id.my_web_view)
     WebView myWebView;
     private String url;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +51,14 @@ public class ProductActivity extends BaseActivity {
 
     private void getData(Intent intent) {
         Bundle bundle = intent.getExtras();
-        url = AppURL.baseHost+"/"+bundle.getString("url");
+         product = (Product) bundle.getSerializable("product");
+        url = AppURL.baseHost+"/"+product.getInformationUrl();
+
     }
 
     private void initView() {
         idIgBack.setVisibility(View.VISIBLE);
-        titleText.setText("产品名");
+        titleText.setText(product.getGoodsName());
         myWebView.loadUrl(url);
         //加载本地中的html
         //myWebView.loadUrl("file:///android_asset/www/test2.html");

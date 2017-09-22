@@ -186,8 +186,8 @@ public class LoginAcitivity extends BaseActivity {
         } else {
             showToastReal("请勾选是否同意协议");
         }
-        //调试使用
-        openActivity(ChooseShopActivity.class, null);
+//        //调试使用
+//        openActivity(ChooseShopActivity.class, null);
     }
 
     private void login() {

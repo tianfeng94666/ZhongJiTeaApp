@@ -126,4 +126,10 @@ public class CommMethod {
         SimpleDateFormat sDateFormat = new SimpleDateFormat(pattern);
         return sDateFormat.format(new Date(dateTime + 0));
     }
+    public static String getFormatedDateTime( String dateTime) {
+       long a = Long.parseLong(dateTime);
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat sDateFormat = new SimpleDateFormat(pattern);
+        return sDateFormat.format(new Date(a + 0));
+    }
 }

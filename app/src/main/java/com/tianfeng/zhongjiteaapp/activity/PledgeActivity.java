@@ -55,8 +55,13 @@ public class PledgeActivity extends BaseActivity {
     LinearLayout llOldMoney;
     @Bind(R.id.ll_real_money)
     LinearLayout llRealMoney;
+    @Bind(R.id.tv_reback_money)
+    TextView tvRebackMoney;
+    @Bind(R.id.ll_reback_money)
+    LinearLayout llRebackMoney;
     private OrderBean item;
     static BaseActivity instance;
+    private int state;
 
 
     @Override
@@ -78,7 +83,7 @@ public class PledgeActivity extends BaseActivity {
     }
 
     private void initView() {
-        int state = Integer.parseInt(item.getTransStatus());
+         state = Integer.parseInt(item.getTransStatus());
         switch (state) {
             //可以进行确认或取消
             case 1:
@@ -96,16 +101,20 @@ public class PledgeActivity extends BaseActivity {
             case 8:
                 init8();
                 break;
-
+            default:
+                init0();
+                break;
         }
     }
 
     private void init6() {
         tvConfirm.setText("确认赎回");
         tvCancle.setText("取消赎回");
+        titleText.setText("确认赎回");
         tvConfirm.setVisibility(View.VISIBLE);
         tvCancle.setVisibility(View.VISIBLE);
         llMoney.setVisibility(View.VISIBLE);
+        llRebackMoney.setVisibility(View.VISIBLE);
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +143,7 @@ public class PledgeActivity extends BaseActivity {
                 PledgeResult getData = new Gson().fromJson(result, PledgeResult.class);
                 if (Global.RESULT_CODE.equals(getData.getCode())) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("key", "已提交申请，等待后台审核");
+                    bundle.putString("key", getData.getResult());
                     openActivity(DialogActivity.class, bundle);
 
                 } else {
@@ -183,6 +192,7 @@ public class PledgeActivity extends BaseActivity {
 
     private void init3() {
         tvConfirm.setText("申请赎回");
+        titleText.setText("已质押茶叶");
         tvConfirm.setVisibility(View.VISIBLE);
         tvCancle.setVisibility(View.GONE);
         llMoney.setVisibility(View.VISIBLE);
@@ -227,6 +237,7 @@ public class PledgeActivity extends BaseActivity {
     private void init1() {
         tvConfirm.setText("确认质押");
         tvCancle.setText("取消质押");
+        titleText.setText("确认评估金额");
         tvConfirm.setVisibility(View.VISIBLE);
         tvCancle.setVisibility(View.VISIBLE);
         llMoney.setVisibility(View.VISIBLE);
@@ -305,7 +316,7 @@ public class PledgeActivity extends BaseActivity {
         }, map);
     }
 
-    //质押待审核
+
     private void init0() {
         Bundle bundle = new Bundle();
         bundle.putString("key", "已提交申请，等待后台审核");
@@ -316,6 +327,7 @@ public class PledgeActivity extends BaseActivity {
      * 暂存，可提交质押
      */
     private void init8() {
+        titleText.setText("选择质押数量");
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

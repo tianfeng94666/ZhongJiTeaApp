@@ -106,8 +106,35 @@
 
         </LinearLayout>
 
-    </LinearLayout>
 
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_reback_money"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:visibility="invisible"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/margin33">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="评估金额    "
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+
+        <TextView
+            android:id="@+id/tv_reback_money"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:paddingLeft="16dp"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_normal" />
+
+    </LinearLayout>
     <TextView
         android:id="@+id/tv_confirm"
         android:layout_width="match_parent"

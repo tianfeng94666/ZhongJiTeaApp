@@ -53,7 +53,7 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
     LinearLayout llRootview;
     private GetProductResult getProductResult;
     private List<Product> productList = new ArrayList<>();
-    private int index;
+    private int index=1;
     private int maxIndex;
     SharedPopupWindow sharedPopupWindow;
     private CommonAdapter productAdapter;
@@ -133,7 +133,7 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
                 public void convert(int position, final BaseViewHolder helper, final Product item) {
                     helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                     helper.setText(R.id.tv_item_name, item.getGoodsName());
-                    helper.setText(R.id.tv_item_type, item.getDeportName());
+                    helper.setText(R.id.tv_item_type, item.getDeportName()+" "+item.getTypeName());
                     if (StringUtils.isEmpty(item.getTagName())) {
                         helper.getView(R.id.tv_item_tag).setVisibility(View.GONE);
                     } else {

@@ -128,7 +128,7 @@
                 android:paddingTop="4dp"
                 android:text="热门茶叶" />
 
-            <com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView
+            <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
                 android:id="@+id/lv_hot_tea"
                 android:headerDividersEnabled="false"
                 android:footerDividersEnabled="false"
@@ -137,7 +137,19 @@
                 android:divider="@color/light_gray"
                 android:dividerHeight="5dp">
 
-            </com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView>
+            </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+            <TextView
+                android:id="@+id/tv_hotloadmore"
+                android:text="加载更多"
+                android:visibility="visible"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textSize="@dimen/text_normal"
+                android:textColor="@color/text_color"
+                android:background="@color/white"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textview_height" />
         </LinearLayout>
 
     </LinearLayout>

@@ -23,6 +23,7 @@ import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.popupwindow.SharedPopupWindow;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.StringUtils;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class MyCollectedActivity extends BaseActivity implements XListView.IXLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycollect);
+        UIUtils.setBarTint(this,false);
         ButterKnife.bind(this);
         sharedPopupWindow = new SharedPopupWindow(this);
         initView();
