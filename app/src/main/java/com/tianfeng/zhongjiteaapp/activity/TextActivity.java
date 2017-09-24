@@ -53,7 +53,7 @@ public class TextActivity extends BaseActivity {
     private void getData(Intent intent) {
         Bundle bundle = intent.getExtras();
         type = bundle.getString("type");
-        //type 0-- 来自帮助协议 1-- 公告
+        //type 0-- 来自帮助协议 1-- 公告和注册协议
         if ("0".equals(type)) {
             helpId = bundle.getString("helpId");
             getHelp();

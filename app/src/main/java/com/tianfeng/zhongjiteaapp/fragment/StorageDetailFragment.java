@@ -57,8 +57,15 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
         View view = View.inflate(getContext(), R.layout.fragment_strage_detail, null);
         ButterKnife.bind(this, view);
         initView(view);
-        getData();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(storageList==null||storageList.size()==0){
+            getData();
+        }
     }
 
     private void getData() {

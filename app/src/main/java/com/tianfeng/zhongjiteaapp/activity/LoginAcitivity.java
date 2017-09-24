@@ -15,6 +15,8 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
+import com.tianfeng.zhongjiteaapp.json.HelpResult;
+import com.tianfeng.zhongjiteaapp.json.LoginProtocolResutl;
 import com.tianfeng.zhongjiteaapp.json.LoginResult;
 import com.tianfeng.zhongjiteaapp.json.MessageCheckResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
@@ -26,6 +28,7 @@ import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CountTimerButton;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -82,6 +85,7 @@ public class LoginAcitivity extends BaseActivity {
     LinearLayout llLogin;
     private CountTimerButton mCountDownTimerUtils;
     private String bizId;//验证码请求返回的bizId
+    private List<LoginProtocolResutl.ResultBean> helpList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,7 @@ public class LoginAcitivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initView();
+        netLoad();
     }
 
     private void initView() {
@@ -98,8 +103,18 @@ public class LoginAcitivity extends BaseActivity {
         if (!StringUtils.isEmpty(phone)) {
             etLoginPhone.setText(phone);
         }
-        if(!StringUtils.isEmpty(password)){
+        if (!StringUtils.isEmpty(password)) {
             etLoginPassword.setText(password);
+        }
+    }
+
+    public void gotoProtocol(int i) {
+        Bundle bundle = new Bundle();
+        bundle.putString("type", "1");
+        if (helpList != null && helpList.size() > 0) {
+            bundle.putString("title", helpList.get(i).getTitle());
+            bundle.putString("content", helpList.get(i).getContent());
+            openActivity(TextActivity.class, bundle);
         }
     }
 
@@ -121,8 +136,10 @@ public class LoginAcitivity extends BaseActivity {
             case R.id.cb_ischeck:
                 break;
             case R.id.tv_agreement1:
+                gotoProtocol(0);
                 break;
             case R.id.tv_agreement2:
+                gotoProtocol(1);
                 break;
             case R.id.tv_next:
                 goNext();
@@ -142,6 +159,36 @@ public class LoginAcitivity extends BaseActivity {
         }
     }
 
+    private void netLoad() {
+        Map map = new HashMap();
+        String url = AppURL.GET_PROTOCOL_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                LoginProtocolResutl loginResult = new Gson().fromJson(result, LoginProtocolResutl.class);
+                if (Global.RESULT_CODE.equals(loginResult.getCode())) {
+                    if (loginResult.getResult() != null) {
+                        helpList = loginResult.getResult();
+                        if (helpList.size() > 0) {
+                            initView();
+                        }
+                    }
+
+                } else {
+                    showToastReal(loginResult.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+                showToastReal(fail);
+            }
+        }, map);
+    }
 
     private void goNext() {
 
@@ -166,12 +213,12 @@ public class LoginAcitivity extends BaseActivity {
                 public void onSuccess(String result) {
                     L.e("result", result);
                     MessageCheckResult messageCheckResult = new Gson().fromJson(result, MessageCheckResult.class);
-                    if(Global.RESULT_CODE.equals(messageCheckResult.getCode())) {
+                    if (Global.RESULT_CODE.equals(messageCheckResult.getCode())) {
                         SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
                         Global.PhoneNumber = etLoginPhone.getText().toString();
                         Global.CODE = etLoginCode.getText().toString();
                         openActivity(ChooseShopActivity.class, null);
-                    }else {
+                    } else {
                         showToastReal(messageCheckResult.getMsg());
                     }
                 }
@@ -213,13 +260,13 @@ public class LoginAcitivity extends BaseActivity {
                     Global.JESSIONID = loginResult.getJsessionid();
                     Global.UserId = loginResult.getResult().getId();
                     Global.shopId = loginResult.getResult().getShopId();
-                    Global.HeadView=AppURL.baseHost+loginResult.getResult().getImgUrl();
-                    Global.nickName =loginResult.getResult().getNickName();
+                    Global.HeadView = AppURL.baseHost + loginResult.getResult().getImgUrl();
+                    Global.nickName = loginResult.getResult().getNickName();
                     Global.isLogin = true;
                     SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
                     SpUtils.getInstace(LoginAcitivity.this).saveString("password", etLoginPassword.getText().toString());
                     openActivity(MainActivity.class, null);
-                }else {
+                } else {
                     showToastReal(loginResult.getMsg());
                 }
 //                Global.UserId =
@@ -287,6 +334,7 @@ public class LoginAcitivity extends BaseActivity {
     }
 
     private void showLogin() {
+
         tvRegisitTv.setTextColor(getResources().getColor(R.color.text_color));
         tvLoginTv.setTextColor(getResources().getColor(R.color.oregon));
         llLogin.setVisibility(View.VISIBLE);

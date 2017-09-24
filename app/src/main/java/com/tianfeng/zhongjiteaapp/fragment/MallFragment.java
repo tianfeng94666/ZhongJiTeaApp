@@ -81,20 +81,14 @@ public class MallFragment extends BaseFragment implements XListView.IXListViewLi
         return view;
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            netLoad();
-        }
-    }
+
 
     private void netLoad() {
         Map map = new HashMap();
         map.put("index", index + "");
         map.put("pageSize", 10);
 
-        VolleyRequestUtils.getInstance().getRequestPost(getActivity(), AppURL.GET_PRODUCT_LIST, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        VolleyRequestUtils.getInstance().getRequestPost(getActivity(), AppURL.GET_MALL_PRODUCT_LIST, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
 
@@ -139,7 +133,7 @@ public class MallFragment extends BaseFragment implements XListView.IXListViewLi
 
         lvMallProduct.setXListViewListener(this);
         lvMallProduct.setAutoLoadEnable(false);
-        lvMallProduct.setPullRefreshEnable(false);
+        lvMallProduct.setPullRefreshEnable(true);
         lvMallProduct.setPullLoadEnable(true);
 
         setViewData();

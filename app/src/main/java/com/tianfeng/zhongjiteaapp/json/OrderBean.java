@@ -10,35 +10,37 @@ public class OrderBean implements Serializable{
 
 
     /**
-     * createTime : 1505836800000
-     * deportId : 0002
-     * deportName : 云南仓
-     * endTime : 2017-09-30
-     * goodsId : 8239f118c7bf4521a7be0d2d937be1e5
-     * goodsName : 2017年中吉号班盆庄园
-     * id : 3508281e486e4f4cb1dcc8171c0c53a7
+     * assessment : 0
+     * createTime : 1505923200000
+     * deportId : 0001
+     * deportName : 华南仓
+     * goodsId : 73328ecb7ff141c0bb045e5da58a0217
+     * goodsName : 2017年中吉号纯麻黑古树茶
+     * id : 77215cf4e08948e2b60088e491e10fe0
      * imgUrl : static/img/def1.jpg
      * phoneNumber : 13689500606
-     * price : 32
-     * quantity : 12
-     * tag : 03
-     * tagName : 普通茶
-     * total : 384
-     * transStatus : 8
-     * transType : 0001
+     * price : 2.32
+     * quantity : 100
+     * redeem : 0
+     * tag : 01
+     * tagName : 热门商品
+     * total : 232
+     * transStatus : 7
+     * transStatusName : 已赎回
+     * transType : 0004
      * type : 0001
      * typeName : 生茶
-     * unit : 03
-     * unitName : 提
-     * updateTime : 1505836800000
+     * unit : 01
+     * unitName : 克
      * userId : e7e3ee23af1a49528d506c9864d8362b
      * userName : 13689500606
+     * zcId : 066ddf75bf57432f8816a4d7f2d0d688
      */
 
-    private String createTime;
+    private String assessment;
+    private long createTime;
     private String deportId;
     private String deportName;
-    private String endTime;
     private String goodsId;
     private String goodsName;
     private String id;
@@ -46,24 +48,34 @@ public class OrderBean implements Serializable{
     private String phoneNumber;
     private String price;
     private String quantity;
+    private String redeem;
     private String tag;
     private String tagName;
     private String total;
     private String transStatus;
+    private String transStatusName;
     private String transType;
     private String type;
     private String typeName;
     private String unit;
     private String unitName;
-    private String updateTime;
     private String userId;
     private String userName;
+    private String zcId;
 
-    public String getCreateTime() {
+    public String getAssessment() {
+        return assessment;
+    }
+
+    public void setAssessment(String assessment) {
+        this.assessment = assessment;
+    }
+
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
@@ -81,14 +93,6 @@ public class OrderBean implements Serializable{
 
     public void setDeportName(String deportName) {
         this.deportName = deportName;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
     }
 
     public String getGoodsId() {
@@ -147,6 +151,14 @@ public class OrderBean implements Serializable{
         this.quantity = quantity;
     }
 
+    public String getRedeem() {
+        return redeem;
+    }
+
+    public void setRedeem(String redeem) {
+        this.redeem = redeem;
+    }
+
     public String getTag() {
         return tag;
     }
@@ -177,6 +189,14 @@ public class OrderBean implements Serializable{
 
     public void setTransStatus(String transStatus) {
         this.transStatus = transStatus;
+    }
+
+    public String getTransStatusName() {
+        return transStatusName;
+    }
+
+    public void setTransStatusName(String transStatusName) {
+        this.transStatusName = transStatusName;
     }
 
     public String getTransType() {
@@ -219,14 +239,6 @@ public class OrderBean implements Serializable{
         this.unitName = unitName;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public String getUserId() {
         return userId;
     }
@@ -241,5 +253,13 @@ public class OrderBean implements Serializable{
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getZcId() {
+        return zcId;
+    }
+
+    public void setZcId(String zcId) {
+        this.zcId = zcId;
     }
 }

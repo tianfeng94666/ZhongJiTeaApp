@@ -12,7 +12,7 @@ public class OrderResult {
     /**
      * code : 0000
      * msg : 查询成功
-     * result : {"condition":{},"currentPage":1,"limit":2147483647,"offset":0,"pageSize":10,"result":[{"createTime":1505897053000,"goodsId":"73328ecb7ff141c0bb045e5da58a0217","goodsName":"2017年中吉号纯麻黑古树茶","id":"6548a7e315be4f60a82858ec859628f6","imgUrl":"static/img/def1.jpg","orderStatus":"1","orderStatusName":"审核通过","orderType":"0001","orderTypeName":"暂存","phoneNumber":"13689500606","price":99.88,"quantity":8,"total":799.04,"unit":"03","unitName":"提","updateTime":1505897053000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"},{"createTime":1505897714000,"goodsId":"8239f118c7bf4521a7be0d2d937be1e5","goodsName":"2017年中吉号班盆庄园","id":"91a4c9e1c49a43c890f242966547f350","imgUrl":"static/img/def1.jpg","orderStatus":"1","orderStatusName":"审核通过","orderType":"0001","orderTypeName":"暂存","phoneNumber":"13689500606","price":32,"quantity":12,"total":384,"unit":"03","unitName":"提","updateTime":1505897714000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"},{"createTime":1505897690000,"goodsId":"1eabe6ec56934cca9dd480058b94de85","goodsName":"2017年中吉号布朗珍品","id":"9d683e5121844ddc847c972c5d650e55","imgUrl":"static/img/def1.jpg","orderStatus":"1","orderStatusName":"审核通过","orderType":"0001","orderTypeName":"暂存","phoneNumber":"13689500606","price":20,"quantity":11,"total":220,"unit":"04","unitName":"件","updateTime":1505897690000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"},{"createTime":1505925462000,"goodsId":"73328ecb7ff141c0bb045e5da58a0217","goodsName":"2017年中吉号纯麻黑古树茶","id":"ac271ae452844e15b627314279912a1d","imgUrl":"static/img/def1.jpg","orderStatus":"已暂存","orderType":"0001","orderTypeName":"暂存","phoneNumber":"13689500606","price":30,"quantity":100,"total":3000,"unit":"03","unitName":"提","updateTime":1505925462000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"}],"storey":0,"totalPage":1,"totalRows":4}
+     * result : {"condition":{},"currentPage":4,"limit":2147483647,"offset":0,"pageSize":10,"result":[{"createTime":1505983777000,"deportName":"华南仓","goodsId":"73328ecb7ff141c0bb045e5da58a0217","goodsName":"2017年中吉号纯麻黑古树茶","id":"fafc4a5eecb244fb8a2ffce7bfaa0780","imgUrl":"static/img/def1.jpg","orderStatus":"3","orderStatusName":"交易成功","orderType":"0004","orderTypeName":"质押","phoneNumber":"13689500606","price":2.32,"quantity":100,"tagName":"热门商品","total":232,"typeName":"生茶","unit":"01","unitName":"克","updateTime":1505983777000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"}],"storey":0,"totalPage":4,"totalRows":31}
      */
 
     private String code;
@@ -46,14 +46,14 @@ public class OrderResult {
     public static class ResultBeanX {
         /**
          * condition : {}
-         * currentPage : 1
+         * currentPage : 4
          * limit : 2147483647
          * offset : 0
          * pageSize : 10
-         * result : [{"createTime":1505897053000,"goodsId":"73328ecb7ff141c0bb045e5da58a0217","goodsName":"2017年中吉号纯麻黑古树茶","id":"6548a7e315be4f60a82858ec859628f6","imgUrl":"static/img/def1.jpg","orderStatus":"1","orderStatusName":"审核通过","orderType":"0001","orderTypeName":"暂存","phoneNumber":"13689500606","price":99.88,"quantity":8,"total":799.04,"unit":"03","unitName":"提","updateTime":1505897053000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"},{"createTime":1505897714000,"goodsId":"8239f118c7bf4521a7be0d2d937be1e5","goodsName":"2017年中吉号班盆庄园","id":"91a4c9e1c49a43c890f242966547f350","imgUrl":"static/img/def1.jpg","orderStatus":"1","orderStatusName":"审核通过","orderType":"0001","orderTypeName":"暂存","phoneNumber":"13689500606","price":32,"quantity":12,"total":384,"unit":"03","unitName":"提","updateTime":1505897714000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"},{"createTime":1505897690000,"goodsId":"1eabe6ec56934cca9dd480058b94de85","goodsName":"2017年中吉号布朗珍品","id":"9d683e5121844ddc847c972c5d650e55","imgUrl":"static/img/def1.jpg","orderStatus":"1","orderStatusName":"审核通过","orderType":"0001","orderTypeName":"暂存","phoneNumber":"13689500606","price":20,"quantity":11,"total":220,"unit":"04","unitName":"件","updateTime":1505897690000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"},{"createTime":1505925462000,"goodsId":"73328ecb7ff141c0bb045e5da58a0217","goodsName":"2017年中吉号纯麻黑古树茶","id":"ac271ae452844e15b627314279912a1d","imgUrl":"static/img/def1.jpg","orderStatus":"已暂存","orderType":"0001","orderTypeName":"暂存","phoneNumber":"13689500606","price":30,"quantity":100,"total":3000,"unit":"03","unitName":"提","updateTime":1505925462000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"}]
+         * result : [{"createTime":1505983777000,"deportName":"华南仓","goodsId":"73328ecb7ff141c0bb045e5da58a0217","goodsName":"2017年中吉号纯麻黑古树茶","id":"fafc4a5eecb244fb8a2ffce7bfaa0780","imgUrl":"static/img/def1.jpg","orderStatus":"3","orderStatusName":"交易成功","orderType":"0004","orderTypeName":"质押","phoneNumber":"13689500606","price":2.32,"quantity":100,"tagName":"热门商品","total":232,"typeName":"生茶","unit":"01","unitName":"克","updateTime":1505983777000,"userId":"e7e3ee23af1a49528d506c9864d8362b","userName":"13689500606"}]
          * storey : 0
-         * totalPage : 1
-         * totalRows : 4
+         * totalPage : 4
+         * totalRows : 31
          */
 
         private ConditionBean condition;
@@ -143,27 +143,31 @@ public class OrderResult {
 
         public static class ResultBean {
             /**
-             * createTime : 1505897053000
+             * createTime : 1505983777000
+             * deportName : 华南仓
              * goodsId : 73328ecb7ff141c0bb045e5da58a0217
              * goodsName : 2017年中吉号纯麻黑古树茶
-             * id : 6548a7e315be4f60a82858ec859628f6
+             * id : fafc4a5eecb244fb8a2ffce7bfaa0780
              * imgUrl : static/img/def1.jpg
-             * orderStatus : 1
-             * orderStatusName : 审核通过
-             * orderType : 0001
-             * orderTypeName : 暂存
+             * orderStatus : 3
+             * orderStatusName : 交易成功
+             * orderType : 0004
+             * orderTypeName : 质押
              * phoneNumber : 13689500606
-             * price : 99.88
-             * quantity : 8
-             * total : 799.04
-             * unit : 03
-             * unitName : 提
-             * updateTime : 1505897053000
+             * price : 2.32
+             * quantity : 100
+             * tagName : 热门商品
+             * total : 232
+             * typeName : 生茶
+             * unit : 01
+             * unitName : 克
+             * updateTime : 1505983777000
              * userId : e7e3ee23af1a49528d506c9864d8362b
              * userName : 13689500606
              */
 
             private long createTime;
+            private String deportName;
             private String goodsId;
             private String goodsName;
             private String id;
@@ -175,7 +179,9 @@ public class OrderResult {
             private String phoneNumber;
             private String price;
             private String quantity;
+            private String tagName;
             private String total;
+            private String typeName;
             private String unit;
             private String unitName;
             private long updateTime;
@@ -188,6 +194,14 @@ public class OrderResult {
 
             public void setCreateTime(long createTime) {
                 this.createTime = createTime;
+            }
+
+            public String getDeportName() {
+                return deportName;
+            }
+
+            public void setDeportName(String deportName) {
+                this.deportName = deportName;
             }
 
             public String getGoodsId() {
@@ -278,12 +292,28 @@ public class OrderResult {
                 this.quantity = quantity;
             }
 
+            public String getTagName() {
+                return tagName;
+            }
+
+            public void setTagName(String tagName) {
+                this.tagName = tagName;
+            }
+
             public String getTotal() {
                 return total;
             }
 
             public void setTotal(String total) {
                 this.total = total;
+            }
+
+            public String getTypeName() {
+                return typeName;
+            }
+
+            public void setTypeName(String typeName) {
+                this.typeName = typeName;
             }
 
             public String getUnit() {

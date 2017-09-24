@@ -96,6 +96,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     }
 
 
+
     private void netLoad() {
         /**
          * 获取广告轮播

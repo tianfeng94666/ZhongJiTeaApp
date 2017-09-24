@@ -106,11 +106,18 @@ public class PledgeActivity extends BaseActivity {
                 break;
         }
     }
-
+public void setTextViewData(){
+    etAmount.setText(item.getQuantity()+"");
+    tvOldMoney.setText(item.getTotal());
+    tvEvaluateMoney.setText(item.getAssessment());
+    tvRebackMoney.setText(item.getRedeem());
+}
     private void init6() {
         tvConfirm.setText("确认赎回");
         tvCancle.setText("取消赎回");
         titleText.setText("确认赎回");
+        etAmount.setEnabled(false);
+        setTextViewData();
         tvConfirm.setVisibility(View.VISIBLE);
         tvCancle.setVisibility(View.VISIBLE);
         llMoney.setVisibility(View.VISIBLE);
@@ -193,6 +200,8 @@ public class PledgeActivity extends BaseActivity {
     private void init3() {
         tvConfirm.setText("申请赎回");
         titleText.setText("已质押茶叶");
+        etAmount.setEnabled(false);
+        setTextViewData();
         tvConfirm.setVisibility(View.VISIBLE);
         tvCancle.setVisibility(View.GONE);
         llMoney.setVisibility(View.VISIBLE);
@@ -238,6 +247,8 @@ public class PledgeActivity extends BaseActivity {
         tvConfirm.setText("确认质押");
         tvCancle.setText("取消质押");
         titleText.setText("确认评估金额");
+        etAmount.setEnabled(false);
+        setTextViewData();
         tvConfirm.setVisibility(View.VISIBLE);
         tvCancle.setVisibility(View.VISIBLE);
         llMoney.setVisibility(View.VISIBLE);

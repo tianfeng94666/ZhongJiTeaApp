@@ -158,17 +158,31 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
     private void initPopupwindow() {
         setCameraPermission();
-        ImageInitiDialog imageInitiDialog = new ImageInitiDialog(SettingActivity.this);
+        ImageInitiDialog imageInitiDialog = new ImageInitiDialog(this);
         imageInitiDialog.showDialog(llSetting);
         imageInitiDialog.setOnImageSelectListener(new ImageInitiDialog.OnImageSelectListener() {
             @Override
             public void onCamera() {
                         /*拍    照*/
-                //构建隐式Intent
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
+                        /*给拍的照片随机取名*/
+                mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "tmp_avatar_"
+                        + String.valueOf(System.currentTimeMillis())
+                        + ".jpg"));
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                intent.putExtra("return-data", true);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
                 //设置切换动画，从右边进入，左边退出
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
@@ -211,21 +225,7 @@ public class SettingActivity extends BaseActivity {
 
         switch (requestCode) {
             case PICK_FROM_CAMERA:
-                //用户点击了取消
-                if(data == null){
-                    return;
-                }else{
-                    Bundle extras = data.getExtras();
-                    if (extras != null){
-                        //获得拍的照片
-                        Bitmap bm = extras.getParcelable("data");
-                        //将Bitmap转化为uri
-                        Uri uri = saveBitmap(bm, "temp");
-                        //启动图像裁剪
-                        mImageCaptureUri= uri;
-                        doCrop();
-                    }
-                }
+                doCrop();
                 break;
             case PICK_FROM_PHOTO:
                 mImageCaptureUri = data.getData();
@@ -298,38 +298,13 @@ public class SettingActivity extends BaseActivity {
         }
         return result;
     }
-    public class CropOption {
+
+    class CropOption {
         public CharSequence title;
         public Drawable icon;
         public Intent appIntent;
     }
-    public class CropOptionAdapter extends ArrayAdapter<CropOption> {
-        private ArrayList<CropOption> mOptions;
-        private LayoutInflater mInflater;
 
-        public CropOptionAdapter(Context context, ArrayList<CropOption> options) {
-            super(context, R.layout.crop_selector, options);
-            mOptions = options;
-            mInflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup group) {
-            if (convertView == null)
-                convertView = mInflater.inflate(R.layout.crop_selector, null);
-            CropOption item = mOptions.get(position);
-            if (item != null) {
-                ((ImageView) convertView.findViewById(R.id.iv_icon))
-                        .setImageDrawable(item.icon);
-                ((TextView) convertView.findViewById(R.id.tv_name))
-                        .setText(item.title);
-
-                return convertView;
-            }
-
-            return null;
-        }
-    }
 
     private void doCrop() {
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -358,43 +333,6 @@ public class SettingActivity extends BaseActivity {
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
         }
-    }
-
-
-    /**
-     * 将Bitmap写入SD卡中的一个文件中,并返回写入文件的Uri
-     * @param bm
-     * @param dirPath
-     * @return
-     */
-    private Uri saveBitmap(Bitmap bm, String dirPath) {
-        //新建文件夹用于存放裁剪后的图片
-        File tmpDir = new File(Environment.getExternalStorageDirectory() + "/" + dirPath);
-        if (!tmpDir.exists()){
-            tmpDir.mkdir();
-        }
-
-        //新建文件存储裁剪后的图片
-        File img = new File(tmpDir.getAbsolutePath() + "/avator.png");
-        try {
-            //打开文件输出流
-            FileOutputStream fos = new FileOutputStream(img);
-            //将bitmap压缩后写入输出流(参数依次为图片格式、图片质量和输出流)
-            bm.compress(Bitmap.CompressFormat.PNG, 85, fos);
-            //刷新输出流
-            fos.flush();
-            //关闭输出流
-            fos.close();
-            //返回File类型的Uri
-            return Uri.fromFile(img);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-
     }
 
 
