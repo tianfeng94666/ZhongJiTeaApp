@@ -161,7 +161,7 @@ public class PersonalDataActivity extends BaseActivity {
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
 

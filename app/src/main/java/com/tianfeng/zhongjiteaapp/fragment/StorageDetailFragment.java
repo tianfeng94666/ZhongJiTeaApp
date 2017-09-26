@@ -106,7 +106,7 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                ToastManager.showToastReal(fail);
+//                ToastManager.showToastReal(fail);
                 lvMallProduct.stopLoadMore();
                 lvMallProduct.stopRefresh();
             }

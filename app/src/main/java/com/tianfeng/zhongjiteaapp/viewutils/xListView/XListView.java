@@ -136,7 +136,8 @@ public class XListView extends ListView implements OnScrollListener {
         // make sure XFooterView is the last footer view, and only add once.
         if (!mIsFooterReady) {
             mIsFooterReady = true;
-            addFooterView(mFooterLayout);
+            //不显示下拉刷新---田丰
+//            addFooterView(mFooterLayout);
         }
 
         super.setAdapter(adapter);

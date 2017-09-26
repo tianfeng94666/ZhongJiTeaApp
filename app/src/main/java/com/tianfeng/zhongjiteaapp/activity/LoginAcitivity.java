@@ -3,6 +3,8 @@ package com.tianfeng.zhongjiteaapp.activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -184,7 +186,7 @@ public class LoginAcitivity extends BaseActivity {
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
     }
@@ -225,7 +227,7 @@ public class LoginAcitivity extends BaseActivity {
                 @Override
                 public void onFail(String fail) {
                     L.e("fail", fail);
-                    showToastReal(fail);
+//                    showToastReal(fail);
                 }
             }, map);
 
@@ -319,7 +321,7 @@ public class LoginAcitivity extends BaseActivity {
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
 
@@ -386,10 +388,11 @@ public class LoginAcitivity extends BaseActivity {
         qq.authorize();//单独授权,OnComplete返回的hashmap是空的
         qq.showUser(null);//授权并获取用户信息
         //移除授权
-        //weibo.removeAccount(true);
+        qq.removeAccount(true);
     }
 
     private void weiChatLogin() {
+
         Platform weibo = ShareSDK.getPlatform(Wechat.NAME);
 //回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
         weibo.setPlatformActionListener(new PlatformActionListener() {
@@ -420,6 +423,6 @@ public class LoginAcitivity extends BaseActivity {
         weibo.authorize();//单独授权,OnComplete返回的hashmap是空的
         weibo.showUser(null);//授权并获取用户信息
 //移除授权
-//weibo.removeAccount(true);
+//        weibo.removeAccount(true);
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.activity.HistoryNoticeActivity;
 import com.tianfeng.zhongjiteaapp.activity.ProductActivity;
 import com.tianfeng.zhongjiteaapp.activity.TextActivity;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
@@ -279,13 +280,14 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         llNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("type", "1");
-                if (noticeResult != null && noticeResult.getResult() != null) {
-                    bundle.putString("title", noticeResult.getResult().getResult().get(0).getTitle());
-                    bundle.putString("content", noticeResult.getResult().getResult().get(0).getContent());
-                    openActivity(TextActivity.class, bundle);
-                }
+//                Bundle bundle = new Bundle();
+//                bundle.putString("type", "1");
+//                if (noticeResult != null && noticeResult.getResult() != null) {
+//                    bundle.putString("title", noticeResult.getResult().getResult().get(0).getTitle());
+//                    bundle.putString("content", noticeResult.getResult().getResult().get(0).getContent());
+//                    openActivity(TextActivity.class, bundle);
+//                }
+                openActivity(HistoryNoticeActivity.class,null);
 
 
             }

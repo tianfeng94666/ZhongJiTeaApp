@@ -364,7 +364,7 @@ public class FlyBanner extends RelativeLayout {
             });
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             if (mIsImageUrl) {
-                ImageLoader.getInstance().displayImage(mImageUrls.get(toRealPosition(position)), imageView, ImageLoadOptions.getOptionsHight());
+                ImageLoader.getInstance().displayImage(mImageUrls.get(toRealPosition(position)), imageView, ImageLoadOptions.getOptionsBanner());
             } else {
                 imageView.setImageResource(mImages.get(toRealPosition(position)));
             }

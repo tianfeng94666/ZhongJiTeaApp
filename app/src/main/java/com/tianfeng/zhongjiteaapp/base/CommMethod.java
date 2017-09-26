@@ -49,7 +49,7 @@ public class CommMethod {
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                ToastManager.showToastReal(fail);
+//                ToastManager.showToastReal(fail);
             }
         }, map);
     }
@@ -79,7 +79,7 @@ public class CommMethod {
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                ToastManager.showToastReal(fail);
+//                ToastManager.showToastReal(fail);
             }
         }, map);
     }

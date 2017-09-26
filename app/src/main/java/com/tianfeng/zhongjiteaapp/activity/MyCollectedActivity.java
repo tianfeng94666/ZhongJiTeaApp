@@ -97,7 +97,7 @@ public class MyCollectedActivity extends BaseActivity implements XListView.IXLis
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
     }

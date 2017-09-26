@@ -162,7 +162,7 @@ public void setTextViewData(){
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
     }
@@ -192,7 +192,7 @@ public void setTextViewData(){
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
     }
@@ -238,7 +238,7 @@ public void setTextViewData(){
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
     }
@@ -292,7 +292,7 @@ public void setTextViewData(){
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
     }
@@ -322,7 +322,7 @@ public void setTextViewData(){
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
     }
@@ -355,6 +355,16 @@ public void setTextViewData(){
             showToastReal("请填写数量！");
             return;
         }
+       double amount = Double.parseDouble(etAmount.getText().toString());
+        double maxamount = Double.parseDouble(item.getQuantity());
+        if(amount<=0){
+            showToastReal("数量不能为负数或0");
+            return;
+        }
+        if(amount>maxamount){
+            showToastReal("数量不能超过质押数量");
+            return;
+        }
         Map map = new HashMap();
         map.put("goodsId", item.getGoodsId());
         map.put("quantity", etAmount.getText().toString());
@@ -380,7 +390,7 @@ public void setTextViewData(){
             @Override
             public void onFail(String fail) {
                 L.e("fail", fail);
-                showToastReal(fail);
+//                showToastReal(fail);
             }
         }, map);
 

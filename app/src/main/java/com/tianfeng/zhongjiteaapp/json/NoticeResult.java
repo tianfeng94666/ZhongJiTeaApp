@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/18 0018.
  */
 
-public class NoticeResult {
+public class NoticeResult{
     /**
      * code : 0000
      * msg : 查询成功
