@@ -118,8 +118,8 @@ public class OrderActivity extends BaseActivity implements XListView.IXListViewL
                     }else {
                         helper.getView(R.id.tv_item_tag).setVisibility(View.VISIBLE);
                     }
-                    helper.setText(R.id.tv_item_tag,item.getTagName());
-                    helper.setText(R.id.tv_item_type,item.getDeportName()+" "+item.getTypeName());
+                    helper.setText(R.id.tv_item_tag," "+item.getTagName()+" ");
+                    helper.setText(R.id.tv_item_type,item.getDeportName()+item.getTypeName());
                     helper.setText(R.id.tv_item_price,"茶叶单价："+item.getPrice());
                     helper.setText(R.id.tv_amount,"成交量："+item.getQuantity());
                     helper.setText(R.id.tv_total_money,"成交总金额："+item.getTotal());

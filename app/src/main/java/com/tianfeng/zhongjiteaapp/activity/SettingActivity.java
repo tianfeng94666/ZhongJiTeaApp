@@ -105,6 +105,12 @@ public class SettingActivity extends BaseActivity {
         setContentView(R.layout.activity_setting);
         UIUtils.setBarTint(this,false);
         ButterKnife.bind(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initView();
         getData();
     }

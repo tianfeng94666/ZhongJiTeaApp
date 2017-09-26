@@ -72,6 +72,8 @@ public class BaseApplication extends Application {
         BaseApplication.mMainThreadHandler = new Handler();
         BaseApplication.mMainThreadId = android.os.Process.myTid();
         BaseApplication.mMainThread = Thread.currentThread();
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(getApplicationContext());
         spUtils = SpUtils.getInstace(this);
         mAcache=ACache.get(this);
         initVolley();

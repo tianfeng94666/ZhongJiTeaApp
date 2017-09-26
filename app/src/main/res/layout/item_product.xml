@@ -1,106 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:paddingLeft="@dimen/margin10"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
     android:background="@drawable/board_white"
-    android:paddingRight="@dimen/margin10"
-    android:layout_height="90dp">
-<com.tianfeng.zhongjiteaapp.viewutils.CircleImageView
-    android:layout_marginTop="@dimen/margin10"
-    android:layout_marginBottom="@dimen/margin10"
-    android:id="@+id/iv_item_product"
-    android:src="@mipmap/first"
-    android:layout_width="70dp"
-    android:layout_height="70dp" />
-    <LinearLayout
-        android:layout_marginTop="@dimen/margin10"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/margin10"
+    android:paddingRight="@dimen/margin10">
+
+    <com.tianfeng.zhongjiteaapp.viewutils.CircleImageView
+        android:id="@+id/iv_item_product"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginBottom="@dimen/margin10"
-        android:paddingLeft="@dimen/marginLeft8"
-        android:orientation="vertical"
+        android:layout_marginTop="@dimen/margin10"
+        android:src="@mipmap/first" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="85dp">
+        android:layout_height="85dp"
+        android:layout_marginBottom="@dimen/margin10"
+        android:layout_marginTop="@dimen/margin10"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/marginLeft8">
 
         <RelativeLayout
             android:id="@+id/ll_"
-            android:orientation="horizontal"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="0dp" >
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
             <LinearLayout
-                android:layout_marginRight="81dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="71dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/tv_item_name"
-                        android:text="E01231 古御风"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_normal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
                         android:gravity="top"
                         android:singleLine="true"
-                        android:maxWidth="120dp"
+                        android:text="E01231 古御风"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_normal" />
+
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:text=""
-                        android:id="@+id/tv_item_tag"
-                        android:layout_toRightOf="@+id/tv_item_name"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:textColor="@color/white"
-                        android:layout_marginLeft="4dp"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:textSize="9sp"
-                        android:layout_marginTop="3dp"
-                        android:layout_gravity="top"
-                        android:background="@drawable/board_oregon_no_padding"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </RelativeLayout>
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_item_tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_toRightOf="@+id/tv_item_name"
+                            android:background="@drawable/board_oregon_no_padding"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="9sp" />
+                    </RelativeLayout>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_item_type"
-                    android:text="云南仓  生茶"
-               android:gravity="center_vertical"
-                    android:textSize="11sp"
-                    android:textColor="@color/oregon"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="云南仓  生茶"
+                    android:textColor="@color/oregon"
+                    android:textSize="11sp" />
             </LinearLayout>
-            <ImageView
-                android:id="@+id/iv_item_collection"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/uncollected"
-                android:layout_marginRight="8dp"
-                android:layout_toLeftOf="@+id/iv_item_share"
-                android:padding="3dp"
 
+            <LinearLayout
+                android:id="@+id/ll_item_collection"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:layout_alignParentRight="true"
-                android:id="@+id/iv_item_share"
-                android:src="@mipmap/shared"
-                android:padding="3dp"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+
+                android:layout_toLeftOf="@+id/ll_item_share"
+                android:background="@drawable/board_white_radio5"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/iv_item_collection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/uncollected" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_item_share"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/board_white_radio3"
+                android:padding="3dp">
+
+                <ImageView
+                    android:id="@+id/iv_item_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/shared" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/tv_product_item_information"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:text="古御风，产自千米深山，选用百年古树，古御风古茶树产于云南省西双版纳省监利县香茗古茶树"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:textSize="13sp"
-            android:textColor="@color/text_color2"
             android:layout_width="wrap_content"
-            android:layout_height="0dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:orientation="horizontal"
+            android:text="古御风，产自千米深山，选用百年古树，古御风古茶树产于云南省西双版纳省监利县香茗古茶树"
+            android:textColor="@color/text_color2"
+            android:textSize="13sp" />
 
     </LinearLayout>
 </LinearLayout>

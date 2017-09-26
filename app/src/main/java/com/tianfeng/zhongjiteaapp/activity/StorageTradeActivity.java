@@ -80,7 +80,7 @@ public class StorageTradeActivity extends BaseActivity {
         titleText.setText(item.getGoodsName());
         tvItemName.setText(item.getGoodsName());
         tvItemTag.setText(item.getTagName());
-        tvItemType.setText(item.getDeportName()+" "+item.getTypeName());
+        tvItemType.setText(item.getDeportName()+item.getTypeName());
         if (StringUtils.isEmpty(item.getTagName())) {
             tvItemTag.setVisibility(View.GONE);
         } else {

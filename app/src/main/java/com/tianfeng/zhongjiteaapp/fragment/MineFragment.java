@@ -82,7 +82,7 @@ public class MineFragment extends BaseFragment {
         }
     }
     private void initView() {
-        ImageLoader.getInstance().displayImage(Global.HeadView,ivHeadPhoto, ImageLoadOptions.getOptionsHight());
+        ImageLoader.getInstance().displayImage(Global.HeadView,ivHeadPhoto, ImageLoadOptions.getOptions());
         tvUsername.setText(Global.nickName);
     }
 

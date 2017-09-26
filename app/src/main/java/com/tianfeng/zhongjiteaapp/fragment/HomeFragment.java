@@ -309,9 +309,9 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 } else {
                     helper.setImageResource(R.id.iv_item_collection, R.mipmap.collected);
                 }
-                helper.setText(R.id.tv_item_tag, item.getTagName());
+                helper.setText(R.id.tv_item_tag, " "+item.getTagName()+" ");
                 helper.setText(R.id.tv_product_item_information, item.getIntroduction().replace(System.getProperty("line.separator"), " "));
-                helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
+                helper.setViewOnclick(R.id.ll_item_collection, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if ("0".equals(item.getIsStored())) {
@@ -327,7 +327,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
                     }
                 });
-                helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
+                helper.setViewOnclick(R.id.ll_item_share, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ShareContent shareContent = new ShareContent();
@@ -360,9 +360,9 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 } else {
                     helper.setImageResource(R.id.iv_item_collection, R.mipmap.collected);
                 }
-                helper.setText(R.id.tv_item_tag, item.getTagName());
+                helper.setText(R.id.tv_item_tag," "+item.getTagName()+" ");
                 helper.setText(R.id.tv_product_item_information, item.getIntroduction().replace(System.getProperty("line.separator"), " "));
-                helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
+                helper.setViewOnclick(R.id.ll_item_collection, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if ("0".equals(item.getIsStored())) {
@@ -376,7 +376,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                         }
                     }
                 });
-                helper.setViewOnclick(R.id.iv_item_share, new View.OnClickListener() {
+                helper.setViewOnclick(R.id.ll_item_share, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ShareContent shareContent = new ShareContent();

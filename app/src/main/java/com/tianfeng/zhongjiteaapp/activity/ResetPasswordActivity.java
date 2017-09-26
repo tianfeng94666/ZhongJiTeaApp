@@ -55,7 +55,7 @@ public class ResetPasswordActivity extends BaseActivity {
     TextView tvLoginCode;
     @Bind(R.id.et_reset)
     EditText etReset;
-    @Bind(R.id.et_password_confirm)
+    @Bind(R.id.et_phone)
     EditText etPasswordConfirm;
     @Bind(R.id.tv_confirm)
     TextView tvConfirm;

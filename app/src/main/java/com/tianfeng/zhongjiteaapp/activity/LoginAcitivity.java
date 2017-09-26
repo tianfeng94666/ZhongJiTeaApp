@@ -15,7 +15,6 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
-import com.tianfeng.zhongjiteaapp.json.HelpResult;
 import com.tianfeng.zhongjiteaapp.json.LoginProtocolResutl;
 import com.tianfeng.zhongjiteaapp.json.LoginResult;
 import com.tianfeng.zhongjiteaapp.json.MessageCheckResult;
@@ -53,7 +52,7 @@ public class LoginAcitivity extends BaseActivity {
     TextView tvLoginTv;
     @Bind(R.id.tv_regisit_tv)
     TextView tvRegisitTv;
-    @Bind(R.id.et_password_confirm)
+    @Bind(R.id.et_phone)
     EditText etLoginPhone;
     @Bind(R.id.et_login_code)
     EditText etLoginCode;
@@ -366,6 +365,7 @@ public class LoginAcitivity extends BaseActivity {
             public void onError(Platform arg0, int arg1, Throwable arg2) {
                 // TODO Auto-generated method stub
                 arg2.printStackTrace();
+                showToastReal("qq登陆失败");
             }
 
             @Override
@@ -373,12 +373,13 @@ public class LoginAcitivity extends BaseActivity {
                 // TODO Auto-generated method stub
                 //输出所有授权信息
                 arg0.getDb().exportData();
+                openActivity(AssociatePhoneActivity.class, null);
             }
 
             @Override
             public void onCancel(Platform arg0, int arg1) {
                 // TODO Auto-generated method stub
-
+                showToastReal("取消qq登陆");
             }
         });
         //authorize与showUser单独调用一个即可
@@ -397,6 +398,7 @@ public class LoginAcitivity extends BaseActivity {
             public void onError(Platform arg0, int arg1, Throwable arg2) {
                 // TODO Auto-generated method stub
                 arg2.printStackTrace();
+                showToastReal("微信登陆失败");
             }
 
             @Override
@@ -404,12 +406,14 @@ public class LoginAcitivity extends BaseActivity {
                 // TODO Auto-generated method stub
                 //输出所有授权信息
                 arg0.getDb().exportData();
+                openActivity(AssociatePhoneActivity.class, null);
+
             }
 
             @Override
             public void onCancel(Platform arg0, int arg1) {
                 // TODO Auto-generated method stub
-
+                showToastReal("取消微信登陆");
             }
         });
 //authorize与showUser单独调用一个即可

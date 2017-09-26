@@ -148,6 +148,7 @@ public class PersonalDataActivity extends BaseActivity {
                 if(Global.RESULT_CODE.equals(loginResult.getCode())){
                     Global.UserId = loginResult.getResult().getId();
                     Global.JESSIONID=loginResult.getJsessionid();
+                    Global.HeadView = AppURL.baseHost + loginResult.getResult().getImgUrl();
                     Global.shopId = loginResult.getResult().getShopId();
                     Global.isLogin =true;
                     openActivity(MainActivity.class,null);

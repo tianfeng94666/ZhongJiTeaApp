@@ -1,5 +1,7 @@
 package com.tianfeng.zhongjiteaapp.json;
 
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
+
 import java.util.List;
 
 /**
@@ -197,7 +199,7 @@ public class OrderResult {
             }
 
             public String getDeportName() {
-                return deportName;
+                return StringUtils.isEmpty(deportName)?"":deportName+" ";
             }
 
             public void setDeportName(String deportName) {
@@ -309,7 +311,7 @@ public class OrderResult {
             }
 
             public String getTypeName() {
-                return typeName;
+                return StringUtils.isEmpty(typeName)?"":typeName;
             }
 
             public void setTypeName(String typeName) {

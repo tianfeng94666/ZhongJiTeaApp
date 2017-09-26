@@ -126,7 +126,7 @@ public class MyCollectedActivity extends BaseActivity implements XListView.IXLis
             public void convert(final int position, final BaseViewHolder helper, final Product item) {
                 helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
                 helper.setText(R.id.tv_item_name, item.getGoodsName());
-                helper.setText(R.id.tv_item_type, item.getDeportName());
+                helper.setText(R.id.tv_item_type, item.getDeportName()+ item.getTypeName());
                 if (StringUtils.isEmpty(item.getTagName())) {
                     helper.getView(R.id.tv_item_tag).setVisibility(View.GONE);
                 } else {

@@ -138,12 +138,12 @@ public class BaseViewHolder {
      */
     public BaseViewHolder setImageBitmap(int viewId, String st) {
         ImageView view = getView(viewId);
-        ImageLoader.getInstance().displayImage(st, view, ImageLoadOptions.getOptions());
+        ImageLoader.getInstance().displayImage(st, view, ImageLoadOptions.getOptionsHight());
         return this;
     }
     public BaseViewHolder setImageBitmap(int viewId, String st, int t) {
         ImageView view = getView(viewId);
-        ImageLoader.getInstance().displayImage(st, view, ImageLoadOptions.getOptions());
+        ImageLoader.getInstance().displayImage(st, view, ImageLoadOptions.getOptionsHight());
         view.setBackgroundColor(android.graphics.Color.parseColor("#ffffff"));
         return this;
     }
@@ -172,7 +172,7 @@ public class BaseViewHolder {
      * @return
      */
     public BaseViewHolder setImageByUrl(int viewId, String url) {
-        ImageLoader.getInstance().displayImage(url, (ImageView) getView(viewId), ImageLoadOptions.getOptions());
+        ImageLoader.getInstance().displayImage(url, (ImageView) getView(viewId), ImageLoadOptions.getOptionsHight());
         return this;
     }
 

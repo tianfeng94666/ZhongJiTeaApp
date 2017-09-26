@@ -166,7 +166,7 @@ public class MallFragment extends BaseFragment implements XListView.IXListViewLi
                 } else {
                     helper.setImageResource(R.id.iv_item_collection, R.mipmap.collected);
                 }
-                helper.setText(R.id.tv_item_tag, item.getTagName());
+                helper.setText(R.id.tv_item_tag," "+item.getTagName()+" ");
                 helper.setText(R.id.tv_product_item_information, item.getIntroduction().replace(System.getProperty("line.separator"), " "));
                 helper.setViewOnclick(R.id.iv_item_collection, new View.OnClickListener() {
                     @Override
@@ -200,7 +200,7 @@ public class MallFragment extends BaseFragment implements XListView.IXListViewLi
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("product", list.get(i));
+                bundle.putSerializable("product", list.get(i-1));
                 openActivity(ProductActivity.class, bundle);
             }
         });

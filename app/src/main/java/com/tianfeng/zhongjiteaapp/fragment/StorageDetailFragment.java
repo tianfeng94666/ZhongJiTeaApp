@@ -124,7 +124,7 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
                     } else {
                         helper.getView(R.id.tv_item_tag).setVisibility(View.VISIBLE);
                     }
-                    helper.setText(R.id.tv_item_tag, item.getTagName());
+                    helper.setText(R.id.tv_item_tag," "+item.getTagName()+" ");
                     helper.setText(R.id.tv_item_type,item.getDeportName()+" "+ item.getTypeName());
                     helper.setText(R.id.tv_item_price, "茶叶单价：" + item.getPrice()+"/"+item.getUnitName());
                     helper.setText(R.id.tv_amount, "成交量：" + item.getQuantity());

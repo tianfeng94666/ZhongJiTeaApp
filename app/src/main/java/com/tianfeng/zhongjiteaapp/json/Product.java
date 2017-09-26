@@ -1,5 +1,7 @@
 package com.tianfeng.zhongjiteaapp.json;
 
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
+
 import java.io.Serializable;
 
 /**
@@ -71,7 +73,7 @@ public  class Product implements Serializable{
     }
 
     public String getTypeName() {
-        return typeName;
+        return StringUtils.isEmpty(typeName)?"":typeName;
     }
 
     public void setTypeName(String typeName) {
@@ -127,7 +129,7 @@ public  class Product implements Serializable{
     }
 
     public String getDeportName() {
-        return deportName;
+        return StringUtils.isEmpty(deportName)?"":deportName+" ";
     }
 
     public void setDeportName(String deportName) {
