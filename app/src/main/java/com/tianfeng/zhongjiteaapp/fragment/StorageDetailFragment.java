@@ -61,9 +61,24 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume
+            if (storageAdapter != null) {
+                onRefresh();
+            }
+
+        } else {
+            //相当于Fragment的onPause
+        }
+    }
+
+
+    @Override
     public void onResume() {
         super.onResume();
-        if(storageList==null||storageList.size()==0){
+        if (storageList == null || storageList.size() == 0) {
             getData();
         }
     }
@@ -92,7 +107,9 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
                         if (temp.size() > 0) {
                             if (maxIndex >= index) {
                                 storageList.addAll(temp);
-                                setData();
+                                if (storageList.size() > 0) {
+                                    setData();
+                                }
                             }
                         }
                     }
@@ -124,9 +141,9 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
                     } else {
                         helper.getView(R.id.tv_item_tag).setVisibility(View.VISIBLE);
                     }
-                    helper.setText(R.id.tv_item_tag," "+item.getTagName()+" ");
-                    helper.setText(R.id.tv_item_type,item.getDeportName()+" "+ item.getTypeName());
-                    helper.setText(R.id.tv_item_price, "茶叶单价：" + item.getPrice()+"/"+item.getUnitName());
+                    helper.setText(R.id.tv_item_tag, " " + item.getTagName() + " ");
+                    helper.setText(R.id.tv_item_type, item.getDeportName() + " " + item.getTypeName());
+                    helper.setText(R.id.tv_item_price, "茶叶单价：" + item.getPrice() + "/" + item.getUnitName());
                     helper.setText(R.id.tv_amount, "成交量：" + item.getQuantity());
                     helper.setText(R.id.tv_total_money, "成交总金额：" + item.getTotal());
                     helper.setText(R.id.tv_date, "购买时间：" + CommMethod.getFormatedDateTime(item.getCreateTime()));
@@ -198,7 +215,10 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
     @Override
     public void onRefresh() {
         index = 1;
-        storageList.clear();
+        if(storageAdapter!=null){
+            storageList.clear();
+            storageAdapter.notifyDataSetChanged();
+        }
         getData();
     }
 

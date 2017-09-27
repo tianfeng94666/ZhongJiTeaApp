@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.activity.AdInfoActivity;
 import com.tianfeng.zhongjiteaapp.activity.HistoryNoticeActivity;
 import com.tianfeng.zhongjiteaapp.activity.ProductActivity;
-import com.tianfeng.zhongjiteaapp.activity.TextActivity;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
@@ -22,6 +22,7 @@ import com.tianfeng.zhongjiteaapp.base.BaseFragment;
 import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.bean.ShareContent;
+import com.tianfeng.zhongjiteaapp.json.AdBean;
 import com.tianfeng.zhongjiteaapp.json.AdResult;
 import com.tianfeng.zhongjiteaapp.json.GetProductResult;
 import com.tianfeng.zhongjiteaapp.json.NoticeResult;
@@ -79,7 +80,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     private List<Product> hotlist = new ArrayList<>();
     private NoticeResult noticeResult;
     private AdResult adResult;
-    private List<AdResult.ResultBeanX.ResultBean> adList;//广告
+    private List<AdBean> adList;//广告
     private List<String> adUrlList = new ArrayList<>();
     private CommonAdapter<Product> hotAdapter;
     private CommonAdapter<Product> newAdapter;
@@ -155,10 +156,11 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 if (Global.RESULT_CODE.equals(adResult.getCode())) {
                     adList = adResult.getResult().getResult();
                     if (adList != null && adList.size() > 0) {
-                        for (AdResult.ResultBeanX.ResultBean itme : adList) {
+                        for (AdBean itme : adList) {
                             adUrlList.add(AppURL.baseHost + itme.getImgUrl());
                         }
-                        flybanner.setImagesUrl(adUrlList);
+                        initBanner();
+
                     }
 
 
@@ -174,6 +176,18 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
             }
         }, map);
+    }
+
+    private void initBanner() {
+        flybanner.setImagesUrl(adUrlList);
+        flybanner.setOnItemClickListener(new FlyBanner.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("adBean",adList.get(position));
+                openActivity(AdInfoActivity.class,bundle);
+            }
+        });
     }
 
     private void getProduct(int index, final String tag) {

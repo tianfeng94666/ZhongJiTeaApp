@@ -73,7 +73,7 @@ public class AdResult {
         private int totalPage;
         private ConditionBean condition;
         private int storey;
-        private List<ResultBean> result;
+        private List<AdBean> result;
 
         public int getOffset() {
             return offset;
@@ -139,81 +139,17 @@ public class AdResult {
             this.storey = storey;
         }
 
-        public List<ResultBean> getResult() {
+        public List<AdBean> getResult() {
             return result;
         }
 
-        public void setResult(List<ResultBean> result) {
+        public void setResult(List<AdBean> result) {
             this.result = result;
         }
 
         public static class ConditionBean {
         }
 
-        public static class ResultBean {
-            /**
-             * id : bdebbaeaedee4c379e37f74cceb7b56a
-             * title : 测试
-             * imgUrl : /file/crop/image/goods/2017/img_1505315498535.bmp
-             * url : https://www.baidu.com/
-             * type : null
-             * createTime : 1505488456000
-             */
 
-            private String id;
-            private String title;
-            private String imgUrl;
-            private String url;
-            private Object type;
-            private long createTime;
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getImgUrl() {
-                return imgUrl;
-            }
-
-            public void setImgUrl(String imgUrl) {
-                this.imgUrl = imgUrl;
-            }
-
-            public String getUrl() {
-                return url;
-            }
-
-            public void setUrl(String url) {
-                this.url = url;
-            }
-
-            public Object getType() {
-                return type;
-            }
-
-            public void setType(Object type) {
-                this.type = type;
-            }
-
-            public long getCreateTime() {
-                return createTime;
-            }
-
-            public void setCreateTime(long createTime) {
-                this.createTime = createTime;
-            }
-        }
     }
 }

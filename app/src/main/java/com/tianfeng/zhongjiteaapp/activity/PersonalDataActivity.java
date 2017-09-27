@@ -151,6 +151,7 @@ public class PersonalDataActivity extends BaseActivity {
                     Global.HeadView = AppURL.baseHost + loginResult.getResult().getImgUrl();
                     Global.shopId = loginResult.getResult().getShopId();
                     Global.isLogin =true;
+                    SpUtils.getInstace(PersonalDataActivity.this).saveBoolean("isExit",false);
                     openActivity(MainActivity.class,null);
                     finish();
                 }else {

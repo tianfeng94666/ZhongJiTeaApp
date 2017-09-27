@@ -25,6 +25,7 @@ import com.tianfeng.zhongjiteaapp.json.LogoutResult;
 import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.SpUtils;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
@@ -133,6 +134,7 @@ public class MineFragment extends BaseFragment {
                 LogoutResult logoutResult = new Gson().fromJson(result, LogoutResult.class);
                 if (Global.RESULT_CODE.equals(logoutResult.getCode())) {
                     Global.isLogin = false;
+                    SpUtils.getInstace(getActivity()).saveBoolean("isExit",true);
                     openActivity(LoginAcitivity.class, null);
                     getActivity().finish();
 

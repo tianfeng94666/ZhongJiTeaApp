@@ -107,9 +107,14 @@ public class LoginAcitivity extends BaseActivity {
         if (!StringUtils.isEmpty(password)) {
             etLoginPassword.setText(password);
         }
+         boolean isExit = SpUtils.getInstace(this).getBoolean("isExit",true);
+        if(!isExit){
+            login();
+        }
     }
 
     public void gotoProtocol(int i) {
+
         Bundle bundle = new Bundle();
         bundle.putString("type", "1");
         if (helpList != null && helpList.size() > 0) {
@@ -264,6 +269,7 @@ public class LoginAcitivity extends BaseActivity {
                     Global.HeadView = AppURL.baseHost + loginResult.getResult().getImgUrl();
                     Global.nickName = loginResult.getResult().getNickName();
                     Global.isLogin = true;
+                    SpUtils.getInstace(LoginAcitivity.this).saveBoolean("isExit", false);
                     SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
                     SpUtils.getInstace(LoginAcitivity.this).saveString("password", etLoginPassword.getText().toString());
                     openActivity(MainActivity.class, null);
@@ -423,6 +429,6 @@ public class LoginAcitivity extends BaseActivity {
         weibo.authorize();//单独授权,OnComplete返回的hashmap是空的
         weibo.showUser(null);//授权并获取用户信息
 //移除授权
-//        weibo.removeAccount(true);
+        weibo.removeAccount(true);
     }
 }

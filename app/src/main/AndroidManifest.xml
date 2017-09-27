@@ -3,6 +3,7 @@
     package="com.tianfeng.zhongjiteaapp">
     <!-- 增加访问网络的权限 -->
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
@@ -46,8 +47,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.FirstActivity"
-            android:theme="@style/SplashTheme"
-            android:alwaysRetainTaskState="true">
+            android:alwaysRetainTaskState="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -81,8 +82,8 @@
         <activity android:name=".activity.TextActivity" />
         <activity android:name=".activity.OrderActivity" />
         <activity android:name=".activity.ChangeNickNameActivity" />
-        <activity android:name=".activity.HistoryNoticeActivity"/>
-
+        <activity android:name=".activity.HistoryNoticeActivity" />
+        <activity android:name=".activity.AdInfoActivity" />
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
