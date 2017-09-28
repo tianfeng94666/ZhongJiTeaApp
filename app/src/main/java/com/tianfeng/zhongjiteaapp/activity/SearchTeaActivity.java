@@ -186,6 +186,7 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
     public void onRefresh() {
         index = 1;
         productList.clear();
+        productAdapter.notifyDataSetChanged();
         getProduct();
     }
 

@@ -3,6 +3,7 @@ package com.tianfeng.zhongjiteaapp.popupwindow;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.bean.ShareContent;
+import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
@@ -119,11 +121,25 @@ public class SharedPopupWindow {
     }
 
     private void weiboShare() {
-        SinaWeibo.ShareParams sp = new SinaWeibo.ShareParams();
-        sp.setText(shareContent.getText());
-        sp.setTitle(shareContent.getTitle());
-        sp.setImageUrl(shareContent.getImagUrl());
-        sp.setUrl(shareContent.getUrl());
+        SinaWeibo.ShareParams oks = new SinaWeibo.ShareParams();
+        // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
+        oks.setTitle(shareContent.getTitle());
+        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
+        oks.setTitleUrl(shareContent.getUrl());
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(shareContent.getText());
+        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+        oks.setImageUrl(shareContent.getImagUrl());
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl(shareContent.getUrl());
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("Androidapp下载地址");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite("ShareSDK");
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl(shareContent.getUrl());
         Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
         weibo.SSOSetting(true);
         weibo.setPlatformActionListener(new PlatformActionListener() {
@@ -144,7 +160,7 @@ public class SharedPopupWindow {
             }
         }); // 设置分享事件回调
 // 执行图文分享
-        weibo.share(sp);
+        weibo.share(oks);
     }
 
     private void qqShare() {
@@ -187,11 +203,25 @@ public class SharedPopupWindow {
     }
 
     private void friendShare() {
-       Platform.ShareParams sp = new Platform.ShareParams();
-        sp.setText(shareContent.getText());
-        sp.setTitle(shareContent.getTitle());
-        sp.setImageUrl(shareContent.getImagUrl());
-        sp.setUrl(shareContent.getUrl());
+       Platform.ShareParams oks = new Platform.ShareParams();
+        // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
+        oks.setTitle(shareContent.getTitle());
+        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
+        oks.setTitleUrl(shareContent.getUrl());
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(shareContent.getText());
+        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+        oks.setImageUrl(shareContent.getImagUrl());
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl(shareContent.getUrl());
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("Androidapp下载地址");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite("ShareSDK");
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl(shareContent.getUrl());
         Platform wechatMoments = ShareSDK.getPlatform(WechatMoments.NAME);
         wechatMoments.setPlatformActionListener(new PlatformActionListener() {
             @Override
@@ -208,31 +238,24 @@ public class SharedPopupWindow {
                 ToastManager.showToastReal("分享取消");
             }
         });
-        wechatMoments.share(sp);
+        wechatMoments.share(oks);
     }
 
     private void weichatShare() {
-        Wechat.ShareParams oks = new Wechat.ShareParams();
+        Platform.ShareParams oks = new Platform.ShareParams();
         // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
         oks.setTitle(shareContent.getTitle());
-        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
-        oks.setTitleUrl(shareContent.getUrl());
         // text是分享文本，所有平台都需要这个字段
         oks.setText(shareContent.getText());
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-//        oks.setImageUrl(shareContent.getImagUrl());
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        oks.setImageUrl(shareContent.getImagUrl());
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl(shareContent.getUrl());
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment("Androidapp下载地址");
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite("ShareSDK");
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(shareContent.getUrl());
-
-
+        oks.setShareType(Platform.SHARE_WEBPAGE);
         Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
         wechat.setPlatformActionListener(new PlatformActionListener() {
             @Override
@@ -243,6 +266,7 @@ public class SharedPopupWindow {
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
                 ToastManager.showToastReal("分享失败");
+                L.e(throwable.toString());
             }
             @Override
             public void onCancel(Platform platform, int i) {

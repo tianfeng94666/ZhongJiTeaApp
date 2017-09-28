@@ -141,6 +141,7 @@ public class HistoryNoticeActivity extends BaseActivity implements XListView.IXL
     public void onRefresh() {
         index = 1;
         noticeList.clear();
+        noticeAdapter.notifyDataSetChanged();
         getNotice();
     }
 

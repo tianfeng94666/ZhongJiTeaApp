@@ -43,4 +43,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'org.json:json:20170516'
     compile files('libs/libammsdk.jar')
+    compile files('libs/ShareSDK-Wechat-2.8.3.jar')
 }

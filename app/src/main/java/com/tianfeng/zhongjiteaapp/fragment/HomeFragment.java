@@ -146,7 +146,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     private void getAd() {
         Map map = new HashMap();
         map.put("index", 1);
-        map.put("pageSize", 3);
+        map.put("pageSize", 5);
         VolleyRequestUtils.getInstance().getRequestPost(getActivity(), AppURL.GET_ADS_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {

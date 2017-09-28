@@ -66,7 +66,7 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
         if (isVisibleToUser) {
             //相当于Fragment的onResume
             if (storageAdapter != null) {
-                onRefresh();
+
             }
 
         } else {
@@ -78,9 +78,7 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
     @Override
     public void onResume() {
         super.onResume();
-        if (storageList == null || storageList.size() == 0) {
-            getData();
-        }
+        onRefresh();
     }
 
     private void getData() {
