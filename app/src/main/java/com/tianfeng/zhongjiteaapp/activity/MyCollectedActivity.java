@@ -2,6 +2,7 @@ package com.tianfeng.zhongjiteaapp.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -160,6 +161,14 @@ public class MyCollectedActivity extends BaseActivity implements XListView.IXLis
                 });
             }
         };
+        lvMycollected.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("product", collectedList.get(position));
+                openActivity(ProductActivity.class, bundle);
+            }
+        });
         lvMycollected.setAdapter(collectedAdapter);
 
     }

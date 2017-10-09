@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,6 +51,8 @@ public class ShopInformationActivity extends BaseActivity {
     TextView tvShopPhone;
     @Bind(R.id.tv_shop_time)
     TextView tvShopTime;
+    @Bind(R.id.tv_call)
+    Button tvCall;
     private ShopInfoResult shopInfo;
 
     @Override
@@ -68,12 +71,13 @@ public class ShopInformationActivity extends BaseActivity {
         tvShopAddress.setText(resultBean.getAddress());
         tvShopPhone.setText(resultBean.getTel());
         tvShopTime.setText(resultBean.getBusiStartTime() + "--" + resultBean.getBusiEndTime());
-        tvShopPhone.setOnClickListener(new View.OnClickListener() {
+        tvCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requestPermission();
             }
         });
+
     }
 
     /**
@@ -125,7 +129,7 @@ public class ShopInformationActivity extends BaseActivity {
     private void callPhone() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:"+tvShopPhone.getText().toString()));
+        intent.setData(Uri.parse("tel:" + tvShopPhone.getText().toString()));
         startActivity(intent);
     }
 

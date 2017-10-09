@@ -40,6 +40,7 @@
         android:layout_marginLeft="@dimen/margin33"
         android:layout_marginRight="@dimen/margin33"
         android:background="@color/color_line" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/textview_height"
@@ -73,6 +74,7 @@
         android:layout_marginLeft="@dimen/margin33"
         android:layout_marginRight="@dimen/margin33"
         android:background="@color/color_line" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/textview_height"
@@ -96,8 +98,19 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/margin16"
             android:gravity="bottom"
-            android:text=""
+            android:text="13058023844"
             android:textColor="@android:color/holo_red_light"
+            android:textSize="@dimen/text_normal" />
+
+        <Button
+            android:id="@+id/tv_call"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin16"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/board_oregon_no_padding"
+            android:text="直接拨打"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_normal" />
     </LinearLayout>
 
@@ -107,6 +120,7 @@
         android:layout_marginLeft="@dimen/margin33"
         android:layout_marginRight="@dimen/margin33"
         android:background="@color/color_line" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/textview_height"

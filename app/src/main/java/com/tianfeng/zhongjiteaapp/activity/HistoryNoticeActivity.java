@@ -13,6 +13,7 @@ import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.CommMethod;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.HelpResult;
 import com.tianfeng.zhongjiteaapp.json.NoticeResult;
@@ -110,10 +111,11 @@ public class HistoryNoticeActivity extends BaseActivity implements XListView.IXL
 
     private void setLv() {
         if (noticeAdapter == null) {
-            noticeAdapter = new CommonAdapter<NoticeResult.ResultBeanX.ResultBean>(noticeList, R.layout.item_help) {
+            noticeAdapter = new CommonAdapter<NoticeResult.ResultBeanX.ResultBean>(noticeList, R.layout.item_notice) {
                 @Override
                 public void convert(int position, BaseViewHolder helper, NoticeResult.ResultBeanX.ResultBean item) {
                     helper.setText(R.id.tv_help_name, noticeList.get(position).getTitle());
+                    helper.setText(R.id.tv_time, CommMethod.getFormatedDateTime(noticeList.get(position).getCreateTime()));
                 }
 
 

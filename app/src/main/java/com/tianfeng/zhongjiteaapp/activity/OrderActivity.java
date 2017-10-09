@@ -124,7 +124,7 @@ public class OrderActivity extends BaseActivity implements XListView.IXListViewL
                     helper.setText(R.id.tv_amount,"成交量："+item.getQuantity());
                     helper.setText(R.id.tv_total_money,"成交总金额："+item.getTotal());
                     helper.setText(R.id.tv_date,"购买时间："+CommMethod.getFormatedDateTime(item.getCreateTime()));
-                    helper.setText(R.id.iv_item_state,item.getOrderStatusName());
+                    helper.setText(R.id.iv_item_state,item.getOrderTypeName());
                     helper.setImageBitmap(R.id.iv_item_product,AppURL.baseHost+"/"+item.getImgUrl());
                 }
 
