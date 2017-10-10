@@ -45,6 +45,7 @@ public class AearChoosePopupWindow {
     private List<GetAearResult.ResultBean.ChildrenBean> childrenBeanList;
     private CommonAdapter<GetAearResult.ResultBean.ChildrenBean> childAdapter;
     public ChildChangeInterface child;
+    private int selectIndex;
 
 
     public AearChoosePopupWindow(Context context, List<GetAearResult.ResultBean.ChildrenBean> childrenBeanList) {
@@ -77,6 +78,37 @@ public class AearChoosePopupWindow {
     }
 
     public void setLvAears(final List<GetAearResult.ResultBean> aears, AdapterView.OnItemClickListener onItemClickListenerchild) {
+        final CommonAdapter aerasAdapter = new CommonAdapter<GetAearResult.ResultBean>(aears, R.layout.item_textview) {
+            @Override
+            public void convert(int position, BaseViewHolder helper, GetAearResult.ResultBean item) {
+                helper.setText(R.id.item_tv, item.getName());
+                if (selectIndex == position) {
+                    helper.getView(R.id.ll_item).setBackgroundColor(context.getResources().getColor(R.color.light_gray));
+                } else {
+                    helper.getView(R.id.ll_item).setBackgroundColor(context.getResources().getColor(R.color.white));
+                }
+
+            }
+
+        };
+        lvAears.setAdapter(aerasAdapter);
+        lvAears.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Global.AeraFirst = aears.get(position).getName();
+                childrenBeanList = aears.get(position).getChildren();
+                ((ChildChangeInterface) context).change(childrenBeanList);
+                selectIndex = position;
+                setChildAdapter();
+                aerasAdapter.notifyDataSetChanged();
+            }
+        });
+
+        setChildAdapter();
+        lvAersChild.setOnItemClickListener(onItemClickListenerchild);
+    }
+
+    private void setChildAdapter() {
         childAdapter = new CommonAdapter<GetAearResult.ResultBean.ChildrenBean>(childrenBeanList, R.layout.item_textview) {
             @Override
             public void convert(int position, BaseViewHolder helper, GetAearResult.ResultBean.ChildrenBean item) {
@@ -84,25 +116,7 @@ public class AearChoosePopupWindow {
             }
 
         };
-        lvAears.setAdapter(new CommonAdapter<GetAearResult.ResultBean>(aears, R.layout.item_textview) {
-            @Override
-            public void convert(int position, BaseViewHolder helper, GetAearResult.ResultBean item) {
-                helper.setText(R.id.item_tv, item.getName());
-            }
-
-        });
-        lvAears.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Global.AeraFirst = aears.get(position).getName();
-                childrenBeanList = aears.get(position).getChildren();
-                ((ChildChangeInterface) context).change(childrenBeanList);
-                childAdapter.notifyDataSetChanged();
-            }
-        });
-
         lvAersChild.setAdapter(childAdapter);
-        lvAersChild.setOnItemClickListener(onItemClickListenerchild);
     }
 
     public void showPop(View view) {

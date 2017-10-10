@@ -95,7 +95,7 @@ public class ChooseShopActivity extends BaseActivity implements ChildChangeInter
 
     private void getShops() {
 
-        VolleyRequestUtils.getInstance().getRequestGet(this, AppURL.GET_SHOPS_LIST+"/"+Global.AeraCode, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        VolleyRequestUtils.getInstance().getRequestGet(this, AppURL.GET_SHOPS_LIST + "/" + Global.AeraCode, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("url", AppURL.GET_SHOPS_LIST);
@@ -148,9 +148,9 @@ public class ChooseShopActivity extends BaseActivity implements ChildChangeInter
         rlChooseShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(StringUtils.isEmpty(Global.AeraCode)){
+                if (StringUtils.isEmpty(Global.AeraCode)) {
                     showToastReal("请先选择地区！");
-                }else {
+                } else {
                     shopPopup.showPop(rlRootView);
                 }
 
@@ -171,6 +171,8 @@ public class ChooseShopActivity extends BaseActivity implements ChildChangeInter
             public void onClick(View v) {
                 if (!StringUtils.isEmpty(tvShopName.getText().toString())) {
                     openActivity(PersonalDataActivity.class, null);
+                } else {
+                    showToastReal("请选择门店");
                 }
             }
         });
@@ -183,6 +185,6 @@ public class ChooseShopActivity extends BaseActivity implements ChildChangeInter
 
     @Override
     public void change(List<GetAearResult.ResultBean.ChildrenBean> childrenBeanList) {
-        this.childrenBeanList =childrenBeanList;
+        this.childrenBeanList = childrenBeanList;
     }
 }
