@@ -98,8 +98,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/margin16"
             android:gravity="bottom"
-            android:text="13058023844"
-            android:textColor="@android:color/holo_red_light"
+            android:text=""
+            android:textColor="@color/text_color"
             android:textSize="@dimen/text_normal" />
 
         <Button

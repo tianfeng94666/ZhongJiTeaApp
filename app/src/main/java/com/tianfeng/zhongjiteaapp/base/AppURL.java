@@ -65,6 +65,10 @@ public class AppURL {
      */
     public static String GET_NOTICE_URL = baseHost + "/api/notice/page";
     /**
+     * 地区查询
+     */
+    public static String GET_AEAR_URL = baseHost+"/api/shop/area";
+    /**
      * 门店查询
      */
     public static String GET_SHOPS_LIST = baseHost + "/api/shop/all";

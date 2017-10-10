@@ -16,4 +16,7 @@ public class Global {
     public static boolean isLogin =false;
     public static String HeadView;
     public static String nickName;
+    public static String AeraFirst;
+    public static String AeraSecond;
+    public static String AeraCode;
 }
