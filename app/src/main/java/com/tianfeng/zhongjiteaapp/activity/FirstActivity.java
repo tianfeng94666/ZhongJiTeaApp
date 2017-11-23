@@ -104,7 +104,10 @@ private  boolean isFirstCome = SpUtils.getInstace(this).getBoolean("isFirst",tru
                     SpUtils.getInstace(FirstActivity.this).saveString("phoneNumber", loginName);
                     SpUtils.getInstace(FirstActivity.this).saveString("password", password);
                     openActivity(MainActivity.class, null);
-                } else {
+                }else if(Global.FAIL_CODE.equals(loginResult.getCode())){
+                    openActivity(LoginAcitivity.class, null);
+                }
+                else {
                     showToastReal(loginResult.getMsg());
                 }
 //                Global.UserId =

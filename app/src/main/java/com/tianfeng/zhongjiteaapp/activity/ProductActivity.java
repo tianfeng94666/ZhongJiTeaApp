@@ -63,15 +63,30 @@ public class ProductActivity extends BaseActivity {
         //加载本地中的html
         //myWebView.loadUrl("file:///android_asset/www/test2.html");
         //加上下面这段代码可以使网页中的链接不以浏览器的方式打开
-        myWebView.setWebViewClient(new WebViewClient());
+        myWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                myWebView.loadUrl("javascript:(function(){" +
+                        "var objs = document.getElementsByTagName('img'); " +
+                        "for(var i=0;i<objs.length;i++)  " +
+                        "{"
+                        + "var img = objs[i];   " +
+                        "    img.style.maxWidth = '100%'; img.style.height = 'auto';  " +
+                        "}" +
+                        "})()");
+            }
+        })
+
+        ;
         //得到webview设置
         WebSettings webSettings = myWebView.getSettings();
         //允许使用javascript
         webSettings.setJavaScriptEnabled(true);
 
         //设置自适应屏幕，两者合用
-        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
-        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+//        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
+//        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
         //将WebAppInterface于javascript绑定
 //        myWebView.addJavascriptInterface(new WebAppInterface(this), "Android");
 

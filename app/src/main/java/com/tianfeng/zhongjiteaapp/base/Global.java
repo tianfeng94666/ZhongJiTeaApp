@@ -7,6 +7,7 @@ package com.tianfeng.zhongjiteaapp.base;
 public class Global {
     public static int selectPosition=0;
     public static String  RESULT_CODE = "0000";
+    public static String  FAIL_CODE = "-1";
     public static String JESSIONID;
     public static String BIZID;
     public static String CODE;//验证码

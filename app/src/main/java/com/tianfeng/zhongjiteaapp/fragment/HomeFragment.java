@@ -127,7 +127,10 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 L.e("url  ", AppURL.GET_NOTICE_URL);
                 noticeResult = new Gson().fromJson(result, NoticeResult.class);
                 if (Global.RESULT_CODE.equals(noticeResult.getCode())) {
-                    tvNotice.setText(noticeResult.getResult().getResult().get(0).getTitle());
+                    if(noticeResult.getResult()!=null&&noticeResult.getResult().getResult()!=null&&noticeResult.getResult().getResult().size()>0){
+                        tvNotice.setText(noticeResult.getResult().getResult().get(0).getTitle());
+                    }
+
 
                 } else {
                     showToastReal(noticeResult.getMsg());
