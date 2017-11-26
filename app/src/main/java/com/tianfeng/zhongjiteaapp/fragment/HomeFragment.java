@@ -43,6 +43,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.tianfeng.zhongjiteaapp.utils.ToastManager.showToastReal;
 
@@ -72,6 +73,12 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     TextView tvLoadmore;
     @Bind(R.id.tv_hotloadmore)
     TextView tvHotloadmore;
+    @Bind(R.id.tv_buy_tea)
+    TextView tvBuyTea;
+    @Bind(R.id.tv_store_tea)
+    TextView tvStoreTea;
+    @Bind(R.id.tv_change_tea)
+    TextView tvChangeTea;
     private View view;
     private GetProductResult getProductResult;
     List<Product> newlist = new ArrayList<>();
@@ -98,7 +105,6 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     }
 
 
-
     private void netLoad() {
         /**
          * 获取广告轮播
@@ -116,6 +122,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
     }
 
+
     private void getNotice() {
         Map map = new HashMap();
         map.put("index", 1);
@@ -127,7 +134,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 L.e("url  ", AppURL.GET_NOTICE_URL);
                 noticeResult = new Gson().fromJson(result, NoticeResult.class);
                 if (Global.RESULT_CODE.equals(noticeResult.getCode())) {
-                    if(noticeResult.getResult()!=null&&noticeResult.getResult().getResult()!=null&&noticeResult.getResult().getResult().size()>0){
+                    if (noticeResult.getResult() != null && noticeResult.getResult().getResult() != null && noticeResult.getResult().getResult().size() > 0) {
                         tvNotice.setText(noticeResult.getResult().getResult().get(0).getTitle());
                     }
 
@@ -187,8 +194,8 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
             @Override
             public void onItemClick(int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("adBean",adList.get(position));
-                openActivity(AdInfoActivity.class,bundle);
+                bundle.putSerializable("adBean", adList.get(position));
+                openActivity(AdInfoActivity.class, bundle);
             }
         });
     }
@@ -221,9 +228,9 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                         } else {
                             showToastReal("已经是全部数据了");
                         }
-                        if(hotlist.size()==0){
+                        if (hotlist.size() == 0) {
                             tvHotloadmore.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             tvHotloadmore.setVisibility(View.VISIBLE);
                         }
 //                        lvHotTea.stopLoadMore();
@@ -304,7 +311,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 //                    bundle.putString("content", noticeResult.getResult().getResult().get(0).getContent());
 //                    openActivity(TextActivity.class, bundle);
 //                }
-                openActivity(HistoryNoticeActivity.class,null);
+                openActivity(HistoryNoticeActivity.class, null);
 
 
             }
@@ -328,7 +335,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 } else {
                     helper.setImageResource(R.id.iv_item_collection, R.mipmap.collected);
                 }
-                helper.setText(R.id.tv_item_tag, " "+item.getTagName()+" ");
+                helper.setText(R.id.tv_item_tag, " " + item.getTagName() + " ");
                 helper.setText(R.id.tv_product_item_information, item.getIntroduction().replace(System.getProperty("line.separator"), " "));
                 helper.setViewOnclick(R.id.ll_item_collection, new View.OnClickListener() {
                     @Override
@@ -379,7 +386,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 } else {
                     helper.setImageResource(R.id.iv_item_collection, R.mipmap.collected);
                 }
-                helper.setText(R.id.tv_item_tag," "+item.getTagName()+" ");
+                helper.setText(R.id.tv_item_tag, " " + item.getTagName() + " ");
                 helper.setText(R.id.tv_product_item_information, item.getIntroduction().replace(System.getProperty("line.separator"), " "));
                 helper.setViewOnclick(R.id.ll_item_collection, new View.OnClickListener() {
                     @Override
@@ -428,5 +435,17 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
         hotTeaIndex++;
         getProduct(hotTeaIndex, "01");
+    }
+
+    @OnClick({R.id.tv_buy_tea, R.id.tv_store_tea, R.id.tv_change_tea})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_buy_tea:
+                break;
+            case R.id.tv_store_tea:
+                break;
+            case R.id.tv_change_tea:
+                break;
+        }
     }
 }

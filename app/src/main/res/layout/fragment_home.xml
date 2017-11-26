@@ -16,8 +16,7 @@
             android:orientation="vertical">
 
 
-            <com.tianfeng.zhongjiteaapp.viewutils.FlyBanner
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.tianfeng.zhongjiteaapp.viewutils.FlyBanner xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/flybanner"
                 android:layout_width="fill_parent"
                 android:layout_height="204dp"
@@ -40,11 +39,11 @@
 
             <View
                 android:layout_width="1px"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="14dp"
                 android:layout_marginRight="14dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/color_line" />
 
             <RelativeLayout
@@ -74,10 +73,55 @@
             </RelativeLayout>
 
         </LinearLayout>
-<View
-    android:background="@color/color_line"
-    android:layout_width="match_parent"
-    android:layout_height="1px"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
+            android:paddingBottom="5dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+
+            <TextView
+                android:id="@+id/tv_buy_tea"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@mipmap/buy_tea"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:text="买茶" />
+
+            <TextView
+                android:id="@+id/tv_store_tea"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@mipmap/store_tea"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:text="买茶" />
+
+            <TextView
+                android:id="@+id/tv_change_tea"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@mipmap/change_tea"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:text="买茶" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,12 +135,12 @@
                 android:id="@+id/tv_new_tea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/board_white"
+                android:background="@drawable/board_light_gray"
                 android:paddingBottom="4dp"
-                android:paddingLeft="@dimen/margin10"
                 android:paddingRight="@dimen/margin10"
                 android:paddingTop="4dp"
-                android:text="新茶上架" />
+                android:drawableLeft="@mipmap/new_tea"
+                android:text="" />
 
             <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
                 android:id="@+id/lv_new_tea"
@@ -106,52 +150,53 @@
                 android:dividerHeight="5dp">
 
             </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+
             <TextView
                 android:id="@+id/tv_loadmore"
-                android:text="加载更多"
-                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textview_height"
                 android:layout_marginTop="5dp"
-                android:textSize="@dimen/text_normal"
-                android:textColor="@color/text_color"
                 android:background="@color/white"
                 android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/textview_height" />
+                android:text="加载更多"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_normal"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_hot_tea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/board_white"
+                android:background="@drawable/board_light_gray"
                 android:paddingBottom="4dp"
-                android:paddingLeft="@dimen/margin10"
                 android:paddingRight="@dimen/margin10"
                 android:paddingTop="4dp"
-                android:text="热门茶叶" />
+                android:drawableLeft="@mipmap/hot_tea"
+                android:text="" />
 
             <com.tianfeng.zhongjiteaapp.viewutils.CustomLV
                 android:id="@+id/lv_hot_tea"
-                android:headerDividersEnabled="false"
-                android:footerDividersEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@color/light_gray"
-                android:dividerHeight="5dp">
+                android:dividerHeight="5dp"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false">
 
             </com.tianfeng.zhongjiteaapp.viewutils.CustomLV>
+
             <TextView
                 android:id="@+id/tv_hotloadmore"
-                android:text="加载更多"
-                android:visibility="visible"
-                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textview_height"
                 android:layout_marginBottom="5dp"
-                android:textSize="@dimen/text_normal"
-                android:textColor="@color/text_color"
+                android:layout_marginTop="5dp"
                 android:background="@color/white"
                 android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/textview_height" />
+                android:text="加载更多"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_normal"
+                android:visibility="visible" />
         </LinearLayout>
 
     </LinearLayout>
