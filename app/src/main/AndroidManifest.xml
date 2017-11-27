@@ -84,6 +84,7 @@
         <activity android:name=".activity.ChangeNickNameActivity" />
         <activity android:name=".activity.HistoryNoticeActivity" />
         <activity android:name=".activity.AdInfoActivity" />
+        <activity android:name=".activity.StorageActivity"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

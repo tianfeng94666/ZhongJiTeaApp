@@ -105,7 +105,7 @@ int selectPosition;
 
 
 
-    private void setChioceFragment(int index) {
+    public void setChioceFragment(int index) {
         FragmentTransaction fragTrans = fragmentMag.beginTransaction();
         resetAllFragmentView();
         hideAllFragments(fragTrans);

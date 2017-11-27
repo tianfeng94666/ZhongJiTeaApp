@@ -20,4 +20,6 @@ public class Global {
     public static String AeraFirst;
     public static String AeraSecond;
     public static String AeraCode;
+    //记录是否有门店
+    public static boolean isHaveShop= true;
 }

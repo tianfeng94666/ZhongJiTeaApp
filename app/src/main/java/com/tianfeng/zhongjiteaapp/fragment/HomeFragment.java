@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.activity.AdInfoActivity;
+import com.tianfeng.zhongjiteaapp.activity.DialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.HistoryNoticeActivity;
+import com.tianfeng.zhongjiteaapp.activity.MainActivity;
 import com.tianfeng.zhongjiteaapp.activity.ProductActivity;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
@@ -441,10 +443,15 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_buy_tea:
+                Bundle bundle = new Bundle();
+                bundle.putString("key", "请联系附近经销商门店");
+                openActivity(DialogActivity.class, bundle);
                 break;
             case R.id.tv_store_tea:
+                ((MainActivity) getActivity()).setChioceFragment(2);
                 break;
             case R.id.tv_change_tea:
+                ((MainActivity) getActivity()).setChioceFragment(2);
                 break;
         }
     }

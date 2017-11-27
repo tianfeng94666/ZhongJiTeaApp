@@ -24,11 +24,14 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import static android.R.attr.type;
+
 /**
  * Created by 田丰 on 2017/9/17.
  */
 
 public class ShopsChoosePopupWindow {
+    private  int type=0;
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.line)
@@ -44,11 +47,24 @@ public class ShopsChoosePopupWindow {
         this.context = context;
         initView();
     }
+    public ShopsChoosePopupWindow(Context context ,int type) {
+        this.context = context;
+        initView();
+        this.type =type;
+    }
+    public void setTitle(String st) {
+            tvTitle.setText(st);
+    }
 
     private void initView() {
         View view = View.inflate(context, R.layout.popupwindow_shops, null);
         ButterKnife.bind(this, view);
-        popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.getWindowHight() / 2);
+        if(type==1){
+            popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.getWindowHight() / 3);
+        }else {
+            popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.getWindowHight() / 2);
+        }
+
 //        llIsshow = (LinearLayout) view.findViewById(R.id.ll_isshow);
         popupWindow.setFocusable(false);
         popupWindow.setOutsideTouchable(false);
@@ -73,16 +89,25 @@ public class ShopsChoosePopupWindow {
             }
         });
     }
-    public void  setLvShop(final List<GetShopsResult.Shop> shops, AdapterView.OnItemClickListener onItemClickListener){
-        lvShop.setAdapter(new CommonAdapter<GetShopsResult.Shop>(shops,R.layout.item_textview) {
+
+    public void setLvShop(final List<GetShopsResult.Shop> shops, AdapterView.OnItemClickListener onItemClickListener) {
+        lvShop.setAdapter(new CommonAdapter<GetShopsResult.Shop>(shops, R.layout.item_textview) {
             @Override
             public void convert(int position, BaseViewHolder helper, GetShopsResult.Shop item) {
-                    helper.setText(R.id.item_tv,item.getShopName());
+                helper.setText(R.id.item_tv, item.getShopName());
             }
         });
         lvShop.setOnItemClickListener(onItemClickListener);
     }
-
+ public void setStrings(final List<String> strings,AdapterView.OnItemClickListener onItemClickListener){
+     lvShop.setAdapter(new CommonAdapter<String>(strings,R.layout.item_textview) {
+         @Override
+         public void convert(int position, BaseViewHolder helper, String item) {
+             helper.setText(R.id.item_tv, item);
+         }
+     });
+     lvShop.setOnItemClickListener(onItemClickListener);
+ }
     public void showPop(View view) {
         setBackgroundAlpha(0.5f);//设置屏幕透明度
         popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);

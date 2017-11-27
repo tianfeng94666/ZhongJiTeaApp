@@ -1,9 +1,11 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,6 +59,8 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
     private int maxIndex;
     SharedPopupWindow sharedPopupWindow;
     private CommonAdapter productAdapter;
+    private final int CHOOSE_TEA_FORM_STORAGE = 1;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,12 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
         UIUtils.setBarTint(this, false);
         ButterKnife.bind(this);
         sharedPopupWindow = new SharedPopupWindow(this);
+        getData();
         initView();
+    }
+
+    private void getData() {
+        type = (String) getIntent().getExtras().get("type");
     }
 
     private void initView() {
@@ -171,6 +180,25 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
 
 
             };
+            lvSeachTea.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if("chooseTea".equals(type)){
+                        Intent intent = new Intent(SearchTeaActivity.this,StorageActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("product",productList.get(position-1));
+                        intent.putExtras(bundle);
+                        setResult(CHOOSE_TEA_FORM_STORAGE,intent);
+                        finish();
+                    }else {
+                        Bundle bundle = new Bundle();
+                        //Xlistview 添加了一个头部
+                        bundle.putSerializable("product", productList.get(position));
+                        openActivity(ProductActivity.class, bundle);
+                    }
+
+                }
+            });
             lvSeachTea.setAdapter(productAdapter);
         } else {
             productAdapter.notifyDataSetChanged();

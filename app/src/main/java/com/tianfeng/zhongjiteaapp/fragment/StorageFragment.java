@@ -16,7 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.activity.StorageActivity;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
+import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ public class StorageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getContext(), R.layout.fragment_storage, null);
         ButterKnife.bind(this, view);
-        UIUtils.setBarTint(getActivity(),false);
+        UIUtils.setBarTint(getActivity(), false);
         initView(view);
         return view;
     }
@@ -62,6 +64,8 @@ public class StorageFragment extends BaseFragment {
     private void initView(View view) {
         titleText.setText("仓储管理");
         idIgBack.setVisibility(View.GONE);
+        tvRight.setImageResource(R.mipmap.add);
+        tvRight.setVisibility(View.VISIBLE);
         tab.addTab(tab.newTab().setText("1"));
         tab.addTab(tab.newTab().setText("2"));
         //添加页卡标题
@@ -69,13 +73,26 @@ public class StorageFragment extends BaseFragment {
         mTitleList.add("云南仓");
         yunNanStorageFragemnt = new StorageDetailFragment(1);
         fragmentList.add(yunNanStorageFragemnt);
-         huaNanStorageFragment = new StorageDetailFragment(2);
+        huaNanStorageFragment = new StorageDetailFragment(2);
         fragmentList.add(huaNanStorageFragment);
         pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), fragmentList);
         viewpager.setAdapter(pagerAdapter);
         tab.setupWithViewPager(viewpager);
         tab.setTabsFromPagerAdapter(pagerAdapter);
+        tvRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addStoreTea();
+            }
+        });
+    }
 
+    private void addStoreTea() {
+        if (Global.isHaveShop) {
+            openActivity(StorageActivity.class, null);
+        } else {
+
+        }
     }
 
     @Override

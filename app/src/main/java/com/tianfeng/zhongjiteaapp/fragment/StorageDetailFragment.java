@@ -50,7 +50,9 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
     public StorageDetailFragment(int i) {
         this.type = i;
     }
+    public StorageDetailFragment() {
 
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
