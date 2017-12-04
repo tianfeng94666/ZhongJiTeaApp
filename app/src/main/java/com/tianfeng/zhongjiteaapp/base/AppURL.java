@@ -144,4 +144,8 @@ public class AppURL {
      * 订单查询
      */
     public static String ORDER_SEARCH = baseHost + "/api/order/list";
+    /**
+     * 暂存申请
+     */
+    public static String STORAGE_REQUEST = baseHost + "/api/zc/apply";
 }

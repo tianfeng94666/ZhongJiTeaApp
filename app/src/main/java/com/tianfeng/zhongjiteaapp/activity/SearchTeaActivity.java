@@ -83,6 +83,9 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
         lvSeachTea.setAutoLoadEnable(false);
         lvSeachTea.setPullRefreshEnable(false);
         lvSeachTea.setPullLoadEnable(true);
+        if("chooseTea".equals(type)){
+            getProduct();
+        }
     }
 
 

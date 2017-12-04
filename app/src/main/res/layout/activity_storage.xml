@@ -224,7 +224,7 @@
             android:drawablePadding="5dp"
             android:drawableRight="@mipmap/icon_next"
             android:gravity="right|center_vertical"
-            android:text="2018-08-01"
+            android:text=""
             android:textColor="@color/text_color2"
             android:textSize="@dimen/text_normal" />
     </LinearLayout>

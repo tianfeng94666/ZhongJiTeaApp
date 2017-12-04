@@ -91,7 +91,6 @@ public class LoginAcitivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UIUtils.setBarTint(this,false);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initView();

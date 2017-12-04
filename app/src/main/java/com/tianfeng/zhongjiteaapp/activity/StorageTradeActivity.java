@@ -107,16 +107,19 @@ public class StorageTradeActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.tv_shipside_delivery:
-                bundle.putString("key", "请与客服联系仓库线下提货");
-                openActivity(DialogActivity.class, bundle);
+//                bundle.putString("key", "请与客服联系仓库线下提货");
+//                openActivity(DialogActivity.class, bundle);
+                openActivity(XianTiActivity.class,null);
                 break;
             case R.id.tv_temporary_storage:
-                bundle.putString("key", "请与客服联系仓库线下续存");
-                openActivity(DialogActivity.class, bundle);
+//                bundle.putString("key", "请与客服联系仓库线下续存");
+//                openActivity(DialogActivity.class, bundle);
+                openActivity(DepositActivity.class,null);
                 break;
             case R.id.tv_make_over:
-                bundle.putString("key", "请与客服联系买家");
-                openActivity(DialogActivity.class, bundle);
+//                bundle.putString("key", "请与客服联系买家");
+//                openActivity(DialogActivity.class, bundle);
+                openActivity(ChangeActivity.class,null);
                 break;
             case R.id.tv_pledge:
                 bundle.putSerializable("storageItem",item);

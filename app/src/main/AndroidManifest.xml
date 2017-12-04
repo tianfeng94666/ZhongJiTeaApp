@@ -66,7 +66,8 @@
         <activity android:name=".activity.HelpActivity" />
         <activity android:name=".activity.ShopInformationActivity" />
         <activity android:name=".activity.ChooseShopActivity" />
-        <activity android:name=".activity.SearchTeaActivity" />
+        <activity android:name=".activity.SearchTeaActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".activity.AssociatePhoneActivity" />
         <activity android:name=".activity.StorageTradeActivity" />
         <activity android:name=".activity.PersonalDataActivity" />
@@ -85,6 +86,9 @@
         <activity android:name=".activity.HistoryNoticeActivity" />
         <activity android:name=".activity.AdInfoActivity" />
         <activity android:name=".activity.StorageActivity"/>
+        <activity android:name=".activity.ChangeActivity"/>
+        <activity android:name=".activity.DepositActivity"/>
+        <activity android:name=".activity.XianTiActivity"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

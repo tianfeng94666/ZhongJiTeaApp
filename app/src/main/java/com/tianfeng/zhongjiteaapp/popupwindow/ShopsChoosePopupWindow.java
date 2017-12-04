@@ -49,8 +49,9 @@ public class ShopsChoosePopupWindow {
     }
     public ShopsChoosePopupWindow(Context context ,int type) {
         this.context = context;
-        initView();
         this.type =type;
+        initView();
+
     }
     public void setTitle(String st) {
             tvTitle.setText(st);
