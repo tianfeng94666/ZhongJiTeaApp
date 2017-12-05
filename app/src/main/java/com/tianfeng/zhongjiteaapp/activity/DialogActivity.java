@@ -57,5 +57,17 @@ public class DialogActivity extends BaseActivity {
         if(PledgeActivity.instance!=null){
             PledgeActivity.instance.finish();
         }
+        if(StorageActivity.instance!=null){
+            StorageActivity.instance.finish();
+        }
+        if(XianTiActivity.instance!=null){
+            XianTiActivity.instance.finish();
+        }
+        if(ChangeActivity.instance!=null){
+            ChangeActivity.instance.finish();
+        }
+        if(DepositActivity.instance!=null){
+            DepositActivity.instance.finish();
+        }
     }
 }

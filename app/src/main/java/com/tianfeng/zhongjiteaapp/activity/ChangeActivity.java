@@ -1,15 +1,29 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.dialog.ProtocolDialog;
+import com.tianfeng.zhongjiteaapp.json.LoginProtocolResutl;
+import com.tianfeng.zhongjiteaapp.json.OrderBean;
+import com.tianfeng.zhongjiteaapp.json.SimpleRequestResult;
+import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
+import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,6 +34,7 @@ import butterknife.OnClick;
  */
 
 public class ChangeActivity extends BaseActivity {
+
     @Bind(R.id.id_ig_back)
     ImageView idIgBack;
     @Bind(R.id.title_text)
@@ -30,6 +45,8 @@ public class ChangeActivity extends BaseActivity {
     RelativeLayout idRelTitle;
     @Bind(R.id.tv_lable)
     TextView tvLable;
+    @Bind(R.id.et_amount)
+    EditText etAmount;
     @Bind(R.id.tv_lable2)
     TextView tvLable2;
     @Bind(R.id.et_price_low)
@@ -39,34 +56,123 @@ public class ChangeActivity extends BaseActivity {
     @Bind(R.id.tv_confirm)
     TextView tvConfirm;
     private ProtocolDialog dialog;
-
+    private OrderBean item;
+    private List<LoginProtocolResutl.ResultBean> helpList;
+    static BaseActivity instance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change);
         ButterKnife.bind(this);
+        instance=this;
+        getDate();
         initView();
     }
+
+    private void getDate() {
+        Bundle bundle = getIntent().getExtras();
+        item = (OrderBean) bundle.getSerializable("storageItem");
+    }
+
     private void initView() {
         titleText.setText("输入转让信息");
     }
+
     @OnClick(R.id.tv_confirm)
     public void onViewClicked() {
         goToNext();
     }
+
     private void goToNext() {
-        View view = View.inflate(this,R.layout.dialog_protocol,null);
-        dialog = new ProtocolDialog(this,view,R.style.protocol_dialog_theme);
+        if (StringUtils.isEmpty(etAmount.getText().toString())) {
+            showToastReal("请输入数量");
+            return;
+        }
+        if (StringUtils.isEmpty(etPriceHigh.getText().toString())) {
+            showToastReal("请输入最高价格");
+            return;
+        }
+        if (StringUtils.isEmpty(etPriceLow.getText().toString())) {
+            showToastReal("请输入最低价格");
+            return;
+        }
+        getProtocol();
+    }
+
+    private void changeRequest() {
+        Map map = new HashMap();
+        map.put("id", item.getId());
+        map.put("quantity", etAmount.getText().toString());
+        String url = AppURL.XIANTI_REQUEST;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                SimpleRequestResult getData = new Gson().fromJson(result, SimpleRequestResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", getData.getResult());
+                    openActivity(DialogActivity.class, bundle);
+
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                showToastReal(fail);
+            }
+        }, map);
+    }
+
+    public void getProtocol() {
+        Map map = new HashMap();
+        String url = AppURL.GET_PROTOCOL_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                LoginProtocolResutl loginResult = new Gson().fromJson(result, LoginProtocolResutl.class);
+                if (Global.RESULT_CODE.equals(loginResult.getCode())) {
+                    if (loginResult.getResult() != null) {
+                        helpList = loginResult.getResult();
+                        if (helpList.size() > 0) {
+                            showComfirmDialog();
+                        }
+                    }
+
+                } else {
+                    showToastReal(loginResult.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                showToastReal(fail);
+            }
+        }, map);
+    }
+
+    private void showComfirmDialog() {
+        View view = View.inflate(this, R.layout.dialog_protocol, null);
+        dialog = new ProtocolDialog(this, view, R.style.protocol_dialog_theme);
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
         TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
-        TextView tvConfirm = (TextView)view.findViewById(R.id.tv_confirm);
-        tvTitle.setText("XX协议");
-        tvContent.setText("有没有");
+        TextView tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
+        tvTitle.setText(helpList.get(1).getTitle());
+        tvContent.setText(Html.fromHtml(helpList.get(1).getContent()));
         tvConfirm.setText("同意并继续");
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToastReal("okok");
+                changeRequest();
             }
         });
 //        dialog.setCancelable(false);

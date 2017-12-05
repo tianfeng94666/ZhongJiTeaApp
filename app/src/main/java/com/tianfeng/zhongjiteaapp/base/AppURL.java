@@ -5,7 +5,12 @@ package com.tianfeng.zhongjiteaapp.base;
  */
 
 public class AppURL {
-    public static String baseHost = "http://119.23.209.140:81/xcb";
+    //正式
+//    public static String baseHost = "http://119.23.209.140:81/xcb";
+    /**
+     * 测试服务器
+     */
+    public static String baseHost = "http://119.23.209.140:82/xcb";
     /**
      * 登入
      */
@@ -147,5 +152,17 @@ public class AppURL {
     /**
      * 暂存申请
      */
-    public static String STORAGE_REQUEST = baseHost + "/api/zc/apply";
+    public static String STORAGE_REQUEST = baseHost + "/api/store/zc/apply";
+    /**
+     * 现提申请
+     */
+    public static String XIANTI_REQUEST=baseHost+"/api/store/xt/apply";
+    /**
+     * 转让申请
+     */
+    public static String CHANGE_REQUEST= baseHost+"/api/store/zr/apply";
+    /**
+     * 续存申请
+     */
+    public static String DEPOSIT_REQUEST = baseHost+"/api/store/xc/apply";
 }

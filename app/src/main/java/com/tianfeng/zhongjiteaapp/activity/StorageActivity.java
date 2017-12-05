@@ -3,6 +3,9 @@ package com.tianfeng.zhongjiteaapp.activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -18,12 +21,14 @@ import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.dialog.ProtocolDialog;
-import com.tianfeng.zhongjiteaapp.json.PledgeResult;
+import com.tianfeng.zhongjiteaapp.json.LoginProtocolResutl;
 import com.tianfeng.zhongjiteaapp.json.Product;
+import com.tianfeng.zhongjiteaapp.json.SimpleRequestResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.popupwindow.ShopsChoosePopupWindow;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.StringUtils;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,8 +72,8 @@ public class StorageActivity extends BaseActivity {
     EditText etTeaAmount;
     @Bind(R.id.et_tea_price)
     EditText etTeaPrice;
-    @Bind(R.id.et_tea_totol)
-    EditText etTeaTotol;
+    @Bind(R.id.tv_tea_totol)
+    TextView tvTeaTotol;
     @Bind(R.id.tv_store_date)
     TextView tvStoreDate;
     @Bind(R.id.tv_next)
@@ -82,6 +87,8 @@ public class StorageActivity extends BaseActivity {
     private int day;
     private ProtocolDialog dialog;
     private String deportId;
+    private List<LoginProtocolResutl.ResultBean> helpList;
+    static BaseActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +96,64 @@ public class StorageActivity extends BaseActivity {
         setContentView(R.layout.activity_storage);
         ButterKnife.bind(this);
         chooseStoragePopupwindow = new ShopsChoosePopupWindow(this, 1);
+        instance = this;
         initView();
+
     }
 
     private void initView() {
         titleText.setText("输入暂存信息");
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                setTotal();
+            }
+        };
+        etTeaAmount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etTeaAmount.setSelection(etTeaAmount.getText().length());
+            }
+        });
+        etTeaPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etTeaPrice.setSelection(etTeaPrice.getText().length());
+            }
+        });
+        etTeaPrice.addTextChangedListener(textWatcher);
+        etTeaAmount.addTextChangedListener(textWatcher);
     }
 
+    public void  setTotal(){
+        String  priceString =etTeaPrice.getText().toString();
+        String  amountString =etTeaAmount.getText().toString();
+        if(!StringUtils.isEmpty(priceString)&&!StringUtils.isEmpty(amountString)){
+            double amount = 0;
+            double price = 0;
+            try {
+                amount = Double.parseDouble(amountString);
+                price = Double.parseDouble(priceString);
+                tvTeaTotol.setText(UIUtils.stringChangeToTwoBitDouble(amount*price+""));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                showToastReal("输入有误！");
+            }
+
+        }else {
+            tvTeaTotol.setText("");
+        }
+    }
     @OnClick({R.id.tv_store_name, R.id.tv_tea_name, R.id.tv_store_date, R.id.tv_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -118,39 +176,7 @@ public class StorageActivity extends BaseActivity {
         if (!judgeData()) {
             return;
         }
-        Map map = new HashMap();
-
-        map.put("userId", Global.UserId);
-        map.put("goodsId", product.getId());
-        map.put("deportId", deportId);
-        map.put("price", etTeaPrice.getText().toString());
-        map.put("quantity", etTeaAmount.getText().toString());
-        map.put("total", etTeaTotol.getText().toString());
-        map.put("endTime", tvStoreDate.getText().toString());
-
-        String url = AppURL.STORAGE_REQUEST;
-        L.e("url", url);
-        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
-            @Override
-            public void onSuccess(String result) {
-                L.e("result", result);
-//                PledgeResult getData = new Gson().fromJson(result, PledgeResult.class);
-//                if (Global.RESULT_CODE.equals(getData.getCode())) {
-//                    showComfirmDialog();
-//                } else {
-//                    showToastReal(getData.getMsg());
-//                }
-
-            }
-
-            @Override
-            public void onFail(String fail) {
-                L.e("fail", fail);
-//                showToastReal(fail);
-            }
-        }, map);
-
-
+        getProtocol();
     }
 
     private boolean judgeData() {
@@ -181,23 +207,89 @@ public class StorageActivity extends BaseActivity {
         return true;
     }
 
+    public void getProtocol() {
+        Map map = new HashMap();
+        String url = AppURL.GET_PROTOCOL_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                LoginProtocolResutl loginResult = new Gson().fromJson(result, LoginProtocolResutl.class);
+                if (Global.RESULT_CODE.equals(loginResult.getCode())) {
+                    if (loginResult.getResult() != null) {
+                        helpList = loginResult.getResult();
+                        if (helpList.size() > 0) {
+                            showComfirmDialog();
+                        }
+                    }
+
+                } else {
+                    showToastReal(loginResult.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                showToastReal(fail);
+            }
+        }, map);
+    }
+
     private void showComfirmDialog() {
+
         View view = View.inflate(this, R.layout.dialog_protocol, null);
         dialog = new ProtocolDialog(this, view, R.style.protocol_dialog_theme);
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
         TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
         TextView tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
-        tvTitle.setText("XX协议");
-        tvContent.setText("有没有");
+        tvTitle.setText(helpList.get(1).getTitle());
+        tvContent.setText(Html.fromHtml(helpList.get(1).getContent()));
         tvConfirm.setText("同意并继续");
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToastReal("okok");
+                storageRequest();
             }
         });
 //        dialog.setCancelable(false);
         dialog.show();
+    }
+
+    private void storageRequest() {
+        Map map = new HashMap();
+        map.put("userId", Global.UserId);
+        map.put("goodsId", product.getId());
+        map.put("deportId", deportId);
+        map.put("price", etTeaPrice.getText().toString());
+        map.put("quantity", etTeaAmount.getText().toString());
+        map.put("total", tvTeaTotol.getText().toString());
+        map.put("endTime", tvStoreDate.getText().toString());
+
+        String url = AppURL.STORAGE_REQUEST;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                SimpleRequestResult getData = new Gson().fromJson(result, SimpleRequestResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", getData.getResult());
+                    openActivity(DialogActivity.class, bundle);
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                showToastReal(fail);
+            }
+        }, map);
     }
 
     private void SearchStore() {

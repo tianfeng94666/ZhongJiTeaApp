@@ -28,11 +28,14 @@ import com.tianfeng.zhongjiteaapp.json.AdBean;
 import com.tianfeng.zhongjiteaapp.json.AdResult;
 import com.tianfeng.zhongjiteaapp.json.GetProductResult;
 import com.tianfeng.zhongjiteaapp.json.NoticeResult;
+import com.tianfeng.zhongjiteaapp.json.OrderBean;
 import com.tianfeng.zhongjiteaapp.json.Product;
+import com.tianfeng.zhongjiteaapp.json.StorageResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.popupwindow.SharedPopupWindow;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.StringUtils;
+import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CustomLV;
 import com.tianfeng.zhongjiteaapp.viewutils.FlyBanner;
@@ -47,6 +50,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.type;
 import static com.tianfeng.zhongjiteaapp.utils.ToastManager.showToastReal;
 
 /**
@@ -93,6 +97,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     private List<String> adUrlList = new ArrayList<>();
     private CommonAdapter<Product> hotAdapter;
     private CommonAdapter<Product> newAdapter;
+    private StorageResult storageResult;
 
     @Nullable
     @Override
@@ -121,7 +126,46 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         getProduct(newTeaIndex, "02");
         //获取热门茶
         getProduct(newTeaIndex, "01");
+        //获取仓储
+//        getStorage();
+    }
 
+    private void getStorage() {
+        Map map = new HashMap();
+        map.put("index", 1);
+        map.put("pageSize", 10);
+        if (type == 1) {
+            map.put("storeType", "0001");
+        } else {
+            map.put("storeType", "0002");
+        }
+
+        L.e("map", map.toString());
+        L.e("url=", AppURL.STORAGE_LIST_URL);
+        VolleyRequestUtils.getInstance().getRequestPost(getActivity(), AppURL.STORAGE_LIST_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                storageResult = new Gson().fromJson(result, StorageResult.class);
+                if (Global.RESULT_CODE.equals(storageResult.getCode())) {
+                    if (storageResult.getResult() != null && storageResult.getResult().getResult() != null) {
+                        List<OrderBean> temp = storageResult.getResult().getResult();
+
+
+                    }
+                } else {
+                    ToastManager.showToastReal(storageResult.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                ToastManager.showToastReal(fail);
+
+            }
+        }, map);
     }
 
 

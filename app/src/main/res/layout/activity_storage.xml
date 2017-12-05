@@ -28,7 +28,7 @@
             android:drawablePadding="5dp"
             android:drawableRight="@mipmap/icon_next"
             android:gravity="right|center_vertical"
-            android:text="华南仓"
+            android:text="请选择仓库"
             android:textColor="@color/text_color2"
             android:textSize="@dimen/text_normal" />
     </LinearLayout>
@@ -183,14 +183,14 @@
             android:textColor="@color/text_color"
             android:textSize="@dimen/text_normal" />
 
-        <EditText
-            android:id="@+id/et_tea_totol"
+        <TextView
+            android:id="@+id/tv_tea_totol"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
             android:drawablePadding="5dp"
             android:gravity="right|center_vertical"
-            android:hint="请输入成交总额"
+
             android:inputType="numberDecimal|number"
             android:text=""
             android:textColor="@color/text_color2"

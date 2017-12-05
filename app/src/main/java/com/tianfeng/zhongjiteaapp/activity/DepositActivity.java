@@ -8,14 +8,23 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.json.OrderBean;
+import com.tianfeng.zhongjiteaapp.json.SimpleRequestResult;
+import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
+import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,14 +52,22 @@ public class DepositActivity extends BaseActivity {
     private int year;
     private int month;
     private int day;
+    private OrderBean item;
+    static BaseActivity instance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
         ButterKnife.bind(this);
+        instance= this;
+        getDate();
         initView();
     }
 
+    private void getDate() {
+        Bundle bundle = getIntent().getExtras();
+        item = (OrderBean) bundle.getSerializable("storageItem");
+    }
     private void initView() {
         titleText.setText("选择续存日期");
     }
@@ -62,8 +79,43 @@ public class DepositActivity extends BaseActivity {
                 initData();
                 break;
             case R.id.tv_confirm:
+                comfirm();
                 break;
         }
+    }
+
+    private void comfirm() {
+        if (StringUtils.isEmpty(tvDate.getText().toString())){
+            showToastReal("请输入数量");
+            return;
+        }
+        Map map = new HashMap();
+        map.put("id", item.getId());
+        map.put("date",tvDate.getText().toString());
+        String url = AppURL.DEPOSIT_REQUEST;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                SimpleRequestResult getData = new Gson().fromJson(result, SimpleRequestResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", getData.getResult());
+                    openActivity(DialogActivity.class, bundle);
+
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                showToastReal(fail);
+            }
+        }, map);
     }
     public void initData() {
         Date date = null;
@@ -77,8 +129,6 @@ public class DepositActivity extends BaseActivity {
         }else {
             date = dateFromString(dateString);
         }
-
-
         calendar.setTime(date);
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);

@@ -13,7 +13,7 @@
     <string name="footer_hint_load_ready"></string>
 
     <string name="shipside_delivery">现提</string>
-    <string name="temporary_storage">暂存</string>
+    <string name="temporary_storage">续存</string>
     <string name="make_over">转让</string>
     <string name="pledge">质押</string>
 </resources>
