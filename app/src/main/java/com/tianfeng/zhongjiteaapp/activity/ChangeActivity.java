@@ -88,6 +88,8 @@ public class ChangeActivity extends BaseActivity {
             showToastReal("请输入数量");
             return;
         }
+
+
         if (StringUtils.isEmpty(etPriceHigh.getText().toString())) {
             showToastReal("请输入最高价格");
             return;
@@ -96,12 +98,29 @@ public class ChangeActivity extends BaseActivity {
             showToastReal("请输入最低价格");
             return;
         }
+        try {
+
+            double high = Double.parseDouble(etPriceHigh.getText().toString());
+            double low = Double.parseDouble(etPriceLow.getText().toString());
+            if(low>high){
+                showToastReal("请输入最低价格不能大于最高价格");
+                return;
+            }
+            double amount = Double.parseDouble(etAmount.getText().toString());
+            if(amount==0&&amount>Double.parseDouble(item.getQuantity())){
+                showToastReal("数量不能为0且不能大于暂存数量");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showToastReal("输入数字错误");
+        }
         getProtocol();
     }
 
     private void changeRequest() {
         Map map = new HashMap();
         map.put("id", item.getId());
+        map.put("expectation", etPriceLow.getText().toString()+"~"+etPriceHigh.getText().toString());
         map.put("quantity", etAmount.getText().toString());
         String url = AppURL.XIANTI_REQUEST;
         L.e("url", url);

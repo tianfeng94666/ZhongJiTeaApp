@@ -61,7 +61,6 @@ public class PledgeActivity extends BaseActivity {
     LinearLayout llRebackMoney;
     private OrderBean item;
     static BaseActivity instance;
-    private int state;
 
 
     @Override
@@ -83,35 +82,30 @@ public class PledgeActivity extends BaseActivity {
     }
 
     private void initView() {
-         state = Integer.parseInt(item.getTransStatus());
-        switch (state) {
-            //可以进行确认或取消
-            case 1:
-                init1();
-                break;
-            //可以进行赎回
-            case 3:
-                init3();
-                break;
-            //进行赎回确认或取消
-            case 6:
-                init6();
-                break;
-            //已暂存
-            case 8:
-                init8();
-                break;
-            default:
-                init0();
-                break;
+        String state = item.getTransStatus();
+        String orderState = item.getTransType();
+        //  确认质押（0004,1）申请赎回（0004,3）确认赎回（0002,1）申请质押（0001,3）
+        if (orderState.equals(Global.PLEDGE) && state.equals("1")) {
+            init1();
+        } else if (orderState.equals(Global.PLEDGE) && state.equals("3")) {
+            init3();
+        } else if (orderState.equals(Global.REBACK) && state.equals("1")) {
+            init6();
+        } else if (orderState.equals(Global.STORAGE) && state.equals("3")) {
+            init8();
+        } else {
+            init0();
         }
+
     }
-public void setTextViewData(){
-    etAmount.setText(item.getQuantity()+"");
-    tvOldMoney.setText(item.getTotal());
-    tvEvaluateMoney.setText(item.getAssessment());
-    tvRebackMoney.setText(item.getRedeem());
-}
+
+    public void setTextViewData() {
+        etAmount.setText(item.getQuantity() + "");
+        tvOldMoney.setText(item.getTotal());
+        tvEvaluateMoney.setText(item.getAssessment());
+        tvRebackMoney.setText(item.getRedeem());
+    }
+
     private void init6() {
         tvConfirm.setText("确认赎回");
         tvCancle.setText("取消赎回");
@@ -355,23 +349,23 @@ public void setTextViewData(){
             showToastReal("请填写数量！");
             return;
         }
-       double amount = Double.parseDouble(etAmount.getText().toString());
+        double amount = Double.parseDouble(etAmount.getText().toString());
         double maxamount = Double.parseDouble(item.getQuantity());
-        if(amount<=0){
+        if (amount <= 0) {
             showToastReal("数量不能为负数或0");
             return;
         }
-        if(amount>maxamount){
+        if (amount > maxamount) {
             showToastReal("数量不能超过质押数量");
             return;
         }
         Map map = new HashMap();
-        map.put("goodsId", item.getGoodsId());
+//        map.put("goodsId", item.getGoodsId());
         map.put("quantity", etAmount.getText().toString());
         map.put("id", item.getId());
         String url = AppURL.PLEDGE_URL;
         L.e("url", url);
-        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);

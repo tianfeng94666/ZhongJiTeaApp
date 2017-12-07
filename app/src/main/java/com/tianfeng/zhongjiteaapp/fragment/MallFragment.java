@@ -128,8 +128,7 @@ public class MallFragment extends BaseFragment implements XListView.IXListViewLi
 
     private void initView() {
         idIgBack.setVisibility(View.GONE);
-        titleText.setText("商城");
-
+        titleText.setText("茶柜");
         lvMallProduct.setXListViewListener(this);
         lvMallProduct.setAutoLoadEnable(false);
         lvMallProduct.setPullRefreshEnable(true);

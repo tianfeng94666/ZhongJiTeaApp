@@ -43,10 +43,19 @@ public  class Product implements Serializable{
     private String deportName;
     private String id;
     private String tag;
+    private String standard;
     private String goodsName;
     private String introduction;
     private long createTime;
     private String isStored;
+
+    public String getStandard() {
+        return standard;
+    }
+
+    public void setStandard(String standard) {
+        this.standard = standard;
+    }
 
     public String getIsStored() {
         return isStored ==null?"0": isStored;

@@ -22,4 +22,12 @@ public class Global {
     public static String AeraCode;
     //记录是否有门店
     public static boolean isHaveShop= true;
+    /**
+     * 状态编码
+     */
+    public static  String XIANTI = "0000";//现提
+    public static  String STORAGE = "0001";//暂存
+    public static  String REBACK = "0002";//赎回
+    public static  String CHANGE = "0003";//转让
+    public static  String PLEDGE = "0004";//质押
 }

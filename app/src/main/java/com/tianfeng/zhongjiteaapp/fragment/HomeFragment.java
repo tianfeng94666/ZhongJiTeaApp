@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.activity.AdInfoActivity;
+import com.tianfeng.zhongjiteaapp.activity.ChooseShopActivity;
 import com.tianfeng.zhongjiteaapp.activity.DialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.HistoryNoticeActivity;
 import com.tianfeng.zhongjiteaapp.activity.MainActivity;
@@ -30,6 +31,7 @@ import com.tianfeng.zhongjiteaapp.json.GetProductResult;
 import com.tianfeng.zhongjiteaapp.json.NoticeResult;
 import com.tianfeng.zhongjiteaapp.json.OrderBean;
 import com.tianfeng.zhongjiteaapp.json.Product;
+import com.tianfeng.zhongjiteaapp.json.StorageCountResult;
 import com.tianfeng.zhongjiteaapp.json.StorageResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.popupwindow.SharedPopupWindow;
@@ -97,7 +99,8 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
     private List<String> adUrlList = new ArrayList<>();
     private CommonAdapter<Product> hotAdapter;
     private CommonAdapter<Product> newAdapter;
-    private StorageResult storageResult;
+    private StorageCountResult storageResult;
+    int storageCount;
 
     @Nullable
     @Override
@@ -127,32 +130,23 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         //获取热门茶
         getProduct(newTeaIndex, "01");
         //获取仓储
-//        getStorage();
+        getStorage();
     }
 
     private void getStorage() {
         Map map = new HashMap();
-        map.put("index", 1);
-        map.put("pageSize", 10);
-        if (type == 1) {
-            map.put("storeType", "0001");
-        } else {
-            map.put("storeType", "0002");
-        }
+        map.put("transType", "0001");
+
 
         L.e("map", map.toString());
-        L.e("url=", AppURL.STORAGE_LIST_URL);
-        VolleyRequestUtils.getInstance().getRequestPost(getActivity(), AppURL.STORAGE_LIST_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        L.e("url=", AppURL.GET_STORAGE);
+        VolleyRequestUtils.getInstance().getStringPostRequest(getActivity(), AppURL.GET_STORAGE, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
-                storageResult = new Gson().fromJson(result, StorageResult.class);
+                storageResult = new Gson().fromJson(result, StorageCountResult.class);
                 if (Global.RESULT_CODE.equals(storageResult.getCode())) {
-                    if (storageResult.getResult() != null && storageResult.getResult().getResult() != null) {
-                        List<OrderBean> temp = storageResult.getResult().getResult();
-
-
-                    }
+                    storageCount = storageResult.getResult();
                 } else {
                     ToastManager.showToastReal(storageResult.getMsg());
                 }
@@ -492,11 +486,30 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
                 openActivity(DialogActivity.class, bundle);
                 break;
             case R.id.tv_store_tea:
-                ((MainActivity) getActivity()).setChioceFragment(2);
+                storageTea();
+
                 break;
             case R.id.tv_change_tea:
-                ((MainActivity) getActivity()).setChioceFragment(2);
+                changeTea();
                 break;
+        }
+    }
+
+    private void storageTea() {
+        if(StringUtils.isEmpty(Global.shopId)){
+            openActivity(ChooseShopActivity.class,null);
+        }else {
+            ((MainActivity) getActivity()).setChioceFragment(2);
+        }
+    }
+
+    private void changeTea() {
+        if (storageCount > 0) {
+            ((MainActivity) getActivity()).setChioceFragment(2);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("key", "请先存储茶品");
+            openActivity(DialogActivity.class, bundle);
         }
     }
 }

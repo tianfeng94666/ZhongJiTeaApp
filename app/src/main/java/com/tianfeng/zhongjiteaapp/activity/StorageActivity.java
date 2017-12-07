@@ -196,6 +196,14 @@ public class StorageActivity extends BaseActivity {
             showToastReal("请输入成交单价");
             return false;
         }
+        if ((etTeaAmount.getText().toString()).equals("0")) {
+            showToastReal("请输入正确的成交数量");
+            return false;
+        }
+        if (etTeaPrice.getText().toString().equals("0")) {
+            showToastReal("请输入正确的成交单价");
+            return false;
+        }
         if (StringUtils.isEmpty(tvStoreName.getText().toString())) {
             showToastReal("请输入成交总金额");
             return false;
@@ -204,6 +212,15 @@ public class StorageActivity extends BaseActivity {
             showToastReal("选择暂存时间");
             return false;
         }
+        try {
+            double teaAmount = Double.parseDouble(etTeaAmount.getText().toString());
+            double teaPrice = Double.parseDouble(etTeaPrice.getText().toString());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            showToastReal("输入数字错误");
+            return false;
+        }
+
         return true;
     }
 
@@ -329,7 +346,7 @@ public class StorageActivity extends BaseActivity {
                     Bundle bundle = data.getExtras();
                     product = (Product) bundle.getSerializable("product");
                     tvTeaName.setText(product.getGoodsName());
-                    tvTeaType.setText(product.getUnit());
+                    tvTeaType.setText(product.getStandard());
                 }
                 break;
 
