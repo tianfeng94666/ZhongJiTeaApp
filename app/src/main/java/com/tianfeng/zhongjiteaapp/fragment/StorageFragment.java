@@ -50,6 +50,7 @@ public class StorageFragment extends BaseFragment {
     public List<Fragment> fragmentList = new ArrayList<>();
     private StorageDetailFragment yunNanStorageFragemnt;
     private StorageDetailFragment huaNanStorageFragment;
+    static int currentItem;
 
     @Nullable
     @Override
@@ -77,12 +78,29 @@ public class StorageFragment extends BaseFragment {
         fragmentList.add(huaNanStorageFragment);
         pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), fragmentList);
         viewpager.setAdapter(pagerAdapter);
+        viewpager.setCurrentItem(currentItem);
         tab.setupWithViewPager(viewpager);
         tab.setTabsFromPagerAdapter(pagerAdapter);
         tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addStoreTea();
+            }
+        });
+        viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentItem = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
     }
@@ -111,6 +129,7 @@ public class StorageFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
+
             return (Fragment) fragments.get(position);
         }
 

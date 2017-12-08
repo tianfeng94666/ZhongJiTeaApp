@@ -56,18 +56,23 @@ public class DialogActivity extends BaseActivity {
         finish();
         if(PledgeActivity.instance!=null){
             PledgeActivity.instance.finish();
+            openActivity(MainActivity.class,null);
         }
         if(StorageActivity.instance!=null){
             StorageActivity.instance.finish();
+            openActivity(MainActivity.class,null);
         }
         if(XianTiActivity.instance!=null){
             XianTiActivity.instance.finish();
+            openActivity(MainActivity.class,null);
         }
         if(ChangeActivity.instance!=null){
             ChangeActivity.instance.finish();
+            openActivity(MainActivity.class,null);
         }
         if(DepositActivity.instance!=null){
             DepositActivity.instance.finish();
+            openActivity(MainActivity.class,null);
         }
     }
 }
