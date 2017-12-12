@@ -2,36 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
     android:id="@+id/rl_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <RelativeLayout
+
+<include layout="@layout/layout_title"/>
+    <LinearLayout
+
+        android:background="@color/gray"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="30dp">
         <TextView
-            android:id="@+id/tv_login_cancle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin24"
-            android:layout_marginTop="15dp"
-            android:text="返回"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/text_normal" />
-        <TextView
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:text="关联门店"
-            android:textColor="@color/text_color"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/margin33"
+            android:text="请先选择门店所在地区，再选择门店"
             android:textSize="@dimen/text_normal"
+            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
-
+    </LinearLayout>
     <RelativeLayout
-        android:layout_marginTop="64dp"
         android:id="@+id/rl_choose_place"
         android:layout_width="match_parent"
         android:background="@color/light_gray"
@@ -76,20 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:background="@color/gray"
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-        <TextView
-            android:textColor="@color/white"
-            android:layout_marginLeft="@dimen/margin33"
-            android:text="请先选择门店所在地区，再选择门店"
-            android:textSize="@dimen/text_normal"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+
 <TextView
     android:id="@+id/tv_next"
     android:textColor="@color/white"

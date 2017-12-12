@@ -169,4 +169,8 @@ public class AppURL {
      * 获取仓储数量
      */
     public static String GET_STORAGE = baseHost +"/api/store/count";
+    /**
+     * 绑定门店
+     */
+    public static String SET_SHOPID = baseHost +"/api/user/shop/bind";
 }

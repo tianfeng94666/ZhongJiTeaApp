@@ -133,7 +133,7 @@ public class PersonalDataActivity extends BaseActivity {
         map.put("mobile", phoneNumber);
         map.put("bizId",Global.BIZID);
         map.put("code",Global.CODE);
-        map.put("shopId",Global.shopId);
+//        map.put("shopId",Global.shopId);
         map.put("loginName",phoneNumber);
         map.put("nickName",etUsername.getText().toString());
         map.put("password",etPassword.getText().toString());

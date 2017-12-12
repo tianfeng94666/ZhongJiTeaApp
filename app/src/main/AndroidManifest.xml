@@ -76,6 +76,9 @@
         <activity
             android:name=".activity.DialogActivity"
             android:theme="@style/Theme.ActivityDialogStyle" />
+        <activity
+            android:name=".activity.ChooseShopDialogActivity"
+            android:theme="@style/Theme.ActivityDialogStyle" />
         <activity android:name=".activity.MyCollectedActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.PledgeActivity" />

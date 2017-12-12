@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.activity.AdInfoActivity;
 import com.tianfeng.zhongjiteaapp.activity.ChooseShopActivity;
+import com.tianfeng.zhongjiteaapp.activity.ChooseShopDialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.DialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.HistoryNoticeActivity;
 import com.tianfeng.zhongjiteaapp.activity.MainActivity;
@@ -497,7 +498,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
     private void storageTea() {
         if(StringUtils.isEmpty(Global.shopId)){
-            openActivity(ChooseShopActivity.class,null);
+            openActivity(ChooseShopDialogActivity.class,null);
         }else {
             ((MainActivity) getActivity()).setChioceFragment(2);
         }

@@ -16,9 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.activity.ChooseShopDialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.StorageActivity;
 import com.tianfeng.zhongjiteaapp.base.BaseFragment;
 import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -106,10 +108,10 @@ public class StorageFragment extends BaseFragment {
     }
 
     private void addStoreTea() {
-        if (Global.isHaveShop) {
-            openActivity(StorageActivity.class, null);
+        if (StringUtils.isEmpty(Global.shopId)) {
+            openActivity(ChooseShopDialogActivity.class, null);
         } else {
-
+            openActivity(StorageActivity.class, null);
         }
     }
 

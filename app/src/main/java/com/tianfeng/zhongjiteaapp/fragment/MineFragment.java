@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.activity.AboutActivity;
+import com.tianfeng.zhongjiteaapp.activity.ChooseShopDialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.HelpActivity;
 import com.tianfeng.zhongjiteaapp.activity.LoginAcitivity;
 import com.tianfeng.zhongjiteaapp.activity.MyCollectedActivity;
@@ -29,6 +30,7 @@ import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.popupwindow.SharedPopupWindow;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.SpUtils;
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
@@ -107,7 +109,12 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_shop:
-                openActivity(ShopInformationActivity.class, null);
+                if(StringUtils.isEmpty(Global.shopId)){
+                    openActivity(ChooseShopDialogActivity.class, null);
+                }else {
+                    openActivity(ShopInformationActivity.class, null);
+                }
+
                 break;
             case R.id.rl_collect:
                 openActivity(MyCollectedActivity.class, null);

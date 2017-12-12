@@ -223,7 +223,7 @@ public class LoginAcitivity extends BaseActivity {
                         SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
                         Global.PhoneNumber = etLoginPhone.getText().toString();
                         Global.CODE = etLoginCode.getText().toString();
-                        openActivity(ChooseShopActivity.class, null);
+                        openActivity(PersonalDataActivity.class, null);
                     } else {
                         showToastReal(messageCheckResult.getMsg());
                     }
