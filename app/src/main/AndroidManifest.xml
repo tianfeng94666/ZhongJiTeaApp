@@ -87,6 +87,7 @@
         <activity android:name=".activity.OrderActivity" />
         <activity android:name=".activity.ChangeNickNameActivity" />
         <activity android:name=".activity.HistoryNoticeActivity" />
+        <activity android:name=".activity.HistrotyMessageActivity"/>
         <activity android:name=".activity.AdInfoActivity" />
         <activity android:name=".activity.StorageActivity"/>
         <activity android:name=".activity.ChangeActivity"/>

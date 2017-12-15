@@ -162,6 +162,10 @@ public class AppURL {
      */
     public static String CHANGE_REQUEST= baseHost+"/api/store/zr/apply";
     /**
+     * 转让取消
+     */
+    public static String CHANGE_CANCLE_REQUEST= baseHost+"/api/store/zr/cancel";
+    /**
      * 续存申请
      */
     public static String DEPOSIT_REQUEST = baseHost+"/api/store/xc/apply";

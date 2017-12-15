@@ -59,6 +59,9 @@ public class ChangeActivity extends BaseActivity {
     private OrderBean item;
     private List<LoginProtocolResutl.ResultBean> helpList;
     static BaseActivity instance;
+    private String orderStatus;
+    private String orderType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,12 +78,69 @@ public class ChangeActivity extends BaseActivity {
     }
 
     private void initView() {
-        titleText.setText("输入转让信息");
+       orderStatus = item.getTransStatus();
+        orderType = item.getTransType();
+        if(Global.CHANGE.equals(orderType)&&Global.SHENHE_WAIT.equals(orderStatus)){
+            String expectation =item.getExpectation();
+            String[] prices = expectation.split("~");
+            etPriceLow.setText(prices[0]);
+            etPriceHigh.setText(prices[1]);
+            etAmount.setText(item.getQuantity());
+            setEditText(etAmount,false);
+            setEditText(etPriceLow,false);
+            setEditText(etPriceHigh,false);
+            tvConfirm.setText("取消转让");
+        }else {
+            setEditText(etAmount,true);
+            setEditText(etPriceLow,true);
+            setEditText(etPriceHigh,true);
+            titleText.setText("输入转让信息");
+            tvConfirm.setText("确定");
+        }
     }
 
+    public  void setEditText(EditText editText,boolean iscan){
+        editText.setFocusable(iscan);
+        editText.setFocusableInTouchMode(iscan);
+    }
     @OnClick(R.id.tv_confirm)
     public void onViewClicked() {
-        goToNext();
+        if(Global.CHANGE.equals(orderType)&&Global.SHENHE_WAIT.equals(orderStatus)){
+            cancle();
+        }else {
+            goToNext();
+        }
+
+    }
+
+    private void cancle() {
+        Map map = new HashMap();
+        map.put("id", item.getId());
+
+        String url = AppURL.CHANGE_CANCLE_REQUEST;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                SimpleRequestResult getData = new Gson().fromJson(result, SimpleRequestResult.class);
+                if (Global.RESULT_CODE.equals(getData.getCode())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("key", getData.getResult());
+                    openActivity(DialogActivity.class, bundle);
+
+                } else {
+                    showToastReal(getData.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                showToastReal(fail);
+            }
+        }, map);
     }
 
     private void goToNext() {
@@ -122,7 +182,7 @@ public class ChangeActivity extends BaseActivity {
         map.put("id", item.getId());
         map.put("expectation", etPriceLow.getText().toString()+"~"+etPriceHigh.getText().toString());
         map.put("quantity", etAmount.getText().toString());
-        String url = AppURL.XIANTI_REQUEST;
+        String url = AppURL.CHANGE_REQUEST;
         L.e("url", url);
         VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override

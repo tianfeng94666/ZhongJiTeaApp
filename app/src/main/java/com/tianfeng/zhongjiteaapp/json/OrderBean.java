@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by 田丰 on 2017/9/20.
  */
 
-public class OrderBean implements Serializable{
+public class OrderBean implements Serializable {
 
 
     /**
@@ -64,6 +64,15 @@ public class OrderBean implements Serializable{
     private String userId;
     private String userName;
     private String zcId;
+    private String expectation;
+
+    public String getExpectation() {
+        return expectation;
+    }
+
+    public void setExpectation(String expectation) {
+        this.expectation = expectation;
+    }
 
     public String getAssessment() {
         return assessment;
@@ -90,7 +99,7 @@ public class OrderBean implements Serializable{
     }
 
     public String getDeportName() {
-        return StringUtils.isEmpty(deportName)?"":deportName+" ";
+        return StringUtils.isEmpty(deportName) ? "" : deportName + " ";
     }
 
     public void setDeportName(String deportName) {
@@ -218,7 +227,7 @@ public class OrderBean implements Serializable{
     }
 
     public String getTypeName() {
-        return StringUtils.isEmpty(typeName)?"":typeName;
+        return StringUtils.isEmpty(typeName) ? "" : typeName;
     }
 
     public void setTypeName(String typeName) {

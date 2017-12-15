@@ -418,4 +418,13 @@ public class StorageActivity extends BaseActivity {
         String st = sb.toString();
         return st;
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        if (dialog != null && dialog.isShowing())
+        {
+            dialog.dismiss();
+        }
+    }
 }

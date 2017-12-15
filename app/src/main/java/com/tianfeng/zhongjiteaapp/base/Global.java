@@ -30,4 +30,12 @@ public class Global {
     public static  String REBACK = "0002";//赎回
     public static  String CHANGE = "0003";//转让
     public static  String PLEDGE = "0004";//质押
+    /**
+     * 订单状态
+     */
+    public static String SHENHE_NO_THROUGH = "2";
+    public static String SHENHE_THROUGH = "1";
+    public static String FINISH = "3";
+    public static String SHENHE_CANCLE= "4";
+    public static String SHENHE_WAIT = "0";
 }

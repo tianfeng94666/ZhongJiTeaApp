@@ -1,6 +1,7 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +14,8 @@ import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.Global;
+import com.tianfeng.zhongjiteaapp.dialog.ProtocolDialog;
+import com.tianfeng.zhongjiteaapp.json.LoginProtocolResutl;
 import com.tianfeng.zhongjiteaapp.json.OrderBean;
 import com.tianfeng.zhongjiteaapp.json.PledgeResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
@@ -21,6 +24,7 @@ import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -61,6 +65,8 @@ public class PledgeActivity extends BaseActivity {
     LinearLayout llRebackMoney;
     private OrderBean item;
     static BaseActivity instance;
+    private List<LoginProtocolResutl.ResultBean> helpList;
+    private ProtocolDialog dialog;
 
 
     @Override
@@ -336,9 +342,58 @@ public class PledgeActivity extends BaseActivity {
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getProtocol();
+            }
+        });
+    }
+    public void getProtocol() {
+        Map map = new HashMap();
+        String url = AppURL.GET_PROTOCOL_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                LoginProtocolResutl loginResult = new Gson().fromJson(result, LoginProtocolResutl.class);
+                if (Global.RESULT_CODE.equals(loginResult.getCode())) {
+                    if (loginResult.getResult() != null) {
+                        helpList = loginResult.getResult();
+                        if (helpList.size() > 0) {
+                            showComfirmDialog();
+                        }
+                    }
+
+                } else {
+                    showToastReal(loginResult.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                showToastReal(fail);
+            }
+        }, map);
+    }
+
+    private void showComfirmDialog() {
+        View view = View.inflate(this, R.layout.dialog_protocol, null);
+        dialog = new ProtocolDialog(this, view, R.style.protocol_dialog_theme);
+        TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
+        TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
+        TextView tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
+        tvTitle.setText(helpList.get(1).getTitle());
+        tvContent.setText(Html.fromHtml(helpList.get(1).getContent()));
+        tvConfirm.setText("同意并继续");
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 pledge();
             }
         });
+//        dialog.setCancelable(false);
+        dialog.show();
     }
 
     /**

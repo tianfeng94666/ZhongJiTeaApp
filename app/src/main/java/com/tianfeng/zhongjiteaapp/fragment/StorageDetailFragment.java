@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 
 import com.google.gson.Gson;
 import com.tianfeng.zhongjiteaapp.R;
+import com.tianfeng.zhongjiteaapp.activity.ChangeActivity;
 import com.tianfeng.zhongjiteaapp.activity.PledgeActivity;
 import com.tianfeng.zhongjiteaapp.activity.StorageTradeActivity;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
@@ -50,9 +51,11 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
     public StorageDetailFragment(int i) {
         this.type = i;
     }
+
     public StorageDetailFragment() {
 
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -147,7 +150,7 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
                     helper.setText(R.id.tv_amount, "成交量：" + item.getQuantity());
                     helper.setText(R.id.tv_total_money, "成交总金额：" + item.getTotal());
                     helper.setText(R.id.tv_date, "购买时间：" + CommMethod.getFormatedDateTime(item.getCreateTime()));
-                    helper.setText(R.id.iv_item_state,item.getTransStatusName());
+                    helper.setText(R.id.iv_item_state, item.getTransStatusName());
                     helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
 
                     helper.getView(R.id.iv_item_state).setOnClickListener(new View.OnClickListener() {
@@ -174,19 +177,22 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
     }
 
     private void judge(OrderBean item) {
-        String orderState =item.getTransType();
+        String orderState = item.getTransType();
         String state = item.getTransStatus();
         Bundle bundle = new Bundle();
         L.e("orderState", "=" + orderState);
         //可以进入质押界面的 确认质押（0004,1）申请赎回（0004,3）确认赎回（0002,1）
-        if((orderState.equals(Global.PLEDGE)&&(state.equals("1")&&state.equals("3")))||orderState.equals(Global.REBACK)&&state.equals("1")){
+        if ((orderState.equals(Global.PLEDGE) && (state.equals("1") && state.equals("3"))) || orderState.equals(Global.REBACK) && state.equals("1")) {
             bundle.putSerializable("storageItem", item);
             openActivity(PledgeActivity.class, bundle);
-        }else if(orderState.equals("0001")&&state.equals("3")){
+        } else if (orderState.equals("0001") && state.equals("3")) {
             //暂存状态 交易成功
             bundle.putSerializable("storageItem", item);
             openActivity(StorageTradeActivity.class, bundle);
-        }else {
+        } else if (orderState.equals(Global.CHANGE) && (state.equals(Global.SHENHE_WAIT))) {
+            bundle.putSerializable("storageItem", item);
+            openActivity(ChangeActivity.class, bundle);
+        } else {
             ToastManager.showToastReal("该状态订单不能操作");
         }
 
@@ -212,7 +218,7 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
     @Override
     public void onRefresh() {
         index = 1;
-        if(storageAdapter!=null){
+        if (storageAdapter != null) {
             storageList.clear();
             storageAdapter.notifyDataSetChanged();
         }

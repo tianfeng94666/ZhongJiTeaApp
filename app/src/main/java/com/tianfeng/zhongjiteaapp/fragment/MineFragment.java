@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.activity.AboutActivity;
 import com.tianfeng.zhongjiteaapp.activity.ChooseShopDialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.HelpActivity;
+import com.tianfeng.zhongjiteaapp.activity.HistrotyMessageActivity;
 import com.tianfeng.zhongjiteaapp.activity.LoginAcitivity;
 import com.tianfeng.zhongjiteaapp.activity.MyCollectedActivity;
 import com.tianfeng.zhongjiteaapp.activity.OrderActivity;
@@ -72,6 +74,8 @@ public class MineFragment extends BaseFragment {
     RelativeLayout rlOrder;
     @Bind(R.id.rootview)
     ScrollView rootview;
+    @Bind(R.id.iv_message)
+    ImageView ivMessage;
     private SharedPopupWindow sharedPopupWindow;
 
     @Nullable
@@ -105,13 +109,13 @@ public class MineFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.rl_shop, R.id.rl_collect, R.id.rl_share, R.id.rl_help, R.id.rl_about, R.id.rl_setting, R.id.tv_exit, R.id.rl_order})
+    @OnClick({R.id.rl_shop, R.id.rl_collect, R.id.rl_share, R.id.rl_help, R.id.rl_about, R.id.rl_setting, R.id.tv_exit, R.id.rl_order, R.id.iv_message})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_shop:
-                if(StringUtils.isEmpty(Global.shopId)){
+                if (StringUtils.isEmpty(Global.shopId)) {
                     openActivity(ChooseShopDialogActivity.class, null);
-                }else {
+                } else {
                     openActivity(ShopInformationActivity.class, null);
                 }
 
@@ -136,6 +140,9 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.tv_exit:
                 logout();
+                break;
+            case R.id.iv_message:
+                openActivity(HistrotyMessageActivity.class, null);
                 break;
         }
     }

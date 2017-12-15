@@ -3,8 +3,6 @@ package com.tianfeng.zhongjiteaapp.activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +26,8 @@ import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CountTimerButton;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,9 +84,14 @@ public class LoginAcitivity extends BaseActivity {
     ImageView ivQq;
     @Bind(R.id.ll_login)
     LinearLayout llLogin;
+    @Bind(R.id.textView)
+    TextView textView;
+    @Bind(R.id.et_register_password)
+    EditText etRegisterPassword;
     private CountTimerButton mCountDownTimerUtils;
     private String bizId;//验证码请求返回的bizId
     private List<LoginProtocolResutl.ResultBean> helpList;
+    private LoginResult loginResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +112,8 @@ public class LoginAcitivity extends BaseActivity {
         if (!StringUtils.isEmpty(password)) {
             etLoginPassword.setText(password);
         }
-         boolean isExit = SpUtils.getInstace(this).getBoolean("isExit",true);
-        if(!isExit){
+        boolean isExit = SpUtils.getInstace(this).getBoolean("isExit", true);
+        if (!isExit) {
             login();
         }
     }
@@ -199,13 +204,18 @@ public class LoginAcitivity extends BaseActivity {
     private void goNext() {
 
         if (cbIscheck.isChecked()) {
+            if (StringUtils.isEmpty(etLoginPhone.getText().toString())) {
+                showToastReal("请输入手机号");
+                return;
+            }
             if (StringUtils.isEmpty(etLoginCode.getText().toString())) {
                 showToastReal("请输入验证码");
                 return;
             }
 
-            if (StringUtils.isEmpty(etLoginPhone.getText().toString())) {
-                showToastReal("请输入手机号");
+
+            if (StringUtils.isEmpty(etRegisterPassword.getText().toString())) {
+                showToastReal("请输入密码");
                 return;
             }
 
@@ -223,7 +233,7 @@ public class LoginAcitivity extends BaseActivity {
                         SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
                         Global.PhoneNumber = etLoginPhone.getText().toString();
                         Global.CODE = etLoginCode.getText().toString();
-                        openActivity(PersonalDataActivity.class, null);
+                        regisit();
                     } else {
                         showToastReal(messageCheckResult.getMsg());
                     }
@@ -243,6 +253,55 @@ public class LoginAcitivity extends BaseActivity {
 //        openActivity(ChooseShopActivity.class, null);
     }
 
+    private void regisit() {
+        String bizIdEncode = null;
+        try {
+            bizIdEncode = URLEncoder.encode(Global.BIZID, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String phoneNumber = SpUtils.getInstace(this).getString("phoneNumber");
+        String url = AppURL.REGISTER_URL + "/" + bizIdEncode + "/" + Global.CODE;
+
+        Map map = new HashMap();
+        map.put("mobile", phoneNumber);
+        map.put("bizId",Global.BIZID);
+        map.put("code",Global.CODE);
+//        map.put("shopId",Global.shopId);
+        map.put("loginName",phoneNumber);
+        map.put("nickName",phoneNumber);
+        map.put("password",etRegisterPassword.getText().toString());
+//        if(!StringUtils.isEmpty(imgurl)){
+//            map.put("imgUrl",imgurl);
+//        }
+        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                loginResult = new Gson().fromJson(result,LoginResult.class);
+                if(Global.RESULT_CODE.equals(loginResult.getCode())){
+                    Global.UserId = loginResult.getResult().getId();
+                    Global.JESSIONID=loginResult.getJsessionid();
+                    Global.HeadView = AppURL.baseHost + loginResult.getResult().getImgUrl();
+                    Global.shopId = loginResult.getResult().getShopId();
+                    Global.isLogin =true;
+                    SpUtils.getInstace(LoginAcitivity.this).saveBoolean("isExit",false);
+                    openActivity(MainActivity.class,null);
+                    finish();
+                }else {
+                    showToastReal(loginResult.getMsg());
+                }
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                showToastReal(fail);
+            }
+        }, map);
+
+
+    }
     private void login() {
         tvLogin.setClickable(false);
         if (etLoginPhone.getText().toString().isEmpty()) {
