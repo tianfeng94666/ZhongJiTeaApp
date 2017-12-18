@@ -72,8 +72,9 @@ public class HistrotyMessageActivity extends BaseActivity implements XListView.I
     private void getNotice() {
         Map map = new HashMap();
         map.put("index", index);
-        map.put("pageSize", 10);
-        VolleyRequestUtils.getInstance().getRequestPost(this, AppURL.GET_NOTICE_URL, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        map.put("userId",Global.UserId);
+        map.put("pageSize", 15);
+        VolleyRequestUtils.getInstance().getRequestPost(this, AppURL.GET_MESSAGELIST, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result ", result);

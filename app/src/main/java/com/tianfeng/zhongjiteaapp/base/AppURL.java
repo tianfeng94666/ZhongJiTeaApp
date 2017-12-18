@@ -177,4 +177,8 @@ public class AppURL {
      * 绑定门店
      */
     public static String SET_SHOPID = baseHost +"/api/user/shop/bind";
+    /**
+     * 暂存消息
+     */
+    public static String GET_MESSAGELIST= baseHost +"/api/msg/zc";
 }
