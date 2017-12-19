@@ -1,5 +1,6 @@
 package com.tianfeng.zhongjiteaapp.net;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 
@@ -147,6 +148,7 @@ public class VolleyRequestUtils {
     }
 
     public void getStringPostRequest(Context context, String url, final HttpStringRequsetCallBack callback, final Map<String, String> map) {
+
         baseShowWatLoading(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -187,13 +189,13 @@ public class VolleyRequestUtils {
 
     //！！！！！！！！get请求！！！！！！！！！！
     public void getRequestGet(Context context, String url, final HttpStringRequsetCallBack callback) {
-        baseShowWatLoading(context);
+//        baseShowWatLoading(context);
         JsonObjectRequest jsonObjectRequest = new NormalPostRequest(Request.Method.GET, url, null,
                 new Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        baseHideWatLoading();
+                      //  baseHideWatLoading();
                         if (callback != null)
                             callback.onSuccess(response.toString());
                     }
@@ -201,7 +203,7 @@ public class VolleyRequestUtils {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                baseHideWatLoading();
+             //   baseHideWatLoading();
                 if (callback != null)
                     callback.onFail(error.toString());
             }

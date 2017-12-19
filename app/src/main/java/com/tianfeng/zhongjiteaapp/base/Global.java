@@ -22,6 +22,9 @@ public class Global {
     public static String AeraCode;
     //记录是否有门店
     public static boolean isHaveShop= true;
+    public static String appId = "wxce488c9ce08c20e3";
+    public static String secret = "203e4b15ebfc1a03475c2ad0809667ee";
+    public static String QQ_APP_ID="1106334471";
     /**
      * 状态编码
      */
@@ -38,4 +41,5 @@ public class Global {
     public static String FINISH = "3";
     public static String SHENHE_CANCLE= "4";
     public static String SHENHE_WAIT = "0";
+
 }

@@ -181,4 +181,8 @@ public class AppURL {
      * 暂存消息
      */
     public static String GET_MESSAGELIST= baseHost +"/api/msg/zc";
+    /**
+     * 登录验证
+     */
+    public static String WEIXIN_LOGIN= baseHost +"/api/user/wx/auth";
 }

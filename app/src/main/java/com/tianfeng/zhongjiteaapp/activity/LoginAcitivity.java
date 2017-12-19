@@ -1,5 +1,6 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,14 +11,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
+import com.tianfeng.zhongjiteaapp.base.BaseApplication;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
 import com.tianfeng.zhongjiteaapp.json.LoginProtocolResutl;
 import com.tianfeng.zhongjiteaapp.json.LoginResult;
 import com.tianfeng.zhongjiteaapp.json.MessageCheckResult;
+import com.tianfeng.zhongjiteaapp.json.WeixinResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.SpUtils;
@@ -92,15 +101,23 @@ public class LoginAcitivity extends BaseActivity {
     private String bizId;//验证码请求返回的bizId
     private List<LoginProtocolResutl.ResultBean> helpList;
     private LoginResult loginResult;
+    private IWXAPI mWxApi;
+    private Tencent mTencent;
+    private QQCallback qqCallback;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        registTo();
         initView();
         netLoad();
+
     }
+
+
 
     private void initView() {
 //        tvNext.setClickable(false);
@@ -265,12 +282,12 @@ public class LoginAcitivity extends BaseActivity {
 
         Map map = new HashMap();
         map.put("mobile", phoneNumber);
-        map.put("bizId",Global.BIZID);
-        map.put("code",Global.CODE);
+        map.put("bizId", Global.BIZID);
+        map.put("code", Global.CODE);
 //        map.put("shopId",Global.shopId);
-        map.put("loginName",phoneNumber);
-        map.put("nickName",phoneNumber);
-        map.put("password",etRegisterPassword.getText().toString());
+        map.put("loginName", phoneNumber);
+        map.put("nickName", phoneNumber);
+        map.put("password", etRegisterPassword.getText().toString());
 //        if(!StringUtils.isEmpty(imgurl)){
 //            map.put("imgUrl",imgurl);
 //        }
@@ -278,17 +295,17 @@ public class LoginAcitivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);
-                loginResult = new Gson().fromJson(result,LoginResult.class);
-                if(Global.RESULT_CODE.equals(loginResult.getCode())){
+                loginResult = new Gson().fromJson(result, LoginResult.class);
+                if (Global.RESULT_CODE.equals(loginResult.getCode())) {
                     Global.UserId = loginResult.getResult().getId();
-                    Global.JESSIONID=loginResult.getJsessionid();
+                    Global.JESSIONID = loginResult.getJsessionid();
                     Global.HeadView = AppURL.baseHost + loginResult.getResult().getImgUrl();
                     Global.shopId = loginResult.getResult().getShopId();
-                    Global.isLogin =true;
-                    SpUtils.getInstace(LoginAcitivity.this).saveBoolean("isExit",false);
-                    openActivity(MainActivity.class,null);
+                    Global.isLogin = true;
+                    SpUtils.getInstace(LoginAcitivity.this).saveBoolean("isExit", false);
+                    openActivity(MainActivity.class, null);
                     finish();
-                }else {
+                } else {
                     showToastReal(loginResult.getMsg());
                 }
             }
@@ -302,6 +319,7 @@ public class LoginAcitivity extends BaseActivity {
 
 
     }
+
     private void login() {
         tvLogin.setClickable(false);
         if (etLoginPhone.getText().toString().isEmpty()) {
@@ -424,70 +442,82 @@ public class LoginAcitivity extends BaseActivity {
     }
 
     private void qqLogin() {
-        Platform qq = ShareSDK.getPlatform(QQ.NAME);
-//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
-        qq.setPlatformActionListener(new PlatformActionListener() {
-
-            @Override
-            public void onError(Platform arg0, int arg1, Throwable arg2) {
-                // TODO Auto-generated method stub
-                arg2.printStackTrace();
-                showToastReal("qq登陆失败");
-            }
-
-            @Override
-            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
-                // TODO Auto-generated method stub
-                //输出所有授权信息
-                arg0.getDb().exportData();
-                openActivity(AssociatePhoneActivity.class, null);
-            }
-
-            @Override
-            public void onCancel(Platform arg0, int arg1) {
-                // TODO Auto-generated method stub
-                showToastReal("取消qq登陆");
-            }
-        });
-        //authorize与showUser单独调用一个即可
-        qq.authorize();//单独授权,OnComplete返回的hashmap是空的
-        qq.showUser(null);//授权并获取用户信息
-        //移除授权
-        qq.removeAccount(true);
+        //QQ登录初始化
+        mTencent = Tencent.createInstance(Global.QQ_APP_ID, this);
+        qqCallback =  new QQCallback();
+        mTencent.login(this, "get_user_info",qqCallback);
     }
 
     private void weiChatLogin() {
 
-        Platform weibo = ShareSDK.getPlatform(Wechat.NAME);
-//回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
-        weibo.setPlatformActionListener(new PlatformActionListener() {
+        if (!mWxApi.isWXAppInstalled()) {
+            showToastReal("您还未安装微信客户端");
+            return;
+        }
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
 
-            @Override
-            public void onError(Platform arg0, int arg1, Throwable arg2) {
-                // TODO Auto-generated method stub
-                arg2.printStackTrace();
-                showToastReal("微信登陆失败");
-            }
-
-            @Override
-            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
-                // TODO Auto-generated method stub
-                //输出所有授权信息
-                arg0.getDb().exportData();
-                openActivity(AssociatePhoneActivity.class, null);
-
-            }
-
-            @Override
-            public void onCancel(Platform arg0, int arg1) {
-                // TODO Auto-generated method stub
-                showToastReal("取消微信登陆");
-            }
-        });
-//authorize与showUser单独调用一个即可
-        weibo.authorize();//单独授权,OnComplete返回的hashmap是空的
-        weibo.showUser(null);//授权并获取用户信息
-//移除授权
-        weibo.removeAccount(true);
+        mWxApi.sendReq(req);
     }
+
+
+    private void registTo() {
+
+        //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
+        mWxApi = WXAPIFactory.createWXAPI(this, "wxce488c9ce08c20e3", true);
+        // 将该app注册到微信
+        mWxApi.registerApp("wxce488c9ce08c20e3");
+    }
+
+
+    class QQCallback implements IUiListener {
+        @Override
+        public void onComplete(Object o) {
+L.e(o.toString());
+//            QQLoginInfo qqLoginInfo = new Gson().fromJson(String.valueOf(o), QQLoginInfo.class);
+//            mTencent.setOpenId(qqLoginInfo.getOpenid());
+//            mTencent.setAccessToken(qqLoginInfo.getAccess_token(), qqLoginInfo.getExpires_in());
+//            getQQUserInfo(qqLoginInfo.getOpenid());
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 官方文档没没没没没没没没没没没这句代码, 但是很很很很很很重要, 不然不会回调!
+        mTencent.onActivityResultData(requestCode, resultCode, data, qqCallback);
+        mTencent.handleResultData(data, qqCallback);
+//        if(requestCode == Constants.REQUEST_API) {
+//            if(resultCode == Constants.RESULT_LOGIN) {
+//                mTencent.handleLoginData(data, loginListener);
+//            }
+//        }
+    }
+//    @Override
+//    public void getWeixingToken(String code) {
+//        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+ Global.appId+"&secret="+Global.secret+"&code="+code+"&grant_type=authorization_code";
+//        VolleyRequestUtils.getInstance().getRequestGet(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+//            @Override
+//            public void onSuccess(String result) {
+//                WeixinResult weixinResult = new Gson().fromJson(result,WeixinResult.class);
+////                textWeixin(weixinResult);
+//            }
+//
+//            @Override
+//            public void onFail(String fail) {
+//
+//            }
+//        });
+//    }
+
 }

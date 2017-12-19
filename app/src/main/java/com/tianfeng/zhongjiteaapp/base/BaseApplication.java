@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.android.volley.RequestQueue;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tianfeng.zhongjiteaapp.net.ImageLoderUtils;
 import com.tianfeng.zhongjiteaapp.net.VolleySingleton;
 import com.tianfeng.zhongjiteaapp.utils.ACache;
@@ -40,6 +42,8 @@ public class BaseApplication extends Application {
     private static String userPic;
 
     public static ACache mAcache = null;
+
+    public IWXAPI mWxApi;
 
     public static String getUserPic() {
         return userPic;
@@ -80,9 +84,12 @@ public class BaseApplication extends Application {
         initImageLoder();
         initOkHttpFinal();
         initParams();
+
         //初始化分享
         ShareSDK.initSDK(this);
     }
+
+
 
     private void initParams() {
 
