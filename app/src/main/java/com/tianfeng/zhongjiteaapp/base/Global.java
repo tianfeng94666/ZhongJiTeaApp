@@ -42,4 +42,6 @@ public class Global {
     public static String SHENHE_CANCLE= "4";
     public static String SHENHE_WAIT = "0";
 
+    public static String QQ_OPENID;
+    public static String WX_OPENID;
 }

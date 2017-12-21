@@ -14,6 +14,7 @@ import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.GetCodeResult;
 import com.tianfeng.zhongjiteaapp.json.LoginProtocolResutl;
+import com.tianfeng.zhongjiteaapp.json.LoginResult;
 import com.tianfeng.zhongjiteaapp.json.MessageCheckResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
@@ -22,6 +23,8 @@ import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CountTimerButton;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,13 +63,21 @@ public class AssociatePhoneActivity extends BaseActivity {
     private CountTimerButton mCountDownTimerUtils;
     private String bizId;
     private List<LoginProtocolResutl.ResultBean> helpList;
+    private LoginResult loginResult;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_associate_phone);
         ButterKnife.bind(this);
+        getDate();
         initView();
+    }
+
+    private void getDate() {
+        Bundle bundle =getIntent().getExtras();
+        type  =bundle.getInt("type");
     }
 
     private void initView() {
@@ -94,56 +105,87 @@ public class AssociatePhoneActivity extends BaseActivity {
                 gotoProtocol(1);
                 break;
             case R.id.tv_next:
-                goNext();
+                goNext(type);
                 break;
         }
     }
 
-    private void goNext() {
+    private void goNext(final int type) {
 
         if (cbIscheck.isChecked()) {
             if (StringUtils.isEmpty(etLoginCode.getText().toString())) {
                 showToastReal("请输入验证码");
                 return;
+            }else {
+                Global.CODE = etLoginCode.getText().toString();
             }
 
             if (StringUtils.isEmpty(etPhone.getText().toString())) {
                 showToastReal("请输入手机号");
                 return;
             }
+            String bizIdEncode = null;
+            try {
+                bizIdEncode = URLEncoder.encode(Global.BIZID, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            final String phoneNumber = etPhone.getText().toString();
+            String url = AppURL.ASSOCIATE_PHONE + "/" + bizIdEncode + "/" + Global.CODE;
 
-            String url = AppURL.MESSAGE_CHECK;
-            Map map = new HashMap();
-            map.put("phoneNumber", etPhone.getText().toString());
-            map.put("bizId", bizId);
-            map.put("code", etLoginCode.getText().toString());
-            VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            final Map map = new HashMap();
+            map.put("mobile", phoneNumber);
+            map.put("bizId", Global.BIZID);
+            map.put("code", Global.CODE);;
+            map.put("nickName", Global.nickName);
+            if(type ==0){
+                map.put("wx", Global.WX_OPENID);
+            }else {
+                map.put("qq", Global.QQ_OPENID);
+            }
+            if(!StringUtils.isEmpty(Global.HeadView)){
+                map.put("imgUrl",Global.HeadView);
+            }
+            L.e(url);
+            VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
                 @Override
                 public void onSuccess(String result) {
                     L.e("result", result);
-                    MessageCheckResult messageCheckResult = new Gson().fromJson(result, MessageCheckResult.class);
-                    if (Global.RESULT_CODE.equals(messageCheckResult.getCode())) {
-                        SpUtils.getInstace(AssociatePhoneActivity.this).saveString("phoneNumber", etPhone.getText().toString());
-                        Global.PhoneNumber = etPhone.getText().toString();
-                        Global.CODE = etLoginCode.getText().toString();
-                        openActivity(ChooseShopActivity.class, null);
+                    loginResult = new Gson().fromJson(result, LoginResult.class);
+                    if (Global.RESULT_CODE.equals(loginResult.getCode())) {
+                        Global.UserId = loginResult.getResult().getId();
+                        Global.JESSIONID = loginResult.getJsessionid();
+                        Global.HeadView = AppURL.baseHost + loginResult.getResult().getImgUrl();
+                        Global.shopId = loginResult.getResult().getShopId();
+                        Global.QQ_OPENID = loginResult.getResult().getQq();
+                        Global.WX_OPENID = loginResult.getResult().getWx();
+                        Global.isLogin = true;
+                        SpUtils.getInstace(AssociatePhoneActivity.this).saveBoolean("isExit", false);
+                        SpUtils.getInstace(AssociatePhoneActivity.this).saveString("phoneNumber",phoneNumber);
+                        if(type ==0){
+                            SpUtils.getInstace(AssociatePhoneActivity.this).saveInt("loginType", 1);
+                        }else {
+                            SpUtils.getInstace(AssociatePhoneActivity.this).saveInt("loginType", 2);
+                        }
+                        openActivity(MainActivity.class, null);
+                        finish();
                     } else {
-                        showToastReal(messageCheckResult.getMsg());
+                        showToastReal(loginResult.getMsg());
                     }
                 }
 
                 @Override
                 public void onFail(String fail) {
                     L.e("fail", fail);
-//                    showToastReal(fail);
+//                showToastReal(fail);
                 }
             }, map);
+
 
         } else {
             showToastReal("请勾选是否同意协议");
         }
-//        //调试使用
-//        openActivity(ChooseShopActivity.class, null);
+
     }
 
     private void getLoginCode() {

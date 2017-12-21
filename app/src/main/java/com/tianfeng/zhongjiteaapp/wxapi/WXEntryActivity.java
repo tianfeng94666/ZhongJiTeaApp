@@ -10,6 +10,8 @@ package com.tianfeng.zhongjiteaapp.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -45,6 +47,7 @@ import cn.sharesdk.wechat.utils.WechatHandlerActivity;
 public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEventHandler {
     private static final int RETURN_MSG_TYPE_LOGIN = 1;
     private static final int RETURN_MSG_TYPE_SHARE = 2;
+    public static final String action ="send_code";
     private IWXAPI mWxApi;
 
     @Override
@@ -99,10 +102,9 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
         switch (errorCode) {
             case BaseResp.ErrCode.ERR_OK:
                 //用户同意
-
                 String code = ((SendAuth.Resp) resp).code;
 
-//               LoginAcitivity.getWeixingToken(code);
+            sendCode(code);
                 L.e(code);
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
@@ -114,34 +116,17 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
             default:
                 break;
         }
-        ToastManager.showToastReal(resp.errStr);
+    }
 
+    private void sendCode(String code) {
+        Intent intent = new Intent(action);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("code",code);
+        intent.putExtras(bundle);
+        sendBroadcast(intent);
 
     }
 
 
 
-    private void textWeixin(WeixinResult weixinResult) {
-
-        String url = AppURL.WEIXIN_LOGIN ;
-
-        Map map = new HashMap();
-        map.put("access_token", weixinResult.getAccess_token());
-        map.put("openid", weixinResult.getOpenid());
-
-
-        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
-            @Override
-            public void onSuccess(String result) {
-                L.e("result", result);
-
-            }
-
-            @Override
-            public void onFail(String fail) {
-                L.e("fail", fail);
-//                showToastReal(fail);
-            }
-        }, map);
-    }
 }

@@ -1,15 +1,16 @@
 package com.tianfeng.zhongjiteaapp.json;
 
 /**
- * Created by Administrator on 2017/9/18 0018.
+ * Created by Administrator on 2017/12/20 0020.
  */
 
-public class LoginResult {
+public class WXLoginCheckResult {
+
     /**
      * code : 0000
      * msg : 登录成功!
-     * result : {"id":"58f5aad5dc4b4cf985b8f7850aa2e6bf","loginName":"13689500606","userName":"13689500606","nickName":"小猪","userType":"0004","userId":null,"password":null,"passwordReal":null,"mobile":"13689500606","areaId":null,"shopId":"50f9c434f8cb4659acad40c9980595c5","imgUrl":"/file/head/image/img_1505722592324.jpg","registerTime":null,"isLock":"1","isDisabled":"1","role":null,"permission":null,"lastLoginTime":null,"menu":null}
-     * jsessionid : 63dd3839-4e7d-4489-98c6-b856af5cd56e
+     * result : {"id":"78078cba406840b69f3437e85c9e3a9c","loginName":null,"userName":null,"nickName":"天风","userType":"0004","userId":null,"password":"f3e3fbd3d3a1263e19f8343552db4c0e","passwordReal":null,"mobile":"17688705930","areaId":null,"shopId":null,"imgUrl":"http://wx.qlogo.cn/mmopen/vi_32/fSKBlFG5AbKGE2LenY5Ysa51LibJ7OYBficMFDDea6BNX1vhBicqnR6t0TXG1dib2S4H6rYOL24FnLfE6u9b9a06WQ/0","registerTime":1513748364000,"isLock":"1","isDisabled":"1","role":null,"permission":null,"lastLoginTime":null,"menu":null,"shopName":null,"wx":"orWgd1rXxU8SmOGrwjowti4OiL7I","qq":null}
+     * jsessionid : e6d8b280-835a-497f-9418-a29eb1fab305
      */
 
     private String code;
@@ -51,25 +52,28 @@ public class LoginResult {
 
     public static class ResultBean {
         /**
-         * id : 58f5aad5dc4b4cf985b8f7850aa2e6bf
-         * loginName : 13689500606
-         * userName : 13689500606
-         * nickName : 小猪
+         * id : 78078cba406840b69f3437e85c9e3a9c
+         * loginName : null
+         * userName : null
+         * nickName : 天风
          * userType : 0004
          * userId : null
-         * password : null
+         * password : f3e3fbd3d3a1263e19f8343552db4c0e
          * passwordReal : null
-         * mobile : 13689500606
+         * mobile : 17688705930
          * areaId : null
-         * shopId : 50f9c434f8cb4659acad40c9980595c5
-         * imgUrl : /file/head/image/img_1505722592324.jpg
-         * registerTime : null
+         * shopId : null
+         * imgUrl : http://wx.qlogo.cn/mmopen/vi_32/fSKBlFG5AbKGE2LenY5Ysa51LibJ7OYBficMFDDea6BNX1vhBicqnR6t0TXG1dib2S4H6rYOL24FnLfE6u9b9a06WQ/0
+         * registerTime : 1513748364000
          * isLock : 1
          * isDisabled : 1
          * role : null
          * permission : null
          * lastLoginTime : null
          * menu : null
+         * shopName : null
+         * wx : orWgd1rXxU8SmOGrwjowti4OiL7I
+         * qq : null
          */
 
         private String id;
@@ -77,38 +81,23 @@ public class LoginResult {
         private String userName;
         private String nickName;
         private String userType;
-        private Object userId;
-        private Object password;
-        private Object passwordReal;
+        private String userId;
+        private String password;
+        private String passwordReal;
         private String mobile;
-        private Object areaId;
+        private String areaId;
         private String shopId;
         private String imgUrl;
-        private Object registerTime;
+        private long registerTime;
         private String isLock;
         private String isDisabled;
-        private Object role;
-        private Object permission;
-        private Object lastLoginTime;
-        private Object menu;
+        private String role;
+        private String permission;
+        private String lastLoginTime;
+        private String menu;
+        private String shopName;
         private String wx;
         private String qq;
-
-        public String getWx() {
-            return wx;
-        }
-
-        public void setWx(String wx) {
-            this.wx = wx;
-        }
-
-        public String getQq() {
-            return qq;
-        }
-
-        public void setQq(String qq) {
-            this.qq = qq;
-        }
 
         public String getId() {
             return id;
@@ -150,27 +139,27 @@ public class LoginResult {
             this.userType = userType;
         }
 
-        public Object getUserId() {
+        public String getUserId() {
             return userId;
         }
 
-        public void setUserId(Object userId) {
+        public void setUserId(String userId) {
             this.userId = userId;
         }
 
-        public Object getPassword() {
+        public String getPassword() {
             return password;
         }
 
-        public void setPassword(Object password) {
+        public void setPassword(String password) {
             this.password = password;
         }
 
-        public Object getPasswordReal() {
+        public String getPasswordReal() {
             return passwordReal;
         }
 
-        public void setPasswordReal(Object passwordReal) {
+        public void setPasswordReal(String passwordReal) {
             this.passwordReal = passwordReal;
         }
 
@@ -182,11 +171,11 @@ public class LoginResult {
             this.mobile = mobile;
         }
 
-        public Object getAreaId() {
+        public String getAreaId() {
             return areaId;
         }
 
-        public void setAreaId(Object areaId) {
+        public void setAreaId(String areaId) {
             this.areaId = areaId;
         }
 
@@ -206,11 +195,11 @@ public class LoginResult {
             this.imgUrl = imgUrl;
         }
 
-        public Object getRegisterTime() {
+        public long getRegisterTime() {
             return registerTime;
         }
 
-        public void setRegisterTime(Object registerTime) {
+        public void setRegisterTime(long registerTime) {
             this.registerTime = registerTime;
         }
 
@@ -230,36 +219,60 @@ public class LoginResult {
             this.isDisabled = isDisabled;
         }
 
-        public Object getRole() {
+        public String getRole() {
             return role;
         }
 
-        public void setRole(Object role) {
+        public void setRole(String role) {
             this.role = role;
         }
 
-        public Object getPermission() {
+        public String getPermission() {
             return permission;
         }
 
-        public void setPermission(Object permission) {
+        public void setPermission(String permission) {
             this.permission = permission;
         }
 
-        public Object getLastLoginTime() {
+        public String getLastLoginTime() {
             return lastLoginTime;
         }
 
-        public void setLastLoginTime(Object lastLoginTime) {
+        public void setLastLoginTime(String lastLoginTime) {
             this.lastLoginTime = lastLoginTime;
         }
 
-        public Object getMenu() {
+        public String getMenu() {
             return menu;
         }
 
-        public void setMenu(Object menu) {
+        public void setMenu(String menu) {
             this.menu = menu;
+        }
+
+        public String getShopName() {
+            return shopName;
+        }
+
+        public void setShopName(String shopName) {
+            this.shopName = shopName;
+        }
+
+        public String getWx() {
+            return wx;
+        }
+
+        public void setWx(String wx) {
+            this.wx = wx;
+        }
+
+        public String getQq() {
+            return qq;
+        }
+
+        public void setQq(String qq) {
+            this.qq = qq;
         }
     }
 }

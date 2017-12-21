@@ -68,7 +68,8 @@
         <activity android:name=".activity.ChooseShopActivity" />
         <activity android:name=".activity.SearchTeaActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".activity.AssociatePhoneActivity" />
+        <activity android:name=".activity.AssociatePhoneActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".activity.StorageTradeActivity" />
         <activity android:name=".activity.PersonalDataActivity" />
         <activity android:name=".activity.ProductActivity" />

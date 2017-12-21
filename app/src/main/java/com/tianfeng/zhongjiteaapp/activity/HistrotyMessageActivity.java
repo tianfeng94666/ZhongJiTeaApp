@@ -18,6 +18,7 @@ import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.json.NoticeResult;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.SpUtils;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.xListView.XListView;
 
@@ -74,7 +75,8 @@ public class HistrotyMessageActivity extends BaseActivity implements XListView.I
         map.put("index", index);
         map.put("userId",Global.UserId);
         map.put("pageSize", 15);
-        VolleyRequestUtils.getInstance().getRequestPost(this, AppURL.GET_MESSAGELIST, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        String url =  AppURL.GET_MESSAGELIST+"?index="+index+"&userId="+Global.UserId+"&pageSize=15";
+        VolleyRequestUtils.getInstance().getRequestGet(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result ", result);
@@ -83,6 +85,7 @@ public class HistrotyMessageActivity extends BaseActivity implements XListView.I
                 if (Global.RESULT_CODE.equals(noticeResult.getCode())) {
                     List temp = noticeResult.getResult().getResult();
                     maxIndex = noticeResult.getResult().getTotalPage();
+                    SpUtils.getInstace(HistrotyMessageActivity.this).saveInt("messageAmount",noticeResult.getResult().getTotalRows());
                     if (maxIndex >= index) {
                         noticeList.addAll(temp);
                     } else {
@@ -105,7 +108,7 @@ public class HistrotyMessageActivity extends BaseActivity implements XListView.I
                 lvMessage.stopLoadMore();
 
             }
-        }, map);
+        });
     }
 
     private void setLv() {

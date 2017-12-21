@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.activity.AboutActivity;
+import com.tianfeng.zhongjiteaapp.activity.AssociatePhoneActivity;
 import com.tianfeng.zhongjiteaapp.activity.ChooseShopDialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.HelpActivity;
 import com.tianfeng.zhongjiteaapp.activity.HistrotyMessageActivity;
@@ -27,6 +28,7 @@ import com.tianfeng.zhongjiteaapp.base.BaseFragment;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.bean.ShareContent;
 import com.tianfeng.zhongjiteaapp.json.LogoutResult;
+import com.tianfeng.zhongjiteaapp.json.NoticeResult;
 import com.tianfeng.zhongjiteaapp.net.ImageLoadOptions;
 import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.popupwindow.SharedPopupWindow;
@@ -37,6 +39,7 @@ import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -77,6 +80,7 @@ public class MineFragment extends BaseFragment {
     @Bind(R.id.iv_message)
     ImageView ivMessage;
     private SharedPopupWindow sharedPopupWindow;
+    private int messageAmount;
 
     @Nullable
     @Override
@@ -85,9 +89,40 @@ public class MineFragment extends BaseFragment {
         UIUtils.setBarTint(getActivity(), false);
         sharedPopupWindow = new SharedPopupWindow(getActivity());
         ButterKnife.bind(this, view);
+        getNotice();
         initView();
 
         return view;
+    }
+
+    /**
+     * 获取message数量
+     */
+    private void getNotice() {
+
+        String url =  AppURL.GET_MESSAGELIST+"?index="+1+"&userId="+Global.UserId+"&pageSize=15";
+        VolleyRequestUtils.getInstance().getRequestGet(getActivity(), url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result ", result);
+                L.e("url  ", AppURL.GET_NOTICE_URL);
+                NoticeResult noticeResult = new Gson().fromJson(result, NoticeResult.class);
+                if (Global.RESULT_CODE.equals(noticeResult.getCode())) {
+                   messageAmount = noticeResult.getResult().getTotalRows();
+
+
+                } else {
+                    showToastReal(noticeResult.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+
+            }
+        });
     }
 
     @Override
@@ -101,6 +136,12 @@ public class MineFragment extends BaseFragment {
     private void initView() {
         ImageLoader.getInstance().displayImage(Global.HeadView, ivHeadPhoto, ImageLoadOptions.getOptions());
         tvUsername.setText(Global.nickName);
+       int currentMessageAmount =SpUtils.getInstace(getActivity()).getInt("messageAmount",0);
+        if(currentMessageAmount==messageAmount){
+            ivMessage.setImageResource(R.mipmap.message);
+        }else {
+            ivMessage.setImageResource(R.mipmap.have_message);
+        }
     }
 
     @Override
@@ -168,6 +209,7 @@ public class MineFragment extends BaseFragment {
                 if (Global.RESULT_CODE.equals(logoutResult.getCode())) {
                     Global.isLogin = false;
                     SpUtils.getInstace(getActivity()).saveBoolean("isExit", true);
+                    SpUtils.getInstace(getActivity()).saveInt("loginType", 0);
                     openActivity(LoginAcitivity.class, null);
                     getActivity().finish();
 

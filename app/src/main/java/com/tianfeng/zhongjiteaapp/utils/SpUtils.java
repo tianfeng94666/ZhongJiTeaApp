@@ -56,6 +56,10 @@ public class SpUtils {
         sharedPreferences.edit().putString(key, value).commit();
     }
 
+    public void saveInt(String key, int value) {
+        sharedPreferences.edit().putInt(key, value).commit();
+    }
+
     /**
      * 保存boolean键值到sp文件
      *
@@ -75,7 +79,9 @@ public class SpUtils {
     public boolean getBoolean(String key, boolean defValue) {
         return sharedPreferences.getBoolean(key, defValue);
     }
-
+    public int getInt(String key, int defValue) {
+        return sharedPreferences.getInt(key, defValue);
+    }
     /**
      * 取字符串，默认“”
      *

@@ -6,11 +6,11 @@ package com.tianfeng.zhongjiteaapp.base;
 
 public class AppURL {
     //正式
-    public static String baseHost = "http://119.23.209.140:81/xcb";
+//    public static String baseHost = "http://119.23.209.140:81/xcb";
     /**
      * 测试服务器
      */
-//    public static String baseHost = "http://119.23.209.140:82/xcb";
+    public static String baseHost = "http://119.23.209.140:83/xcb";
     /**
      * 登入
      */
@@ -185,4 +185,12 @@ public class AppURL {
      * 登录验证
      */
     public static String WEIXIN_LOGIN= baseHost +"/api/user/wx/auth";
+    /**
+     * qq登录验证
+     */
+    public static String QQ_LOGIN= baseHost +"/api/user/qq/auth";
+    /**
+     * api/user/bind/
+     */
+    public static String ASSOCIATE_PHONE= baseHost +"/api/user/bind/";
 }
