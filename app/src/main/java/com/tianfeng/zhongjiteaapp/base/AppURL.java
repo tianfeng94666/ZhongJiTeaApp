@@ -6,11 +6,11 @@ package com.tianfeng.zhongjiteaapp.base;
 
 public class AppURL {
     //正式
-//    public static String baseHost = "http://119.23.209.140:81/xcb";
+    public static String baseHost = "http://119.23.209.140:81/xcb";
     /**
      * 测试服务器
      */
-    public static String baseHost = "http://119.23.209.140:83/xcb";
+//    public static String baseHost = "http://119.23.209.140:83/xcb";
     /**
      * 登入
      */
