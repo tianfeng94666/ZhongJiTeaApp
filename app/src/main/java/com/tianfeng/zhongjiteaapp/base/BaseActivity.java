@@ -49,7 +49,7 @@ public class BaseActivity extends FragmentActivity implements HttpCycleContext {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        UIUtils.setBarTint(this,true);
+        UIUtils.setBarTint(this,false);
 
     }
 

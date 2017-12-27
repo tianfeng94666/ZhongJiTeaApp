@@ -125,7 +125,7 @@ public class LoginAcitivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UIUtils.setBarTint(this,false);
+        UIUtils.setBarTint(this,true);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         registTo();
@@ -138,6 +138,7 @@ public class LoginAcitivity extends BaseActivity {
 
 
     private void initView() {
+
 //        tvNext.setClickable(false);
         String phone = SpUtils.getInstace(this).getString("phoneNumber");
         String password = SpUtils.getInstace(this).getString("password");
@@ -366,7 +367,9 @@ public class LoginAcitivity extends BaseActivity {
                     SpUtils.getInstace(LoginAcitivity.this).saveString("phoneNumber", etLoginPhone.getText().toString());
                     SpUtils.getInstace(LoginAcitivity.this).saveString("password", etLoginPassword.getText().toString());
                     SpUtils.getInstace(LoginAcitivity.this).saveInt("loginType", 3);
-                    openActivity(MainActivity.class, null);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("openType",1);
+                    openActivity(MainActivity.class, bundle);
                 } else {
                     showToastReal(loginResult.getMsg());
                 }
@@ -566,7 +569,9 @@ public class LoginAcitivity extends BaseActivity {
                     Global.isLogin = true;
                     SpUtils.getInstace(LoginAcitivity.this).saveBoolean("isExit", false);
                     SpUtils.getInstace(LoginAcitivity.this).saveInt("loginType", 2);
-                    openActivity(MainActivity.class,null);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("openType",1);
+                    openActivity(MainActivity.class, bundle);
                 }
             }
 
@@ -711,8 +716,9 @@ public class LoginAcitivity extends BaseActivity {
                     Global.isLogin = true;
                     SpUtils.getInstace(LoginAcitivity.this).saveBoolean("isExit", false);
                     SpUtils.getInstace(LoginAcitivity.this).saveInt("loginType", 1);
-                    openActivity(MainActivity.class, null);
-
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("openType",1);
+                    openActivity(MainActivity.class, bundle);
                 }
             }
 

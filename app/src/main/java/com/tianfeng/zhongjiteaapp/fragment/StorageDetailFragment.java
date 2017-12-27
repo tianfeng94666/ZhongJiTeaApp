@@ -148,7 +148,12 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
                     helper.setText(R.id.tv_item_type, item.getDeportName() + " " + item.getTypeName());
                     helper.setText(R.id.tv_item_price, "茶叶单价：" + item.getPrice() + "/" + item.getUnitName());
                     helper.setText(R.id.tv_amount, "成交量：" + item.getQuantity());
-                    helper.setText(R.id.tv_total_money, "成交总金额：" + item.getTotal());
+                    if(Global.STORAGE.equals(item.getTransType())&&Global.FINISH.equals(item.getTransStatus())){
+                        helper.setText(R.id.tv_total_money, "暂存时间：" + item.getEndTime());
+                    }else {
+                        helper.setText(R.id.tv_total_money, "成交总金额：" + item.getTotal());
+                    }
+
                     helper.setText(R.id.tv_date, "购买时间：" + CommMethod.getFormatedDateTime(item.getCreateTime()));
                     helper.setText(R.id.iv_item_state, item.getTransStatusName());
                     helper.setImageBitmap(R.id.iv_item_product, AppURL.baseHost + "/" + item.getImgUrl());
@@ -182,7 +187,7 @@ public class StorageDetailFragment extends BaseFragment implements XListView.IXL
         Bundle bundle = new Bundle();
         L.e("orderState", "=" + orderState);
         //可以进入质押界面的 确认质押（0004,1）申请赎回（0004,3）确认赎回（0002,1）
-        if ((orderState.equals(Global.PLEDGE) && (state.equals("1") && state.equals("3"))) || orderState.equals(Global.REBACK) && state.equals("1")) {
+        if ((orderState.equals(Global.PLEDGE) && (state.equals("1") || state.equals("3"))) || orderState.equals(Global.REBACK) && state.equals("1")) {
             bundle.putSerializable("storageItem", item);
             openActivity(PledgeActivity.class, bundle);
         } else if (orderState.equals("0001") && state.equals("3")) {

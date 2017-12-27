@@ -28,7 +28,8 @@
             android:drawablePadding="5dp"
             android:drawableRight="@mipmap/icon_next"
             android:gravity="right|center_vertical"
-            android:text="请选择仓库"
+            android:textColorHint="@color/text_color2"
+            android:hint="请选择仓库"
             android:textColor="@color/text_color2"
             android:textSize="@dimen/text_normal" />
     </LinearLayout>
@@ -59,7 +60,8 @@
             android:drawablePadding="5dp"
             android:drawableRight="@mipmap/icon_next"
             android:gravity="right|center_vertical"
-            android:text="请选择已购茶品"
+            android:hint="请选择已购茶品"
+            android:textColorHint="@color/text_color2"
             android:textColor="@color/text_color2"
             android:textSize="@dimen/text_normal" />
     </LinearLayout>

@@ -47,7 +47,7 @@ public class DialogActivity extends BaseActivity {
 
     private void getData() {
         Bundle bundle = getIntent().getExtras();
-        tvMessage.setText(bundle.get("key").toString());
+        tvMessage.setText(bundle.getString("key"));
         activity = (Activity) bundle.getSerializable("activity");
     }
 

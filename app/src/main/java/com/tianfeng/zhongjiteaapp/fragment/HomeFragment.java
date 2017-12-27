@@ -19,6 +19,7 @@ import com.tianfeng.zhongjiteaapp.activity.DialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.HistoryNoticeActivity;
 import com.tianfeng.zhongjiteaapp.activity.MainActivity;
 import com.tianfeng.zhongjiteaapp.activity.ProductActivity;
+import com.tianfeng.zhongjiteaapp.activity.StorageActivity;
 import com.tianfeng.zhongjiteaapp.adapter.BaseViewHolder;
 import com.tianfeng.zhongjiteaapp.adapter.CommonAdapter;
 import com.tianfeng.zhongjiteaapp.base.AppURL;
@@ -132,6 +133,19 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
         getProduct(newTeaIndex, "01");
         //获取仓储
         getStorage();
+        //判断是否要弹出绑定门店
+        isAssociateShop();
+    }
+
+    private void isAssociateShop() {
+        int openType =((MainActivity)getActivity()).getOpenType();
+//        if(openType==0){
+//            return;
+//        }else {
+            if(StringUtils.isEmpty(Global.shopId)){
+                openActivity(ChooseShopDialogActivity.class,null);
+            }
+//        }
     }
 
     private void getStorage() {
@@ -498,8 +512,11 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
     private void storageTea() {
         if(StringUtils.isEmpty(Global.shopId)){
-            openActivity(ChooseShopDialogActivity.class,null);
+            Bundle bundle = new Bundle();
+            bundle.putInt("nextStep",1);
+            openActivity(ChooseShopDialogActivity.class,bundle);
         }else {
+            openActivity(StorageActivity.class,null);
             ((MainActivity) getActivity()).setChioceFragment(2);
         }
     }

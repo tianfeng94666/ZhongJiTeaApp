@@ -1,5 +1,6 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,6 +64,8 @@ public class ChooseShopActivity extends BaseActivity implements ChildChangeInter
     private List<GetAearResult.ResultBean> aears;
     private AearChoosePopupWindow aearsPopup;
     private List<GetAearResult.ResultBean.ChildrenBean> childrenBeanList;
+    private Bundle bundle;
+    private int nextStep = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +73,16 @@ public class ChooseShopActivity extends BaseActivity implements ChildChangeInter
         setContentView(R.layout.activity_shop);
         UIUtils.setBarTint(this, false);
         ButterKnife.bind(this);
+        getDate(getIntent());
         getAear();
 
+    }
+
+    private void getDate(Intent intent) {
+        bundle = intent.getExtras();
+        if (bundle != null) {
+            nextStep = bundle.getInt("nextStep");
+        }
     }
 
     private void getAear() {
@@ -206,6 +217,14 @@ public class ChooseShopActivity extends BaseActivity implements ChildChangeInter
                 SimpleRequestResult getData = new Gson().fromJson(result, SimpleRequestResult.class);
                 if (Global.RESULT_CODE.equals(getData.getCode())) {
                     showToastReal("绑定成功");
+                    if (nextStep == 0) {
+
+                    } else if (nextStep == 1) {
+                        //到暂存商品去
+                        openActivity(StorageActivity.class,null);
+                    } else if (nextStep == 2) {
+                        //
+                    }
                     finish();
 
                 } else {

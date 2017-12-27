@@ -1,5 +1,6 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -59,13 +60,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     TextView tvMine;
     @Bind(R.id.id_fl_tab4)
     LinearLayout id_fl_tab4;
-int selectPosition;
+    int selectPosition;
     public Fragment homeFragment, mallFragment, storageFragment, mineFrament;
     private FragmentManager fragmentMag;
+    public int openType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getDate(getIntent());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
@@ -73,11 +76,25 @@ int selectPosition;
 
     }
 
+    private void getDate(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        if(bundle!=null){
+            openType = bundle.getInt("openType");
+        }
+    }
+
+    public int getOpenType() {
+        return openType;
+    }
+
+    public void setOpenType(int openType) {
+        this.openType = openType;
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!Global.isLogin){
+        if (!Global.isLogin) {
             setChioceFragment(0);
         }
     }
@@ -96,15 +113,6 @@ int selectPosition;
     }
 
 
-
-
-
-
-
-
-
-
-
     public void setChioceFragment(int index) {
         FragmentTransaction fragTrans = fragmentMag.beginTransaction();
         resetAllFragmentView();
@@ -119,7 +127,7 @@ int selectPosition;
                 } else {
                     fragTrans.show(homeFragment);
                 }
-                Global.selectPosition=0;
+                Global.selectPosition = 0;
                 break;
             case 1:
                 tvMall.setTextColor(getResources().getColor(R.color.theme_color));
@@ -131,7 +139,7 @@ int selectPosition;
                     fragTrans.show(mallFragment);
                 }
 
-                Global.selectPosition=1;
+                Global.selectPosition = 1;
                 break;
             case 2:
                 tvStorage.setTextColor(getResources().getColor(R.color.theme_color));
@@ -143,7 +151,7 @@ int selectPosition;
                     fragTrans.show(storageFragment);
                 }
 
-                Global.selectPosition=2;
+                Global.selectPosition = 2;
                 break;
             case 3:
                 tvMine.setTextColor(getResources().getColor(R.color.theme_color));
@@ -154,7 +162,7 @@ int selectPosition;
                 } else {
                     fragTrans.show(mineFrament);
                 }
-                Global.selectPosition=3;
+                Global.selectPosition = 3;
                 break;
 
         }
@@ -187,7 +195,7 @@ int selectPosition;
             fragTrans.hide(mallFragment);
         }
 
-        if(mineFrament!=null){
+        if (mineFrament != null) {
             fragTrans.hide(mineFrament);
         }
     }
@@ -211,10 +219,6 @@ int selectPosition;
 
         }
     }
-
-
-
-
 
 
     private long exitTime = 0;

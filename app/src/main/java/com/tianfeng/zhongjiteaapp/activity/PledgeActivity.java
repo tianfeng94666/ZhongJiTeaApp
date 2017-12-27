@@ -219,7 +219,7 @@ public class PledgeActivity extends BaseActivity {
         map.put("id", item.getId());
         String url = AppURL.RETURN_URL;
         L.e("url", url);
-        VolleyRequestUtils.getInstance().getRequestPost(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
             @Override
             public void onSuccess(String result) {
                 L.e("result", result);

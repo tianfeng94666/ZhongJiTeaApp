@@ -257,4 +257,12 @@ public class ChangeActivity extends BaseActivity {
 //        dialog.setCancelable(false);
         dialog.show();
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        if(dialog!=null){
+            dialog.dismiss();
+        }
+    }
 }

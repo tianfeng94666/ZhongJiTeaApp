@@ -89,6 +89,8 @@ public class DepositActivity extends BaseActivity {
             showToastReal("请输入数量");
             return;
         }
+//比较选择时间
+
         Map map = new HashMap();
         map.put("id", item.getId());
         map.put("date",tvDate.getText().toString());

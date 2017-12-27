@@ -79,6 +79,7 @@
             android:theme="@style/Theme.ActivityDialogStyle" />
         <activity
             android:name=".activity.ChooseShopDialogActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.ActivityDialogStyle" />
         <activity android:name=".activity.MyCollectedActivity" />
         <activity android:name=".activity.AboutActivity" />

@@ -421,7 +421,9 @@ public class UIUtils {
                 darkModeFlag = field.getInt(layoutParams);
                 Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
                 if (dark) {
-                    extraFlagField.invoke(window, darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 } else {
                     extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
                 }

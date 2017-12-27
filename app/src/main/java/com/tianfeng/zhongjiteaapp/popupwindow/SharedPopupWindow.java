@@ -1,8 +1,13 @@
 package com.tianfeng.zhongjiteaapp.popupwindow;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -50,7 +55,6 @@ public class SharedPopupWindow {
     TextView tvShareCancle;
     private PopupWindow popupWindow;
     private ShareContent shareContent;
-
     public SharedPopupWindow(Context context) {
         this.context = context;
         initView();
@@ -146,7 +150,6 @@ public class SharedPopupWindow {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 ToastManager.showToastReal("分享成功");
-                closePopupWindow();
             }
 
             @Override
@@ -161,6 +164,7 @@ public class SharedPopupWindow {
         }); // 设置分享事件回调
 // 执行图文分享
         weibo.share(oks);
+        closePopupWindow();
     }
 
     private void qqShare() {
@@ -187,7 +191,6 @@ public class SharedPopupWindow {
         qq.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                popupWindow.dismiss();
                 ToastManager.showToastReal("分享成功");
             }
             @Override
@@ -200,6 +203,7 @@ public class SharedPopupWindow {
             }
         });
         qq.share(oks);
+        closePopupWindow();
     }
 
     private void friendShare() {
@@ -226,7 +230,6 @@ public class SharedPopupWindow {
         wechatMoments.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                popupWindow.dismiss();
                 ToastManager.showToastReal("分享成功");
             }
             @Override
@@ -239,6 +242,7 @@ public class SharedPopupWindow {
             }
         });
         wechatMoments.share(oks);
+        closePopupWindow();
     }
 
     private void weichatShare() {
@@ -260,7 +264,6 @@ public class SharedPopupWindow {
         wechat.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                popupWindow.dismiss();
                 ToastManager.showToastReal("分享成功");
             }
             @Override
@@ -274,5 +277,6 @@ public class SharedPopupWindow {
             }
         });
         wechat.share(oks);
+        closePopupWindow();
     }
 }

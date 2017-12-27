@@ -130,7 +130,12 @@ public class SettingActivity extends BaseActivity {
                 UserInfoResult userinfoResult = new Gson().fromJson(result, UserInfoResult.class);
                 if (Global.RESULT_CODE.equals(userinfoResult.getCode())) {
                     if (userinfoResult.getResult() != null) {
-                        ImageLoader.getInstance().displayImage(AppURL.baseHost+"/"+userinfoResult.getResult().getImgUrl(),ivHeadPhoto);
+                        if(userinfoResult.getResult().getImgUrl().indexOf("http")>0){
+                            ImageLoader.getInstance().displayImage(userinfoResult.getResult().getImgUrl(),ivHeadPhoto);
+                        }else {
+                            ImageLoader.getInstance().displayImage(AppURL.baseHost+"/"+userinfoResult.getResult().getImgUrl(),ivHeadPhoto);
+                        }
+
                         tvPhone.setText(userinfoResult.getResult().getMobile());
                         tvUsername.setText(userinfoResult.getResult().getNickName());
                     }

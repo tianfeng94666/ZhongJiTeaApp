@@ -149,7 +149,9 @@ public class FirstActivity extends BaseActivity {
                     Global.isLogin = true;
                     SpUtils.getInstace(FirstActivity.this).saveBoolean("isExit", false);
                     SpUtils.getInstace(FirstActivity.this).saveInt("loginType", 2);
-                    openActivity(MainActivity.class,null);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("openType",1);
+                    openActivity(MainActivity.class, bundle);
                 }else {
                     openActivity(LoginAcitivity.class,null);
                 }
@@ -252,7 +254,9 @@ public class FirstActivity extends BaseActivity {
                     Global.isLogin = true;
                     SpUtils.getInstace(FirstActivity.this).saveBoolean("isExit", false);
                     SpUtils.getInstace(FirstActivity.this).saveInt("loginType", 1);
-                    openActivity(MainActivity.class, null);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("openType",1);
+                    openActivity(MainActivity.class, bundle);
 
                 }else {
                     openActivity(LoginAcitivity.class,null);
@@ -289,7 +293,9 @@ public class FirstActivity extends BaseActivity {
                     SpUtils.getInstace(FirstActivity.this).saveBoolean("isExit", false);
                     SpUtils.getInstace(FirstActivity.this).saveString("phoneNumber", loginName);
                     SpUtils.getInstace(FirstActivity.this).saveString("password", password);
-                    openActivity(MainActivity.class, null);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("openType",1);
+                    openActivity(MainActivity.class, bundle);
                 } else if (Global.FAIL_CODE.equals(loginResult.getCode())) {
                     openActivity(LoginAcitivity.class, null);
                 } else {

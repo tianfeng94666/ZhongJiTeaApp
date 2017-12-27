@@ -109,7 +109,9 @@ public class StorageFragment extends BaseFragment {
 
     private void addStoreTea() {
         if (StringUtils.isEmpty(Global.shopId)) {
-            openActivity(ChooseShopDialogActivity.class, null);
+            Bundle bundle = new Bundle();
+            bundle.putInt("nextStep",1);
+            openActivity(ChooseShopDialogActivity.class, bundle);
         } else {
             openActivity(StorageActivity.class, null);
         }

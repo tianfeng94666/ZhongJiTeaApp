@@ -60,7 +60,7 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
     SharedPopupWindow sharedPopupWindow;
     private CommonAdapter productAdapter;
     private final int CHOOSE_TEA_FORM_STORAGE = 1;
-    private String type;
+    private String type="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,11 @@ public class SearchTeaActivity extends BaseActivity implements XListView.IXListV
     }
 
     private void getData() {
-        type = (String) getIntent().getExtras().get("type");
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null){
+            type = (String) bundle.get("type");
+        }
+
     }
 
     private void initView() {

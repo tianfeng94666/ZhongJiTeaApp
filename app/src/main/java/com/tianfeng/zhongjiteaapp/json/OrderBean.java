@@ -65,6 +65,15 @@ public class OrderBean implements Serializable {
     private String userName;
     private String zcId;
     private String expectation;
+    private String endTime;
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
 
     public String getExpectation() {
         return expectation;

@@ -1,5 +1,6 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -25,18 +26,25 @@ public class ChooseShopDialogActivity extends BaseActivity {
     @Bind(R.id.tv_cancle)
     TextView tvCancle;
     GoToNextInterface goToNextInterface;
+    private Bundle bundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_shop_dialog);
         ButterKnife.bind(this);
+        getDate(getIntent());
+    }
+
+    private void getDate(Intent intent) {
+       bundle = intent.getExtras();
     }
 
     @OnClick({R.id.tv_confirm, R.id.tv_cancle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_confirm:
-                openActivity(ChooseShopActivity.class,null);
+                openActivity(ChooseShopActivity.class,bundle);
                 finish();
                 break;
             case R.id.tv_cancle:

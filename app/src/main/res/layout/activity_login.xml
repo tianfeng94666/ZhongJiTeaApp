@@ -255,7 +255,7 @@
             android:layout_marginTop="@dimen/maginTop10"
             android:background="@drawable/board_oregon"
             android:gravity="center"
-            android:text="下一步"
+            android:text="注册"
             android:textColor="@color/white" />
     </LinearLayout>
 

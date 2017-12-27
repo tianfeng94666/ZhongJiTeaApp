@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="4dp"
-                android:drawableTop="@mipmap/store_tea"
+                android:drawableTop="@mipmap/strage_tea"
                 android:gravity="center"
                 android:paddingTop="8dp"
                 android:text="存茶" />

@@ -17,6 +17,8 @@ import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.CircleImageView;
 
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -115,14 +117,31 @@ public class StorageTradeActivity extends BaseActivity {
                 openActivity(DepositActivity.class,bundle);
                 break;
             case R.id.tv_make_over:
-                bundle.putSerializable("storageItem",item);
-                openActivity(ChangeActivity.class,bundle);
+                if(isCanMakeOver()){
+                    bundle.putSerializable("storageItem",item);
+                    openActivity(ChangeActivity.class,bundle);
+                }else {
+                    Bundle bundle2= new Bundle();
+                    bundle2.putString("key", "购买时间未满三年，禁止操作");
+                    openActivity(DialogActivity.class, bundle2);
+                }
                 break;
             case R.id.tv_pledge:
                 bundle.putSerializable("storageItem",item);
                 openActivity(PledgeActivity.class,bundle);
                 break;
         }
+    }
+
+    private boolean isCanMakeOver() {
+       Date date = new Date();
+       long time = date.getTime()-  item.getCreateTime();
+        long threeYear = 3*365*24*60*60*1000;
+      if(time>threeYear){
+          return true;
+      }else {
+          return false;
+      }
     }
 
 

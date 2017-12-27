@@ -1,17 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
-
+    signingConfigs {
+        mykey {
+            keyPassword '123456'
+            storeFile file('D:/Android_workplace/mykey.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.tianfeng.zhongjiteaapp"
         multiDexEnabled true
         minSdkVersion 16    //示向下低至android API 14，即androd 4.0和4.0以上的版本都可以运行该工程
-        targetSdkVersion 23  //表示采用的目标android API是 API 21即 android 5.0。
+        targetSdkVersion 21  //表示采用的目标android API是 API 21即 android 5.0。
         versionCode 3
         versionName "3.0"
-        useLibrary'org.apache.http.legacy'
+        useLibrary 'org.apache.http.legacy'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,7 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions{
+    lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }

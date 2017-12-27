@@ -109,7 +109,7 @@
             android:layout_marginLeft="@dimen/margin16"
             android:layout_marginTop="8dp"
             android:background="@drawable/board_oregon_no_padding"
-            android:text="直接拨打"
+            android:text="拨打"
             android:textColor="@color/white"
             android:textSize="@dimen/text_normal" />
     </LinearLayout>

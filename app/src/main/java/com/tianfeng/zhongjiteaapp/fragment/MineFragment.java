@@ -19,6 +19,7 @@ import com.tianfeng.zhongjiteaapp.activity.ChooseShopDialogActivity;
 import com.tianfeng.zhongjiteaapp.activity.HelpActivity;
 import com.tianfeng.zhongjiteaapp.activity.HistrotyMessageActivity;
 import com.tianfeng.zhongjiteaapp.activity.LoginAcitivity;
+import com.tianfeng.zhongjiteaapp.activity.MainActivity;
 import com.tianfeng.zhongjiteaapp.activity.MyCollectedActivity;
 import com.tianfeng.zhongjiteaapp.activity.OrderActivity;
 import com.tianfeng.zhongjiteaapp.activity.SettingActivity;
@@ -126,6 +127,18 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume
+            initView();
+
+        } else {
+            //相当于Fragment的onPause
+        }
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
@@ -134,6 +147,9 @@ public class MineFragment extends BaseFragment {
     }
 
     private void initView() {
+        if(Global.HeadView.indexOf("http")<=0){
+            Global.HeadView =AppURL.baseHost+Global.HeadView;
+        }
         ImageLoader.getInstance().displayImage(Global.HeadView, ivHeadPhoto, ImageLoadOptions.getOptions());
         tvUsername.setText(Global.nickName);
        int currentMessageAmount =SpUtils.getInstace(getActivity()).getInt("messageAmount",0);
@@ -212,6 +228,7 @@ public class MineFragment extends BaseFragment {
                     SpUtils.getInstace(getActivity()).saveInt("loginType", 0);
                     openActivity(LoginAcitivity.class, null);
                     getActivity().finish();
+                    ((MainActivity)getActivity()).setChioceFragment(0);
 
                 } else {
                     showToastReal(logoutResult.getMsg());
