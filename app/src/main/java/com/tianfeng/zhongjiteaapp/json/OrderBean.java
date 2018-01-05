@@ -66,6 +66,24 @@ public class OrderBean implements Serializable {
     private String zcId;
     private String expectation;
     private String endTime;
+    private String logistics;
+    private String logisticsNumber;
+
+    public String getLogistics() {
+        return logistics;
+    }
+
+    public void setLogistics(String logistics) {
+        this.logistics = logistics;
+    }
+
+    public String getLogisticsNumber() {
+        return logisticsNumber;
+    }
+
+    public void setLogisticsNumber(String logisticsNumber) {
+        this.logisticsNumber = logisticsNumber;
+    }
 
     public String getEndTime() {
         return endTime;

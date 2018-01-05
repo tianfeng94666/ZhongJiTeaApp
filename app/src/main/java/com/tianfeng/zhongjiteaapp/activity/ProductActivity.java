@@ -60,6 +60,7 @@ public class ProductActivity extends BaseActivity {
         idIgBack.setVisibility(View.VISIBLE);
         titleText.setText(product.getGoodsName());
         myWebView.loadUrl(url);
+        baseShowWatLoading();
         //加载本地中的html
         //myWebView.loadUrl("file:///android_asset/www/test2.html");
         //加上下面这段代码可以使网页中的链接不以浏览器的方式打开
@@ -67,6 +68,7 @@ public class ProductActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
                 myWebView.loadUrl("javascript:(function(){" +
                         "var objs = document.getElementsByTagName('img'); " +
                         "for(var i=0;i<objs.length;i++)  " +
@@ -75,6 +77,7 @@ public class ProductActivity extends BaseActivity {
                         "    img.style.maxWidth = '100%'; img.style.height = 'auto';  " +
                         "}" +
                         "})()");
+                baseHideWatLoading();
             }
         })
 

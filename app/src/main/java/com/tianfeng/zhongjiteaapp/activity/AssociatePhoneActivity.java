@@ -69,9 +69,11 @@ public class AssociatePhoneActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UIUtils.setBarTint(this,true);
         setContentView(R.layout.activity_associate_phone);
         ButterKnife.bind(this);
         getDate();
+        netLoad();
         initView();
     }
 
@@ -81,6 +83,10 @@ public class AssociatePhoneActivity extends BaseActivity {
     }
 
     private void initView() {
+        /**
+         * 将登陆模式清空
+         */
+        SpUtils.getInstace(this).saveInt("loginType", 0);
         String phone = SpUtils.getInstace(this).getString("phoneNumber");
         if (!StringUtils.isEmpty(phone)) {
             etPhone.setText(phone);
@@ -122,6 +128,10 @@ public class AssociatePhoneActivity extends BaseActivity {
 
             if (StringUtils.isEmpty(etPhone.getText().toString())) {
                 showToastReal("请输入手机号");
+                return;
+            }
+            if (StringUtils.isEmpty(Global.BIZID)) {
+                showToastReal("未获取验证码");
                 return;
             }
             String bizIdEncode = null;
@@ -214,6 +224,34 @@ public class AssociatePhoneActivity extends BaseActivity {
         }
     }
 
+    private void netLoad() {
+        Map map = new HashMap();
+        String url = AppURL.GET_PROTOCOL_URL;
+        L.e("url", url);
+        VolleyRequestUtils.getInstance().getStringPostRequest(this, url, new VolleyRequestUtils.HttpStringRequsetCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                L.e("result", result);
+                LoginProtocolResutl loginResult = new Gson().fromJson(result, LoginProtocolResutl.class);
+                if (Global.RESULT_CODE.equals(loginResult.getCode())) {
+                    if (loginResult.getResult() != null) {
+                        helpList = loginResult.getResult();
+
+                    }
+
+                } else {
+                    showToastReal(loginResult.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFail(String fail) {
+                L.e("fail", fail);
+//                showToastReal(fail);
+            }
+        }, map);
+    }
     private void getCode() {
         Map map = new HashMap();
         map.put("phoneNumber", etPhone.getText().toString());

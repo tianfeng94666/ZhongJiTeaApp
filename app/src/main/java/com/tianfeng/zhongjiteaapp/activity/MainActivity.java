@@ -1,6 +1,7 @@
 package com.tianfeng.zhongjiteaapp.activity;
 
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -61,6 +62,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.id_fl_tab4)
     LinearLayout id_fl_tab4;
     int selectPosition;
+    static  BaseActivity intance;
     public Fragment homeFragment, mallFragment, storageFragment, mineFrament;
     private FragmentManager fragmentMag;
     public int openType;
@@ -71,6 +73,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         getDate(getIntent());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        intance=this;
         initView();
 
 
@@ -94,6 +97,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
+        setChioceFragment(Global.selectPosition);
         if (!Global.isLogin) {
             setChioceFragment(0);
         }

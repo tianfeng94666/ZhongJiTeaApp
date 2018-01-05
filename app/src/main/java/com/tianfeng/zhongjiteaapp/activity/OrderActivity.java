@@ -109,16 +109,21 @@ public class OrderActivity extends BaseActivity implements XListView.IXListViewL
 
     private void setLv() {
         if (orderAdapter == null) {
-            orderAdapter = new CommonAdapter<OrderResult.ResultBeanX.ResultBean>(orderList, R.layout.item_storage) {
+            orderAdapter = new CommonAdapter<OrderResult.ResultBeanX.ResultBean>(orderList, R.layout.item_order) {
                 @Override
                 public void convert(int position, BaseViewHolder helper, final OrderResult.ResultBeanX.ResultBean item) {
                     helper.setText(R.id.tv_item_name,item.getGoodsName());
-                    if(StringUtils.isEmpty(item.getTagName())){
-                        helper.getView(R.id.tv_item_tag).setVisibility(View.GONE);
+
+                    if(StringUtils.isEmpty(item.getLogistics())){
+                        helper.getView(R.id.tv_logistics).setVisibility(View.GONE);
+                        helper.getView(R.id.tv_logistics_number).setVisibility(View.GONE);
                     }else {
-                        helper.getView(R.id.tv_item_tag).setVisibility(View.VISIBLE);
+                        helper.getView(R.id.tv_logistics).setVisibility(View.VISIBLE);
+                        helper.getView(R.id.tv_logistics_number).setVisibility(View.VISIBLE);
                     }
-                    helper.setText(R.id.tv_item_tag," "+item.getTagName()+" ");
+                    helper.setText(R.id.tv_logistics,"物流公司："+item.getLogistics());
+                    helper.setText(R.id.tv_logistics_number,"订单号："+item.getLogisticsNumber());
+//                    helper.setText(R.id.tv_item_tag," "+item.getTagName()+" ");
                     helper.setText(R.id.tv_item_type,item.getDeportName()+item.getTypeName());
                     helper.setText(R.id.tv_item_price,"茶叶单价："+item.getPrice());
                     helper.setText(R.id.tv_amount,"成交量："+item.getQuantity());

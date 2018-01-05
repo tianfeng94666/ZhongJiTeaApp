@@ -19,6 +19,7 @@ import com.tianfeng.zhongjiteaapp.net.VolleyRequestUtils;
 import com.tianfeng.zhongjiteaapp.utils.L;
 import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -90,6 +91,10 @@ public class DepositActivity extends BaseActivity {
             return;
         }
 //比较选择时间
+        if(getDateLong(tvDate.getText().toString(),item.getEndTime())){
+            showToastReal("续存时间应大于当前暂存时间");
+            return;
+        }
 
         Map map = new HashMap();
         map.put("id", item.getId());
@@ -119,6 +124,30 @@ public class DepositActivity extends BaseActivity {
             }
         }, map);
     }
+
+    private boolean getDateLong(String s, String endTime) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        //获取Calendar实例
+        Calendar currentTime = Calendar.getInstance();
+        Calendar compareTime = Calendar.getInstance();
+        try {
+            //把字符串转成日期类型
+            currentTime.setTime(df.parse(s));
+            compareTime.setTime(df.parse(endTime));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //利用Calendar的方法比较大小
+        if (currentTime.compareTo(compareTime) <=0) {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+
     public void initData() {
         Date date = null;
         Calendar calendar = Calendar.getInstance();

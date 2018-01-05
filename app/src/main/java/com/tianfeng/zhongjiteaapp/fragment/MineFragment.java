@@ -1,5 +1,7 @@
 package com.tianfeng.zhongjiteaapp.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -147,10 +149,13 @@ public class MineFragment extends BaseFragment {
     }
 
     private void initView() {
-        if(Global.HeadView.indexOf("http")<=0){
-            Global.HeadView =AppURL.baseHost+Global.HeadView;
+        if(Global.HeadView!=null){
+            if(Global.HeadView.indexOf("http")<0){
+                Global.HeadView =AppURL.baseHost+Global.HeadView;
+            }
+            ImageLoader.getInstance().displayImage(Global.HeadView, ivHeadPhoto, ImageLoadOptions.getOptions());
         }
-        ImageLoader.getInstance().displayImage(Global.HeadView, ivHeadPhoto, ImageLoadOptions.getOptions());
+
         tvUsername.setText(Global.nickName);
        int currentMessageAmount =SpUtils.getInstace(getActivity()).getInt("messageAmount",0);
         if(currentMessageAmount==messageAmount){
@@ -207,7 +212,7 @@ public class MineFragment extends BaseFragment {
     private void share() {
         ShareContent shareContent = new ShareContent();
         shareContent.setImagUrl("");
-        shareContent.setUrl("https://www.pgyer.com/n1z5");
+        shareContent.setUrl("http://zhushou.360.cn/detail/index/soft_id/3894203?recrefer=SE_D_%E5%B0%8F%E8%8C%B6%E5%AE%9D");
         shareContent.setTitle("小茶宝下载");
         shareContent.setText("一款关于各种精品茶叶的app");
         sharedPopupWindow.showPop(rootview, shareContent);
@@ -228,6 +233,7 @@ public class MineFragment extends BaseFragment {
                     SpUtils.getInstace(getActivity()).saveInt("loginType", 0);
                     openActivity(LoginAcitivity.class, null);
                     getActivity().finish();
+                    Global.selectPosition=0;
                     ((MainActivity)getActivity()).setChioceFragment(0);
 
                 } else {

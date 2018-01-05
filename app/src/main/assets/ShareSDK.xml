@@ -58,10 +58,11 @@
     <SinaWeibo
         Id="1"
         SortId="1"
-        AppKey="2341659063"
-        AppSecret="31df936deb0b727abff9aace6eaaf07c"
+        AppKey="560017878"
+        AppSecret="a704418eb4a9d3620d3cff8cf27e9c9a"
         RedirectUrl="http://www.sharesdk.cn"
         ShareByAppClient="true"
+		BypassApproval="true"
         Enable="true" />
 
     <TencentWeibo
@@ -108,7 +109,7 @@
         SortId="5"
         AppId="wxce488c9ce08c20e3"
         AppSecret="203e4b15ebfc1a03475c2ad0809667ee"
-        BypassApproval="true"
+        BypassApproval="false"
         Enable="true" />
         
 	<WechatFavorite

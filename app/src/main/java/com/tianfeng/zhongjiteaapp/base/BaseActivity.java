@@ -134,8 +134,18 @@ public class BaseActivity extends FragmentActivity implements HttpCycleContext {
         return super.onTouchEvent(event);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (loadingDialog != null ) {
+                loadingDialog.cancel();
+                loadingDialog = null;
+            }
+        }
 
 
+        return super.onKeyDown(keyCode, event);
+    }
 
     /**
      * 延迟去往新的Activity

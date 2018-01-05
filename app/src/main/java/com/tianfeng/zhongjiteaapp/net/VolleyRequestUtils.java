@@ -20,6 +20,8 @@ import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.BaseApplication;
 import com.tianfeng.zhongjiteaapp.base.Global;
 import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.ToastManager;
+import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 import com.tianfeng.zhongjiteaapp.viewutils.LoadingWaitDialog;
 
 
@@ -104,6 +106,9 @@ public class VolleyRequestUtils {
 
     //！！！！！！！！get请求为了保证cookie一致  后来不要使用该方法！！！！！！！！！！
     public void getRequestPost(Context context, String url, final HttpStringRequsetCallBack callback, final Map<String, String> map) {
+        if(!UIUtils.getNetConnecState(context)){
+            ToastManager.showToastReal("请检查网络连接！");
+        }
         baseShowWatLoading(context);
         JSONObject jsonObject = new JSONObject(map);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, url, jsonObject, new Listener<JSONObject>() {
@@ -148,7 +153,9 @@ public class VolleyRequestUtils {
     }
 
     public void getStringPostRequest(Context context, String url, final HttpStringRequsetCallBack callback, final Map<String, String> map) {
-
+        if(!UIUtils.getNetConnecState(context)){
+            ToastManager.showToastReal("请检查网络连接！");
+        }
         baseShowWatLoading(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -190,6 +197,9 @@ public class VolleyRequestUtils {
     //！！！！！！！！get请求！！！！！！！！！！
     public void getRequestGet(Context context, String url, final HttpStringRequsetCallBack callback) {
 //        baseShowWatLoading(context);
+        if(!UIUtils.getNetConnecState(context)){
+            ToastManager.showToastReal("请检查网络连接！");
+        }
         JsonObjectRequest jsonObjectRequest = new NormalPostRequest(Request.Method.GET, url, null,
                 new Listener<JSONObject>() {
 

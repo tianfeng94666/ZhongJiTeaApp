@@ -296,6 +296,7 @@ public class StorageActivity extends BaseActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("key", getData.getResult());
                     openActivity(DialogActivity.class, bundle);
+                    Global.selectPosition = 2;
                 } else {
                     showToastReal(getData.getMsg());
                 }

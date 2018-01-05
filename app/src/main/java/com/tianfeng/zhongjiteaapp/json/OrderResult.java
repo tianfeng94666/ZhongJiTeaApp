@@ -189,7 +189,24 @@ public class OrderResult {
             private long updateTime;
             private String userId;
             private String userName;
+            private String logistics;
+            private String logisticsNumber;
 
+            public String getLogistics() {
+                return logistics;
+            }
+
+            public void setLogistics(String logistics) {
+                this.logistics = logistics;
+            }
+
+            public String getLogisticsNumber() {
+                return logisticsNumber;
+            }
+
+            public void setLogisticsNumber(String logisticsNumber) {
+                this.logisticsNumber = logisticsNumber;
+            }
             public long getCreateTime() {
                 return createTime;
             }

@@ -125,7 +125,7 @@ public class LoginAcitivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UIUtils.setBarTint(this,true);
+        UIUtils.setBarTint(this, true);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         registTo();
@@ -133,8 +133,6 @@ public class LoginAcitivity extends BaseActivity {
         netLoad();
 
     }
-
-
 
 
     private void initView() {
@@ -169,7 +167,9 @@ public class LoginAcitivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_login_cancle:
-                openActivity(MainActivity.class, null);
+                Bundle bundle = new Bundle();
+                bundle.putInt("openType", 1);
+                openActivity(MainActivity.class, bundle);
                 break;
             case R.id.tv_login_tv:
                 showLogin();
@@ -368,7 +368,7 @@ public class LoginAcitivity extends BaseActivity {
                     SpUtils.getInstace(LoginAcitivity.this).saveString("password", etLoginPassword.getText().toString());
                     SpUtils.getInstace(LoginAcitivity.this).saveInt("loginType", 3);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("openType",1);
+                    bundle.putInt("openType", 0);
                     openActivity(MainActivity.class, bundle);
                 } else {
                     showToastReal(loginResult.getMsg());
@@ -467,6 +467,7 @@ public class LoginAcitivity extends BaseActivity {
         }
 
         mTencent.login(this, "all", qqCallback);
+        baseShowWatLoading();
     }
 
     private void weiChatLogin() {
@@ -480,14 +481,20 @@ public class LoginAcitivity extends BaseActivity {
         req.state = "diandi_wx_login";
 
         mWxApi.sendReq(req);
+        baseShowWatLoading();
     }
 
 
     private void registTo() {
         //QQ登录初始化
-        mTencent = Tencent.createInstance(Global.QQ_APP_ID, this);
-        //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
-        mWxApi = WXAPIFactory.createWXAPI(this, "wxce488c9ce08c20e3", true);
+        if (mTencent == null) {
+            mTencent = Tencent.createInstance(Global.QQ_APP_ID, this);
+        }
+        if (mWxApi == null) {
+            //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
+            mWxApi = WXAPIFactory.createWXAPI(this, "wxce488c9ce08c20e3", true);
+        }
+
         // 将该app注册到微信
         mWxApi.registerApp("wxce488c9ce08c20e3");
         //广播监听code
@@ -499,6 +506,7 @@ public class LoginAcitivity extends BaseActivity {
     class QQCallback implements IUiListener {
         @Override
         public void onComplete(Object value) {
+            baseHideWatLoading();
             L.e(value.toString());
             QQGetTokenResult qqGetTokenResult = new Gson().fromJson(value.toString(), QQGetTokenResult.class);
             System.out.println("有数据返回..");
@@ -517,7 +525,7 @@ public class LoginAcitivity extends BaseActivity {
                     showToastReal("登录成功");
                     Global.QQ_OPENID = qqGetTokenResult.getOpenid();
                     mTencent.setOpenId(qqGetTokenResult.getOpenid());
-                    SpUtils.getInstace(LoginAcitivity.this).saveString("QQ_access_token",qqGetTokenResult.getAccess_token());
+                    SpUtils.getInstace(LoginAcitivity.this).saveString("QQ_access_token", qqGetTokenResult.getAccess_token());
                     mTencent.setAccessToken(qqGetTokenResult.getAccess_token(), qqGetTokenResult.getExpires_in() + "");
                     getUser();
                     testQQ(qqGetTokenResult);
@@ -532,12 +540,12 @@ public class LoginAcitivity extends BaseActivity {
 
         @Override
         public void onError(UiError uiError) {
-
+            baseHideWatLoading();
         }
 
         @Override
         public void onCancel() {
-
+            baseHideWatLoading();
         }
     }
 
@@ -570,7 +578,7 @@ public class LoginAcitivity extends BaseActivity {
                     SpUtils.getInstace(LoginAcitivity.this).saveBoolean("isExit", false);
                     SpUtils.getInstace(LoginAcitivity.this).saveInt("loginType", 2);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("openType",1);
+                    bundle.putInt("openType", 0);
                     openActivity(MainActivity.class, bundle);
                 }
             }
@@ -638,9 +646,9 @@ public class LoginAcitivity extends BaseActivity {
             public void onSuccess(String result) {
                 WeixinResult weixinResult = new Gson().fromJson(result, WeixinResult.class);
                 Global.WX_OPENID = weixinResult.getOpenid();
-                SpUtils.getInstace(LoginAcitivity.this).saveString("refresh_token",weixinResult.getRefresh_token());
-                SpUtils.getInstace(LoginAcitivity.this).saveString("access_token",weixinResult.getAccess_token());
-                SpUtils.getInstace(LoginAcitivity.this).saveString("openid",weixinResult.getOpenid());
+                SpUtils.getInstace(LoginAcitivity.this).saveString("refresh_token", weixinResult.getRefresh_token());
+                SpUtils.getInstace(LoginAcitivity.this).saveString("access_token", weixinResult.getAccess_token());
+                SpUtils.getInstace(LoginAcitivity.this).saveString("openid", weixinResult.getOpenid());
                 getWXDate(weixinResult);
                 testWeixin();
             }
@@ -653,8 +661,6 @@ public class LoginAcitivity extends BaseActivity {
     }
 
 
-
-
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
         @Override
@@ -665,6 +671,7 @@ public class LoginAcitivity extends BaseActivity {
             if (!StringUtils.isEmpty(code)) {
                 getWeixingToken(code);
             }
+            baseHideWatLoading();
         }
     };
 
@@ -692,7 +699,7 @@ public class LoginAcitivity extends BaseActivity {
         String access_token = SpUtils.getInstace(this).getString("access_token");
         String openid = SpUtils.getInstace(this).getString("openid");
         Map map = new HashMap();
-        map.put("access_token",access_token);
+        map.put("access_token", access_token);
         map.put("openid", openid);
 
 
@@ -717,7 +724,7 @@ public class LoginAcitivity extends BaseActivity {
                     SpUtils.getInstace(LoginAcitivity.this).saveBoolean("isExit", false);
                     SpUtils.getInstace(LoginAcitivity.this).saveInt("loginType", 1);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("openType",1);
+                    bundle.putInt("openType", 0);
                     openActivity(MainActivity.class, bundle);
                 }
             }

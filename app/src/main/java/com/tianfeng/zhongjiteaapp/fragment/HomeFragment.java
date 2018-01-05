@@ -139,13 +139,13 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
 
     private void isAssociateShop() {
         int openType =((MainActivity)getActivity()).getOpenType();
-//        if(openType==0){
-//            return;
-//        }else {
+        if(openType==1){
+            return;
+        }else {
             if(StringUtils.isEmpty(Global.shopId)){
                 openActivity(ChooseShopDialogActivity.class,null);
             }
-//        }
+        }
     }
 
     private void getStorage() {
@@ -517,7 +517,7 @@ public class HomeFragment extends BaseFragment implements XListView.IXListViewLi
             openActivity(ChooseShopDialogActivity.class,bundle);
         }else {
             openActivity(StorageActivity.class,null);
-            ((MainActivity) getActivity()).setChioceFragment(2);
+//            ((MainActivity) getActivity()).setChioceFragment(2);
         }
     }
 

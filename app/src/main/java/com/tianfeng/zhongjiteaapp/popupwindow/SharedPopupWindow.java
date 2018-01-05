@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +22,7 @@ import com.tianfeng.zhongjiteaapp.R;
 import com.tianfeng.zhongjiteaapp.base.BaseActivity;
 import com.tianfeng.zhongjiteaapp.bean.ShareContent;
 import com.tianfeng.zhongjiteaapp.utils.L;
+import com.tianfeng.zhongjiteaapp.utils.StringUtils;
 import com.tianfeng.zhongjiteaapp.utils.ToastManager;
 import com.tianfeng.zhongjiteaapp.utils.UIUtils;
 
@@ -145,6 +147,7 @@ public class SharedPopupWindow {
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(shareContent.getUrl());
         Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+        oks.setShareType(Platform.SHARE_WEBPAGE);
         weibo.SSOSetting(true);
         weibo.setPlatformActionListener(new PlatformActionListener() {
             @Override
@@ -215,7 +218,12 @@ public class SharedPopupWindow {
         // text是分享文本，所有平台都需要这个字段
         oks.setText(shareContent.getText());
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-        oks.setImageUrl(shareContent.getImagUrl());
+        if(StringUtils.isEmpty(shareContent.getImagUrl())){
+            Bitmap bitmap =((BitmapDrawable) context.getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap();
+            oks.setImageData(bitmap);
+        }else {
+            oks.setImageUrl(shareContent.getImagUrl());
+        }
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
@@ -226,6 +234,7 @@ public class SharedPopupWindow {
         oks.setSite("ShareSDK");
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(shareContent.getUrl());
+        oks.setShareType(Platform.SHARE_WEBPAGE);
         Platform wechatMoments = ShareSDK.getPlatform(WechatMoments.NAME);
         wechatMoments.setPlatformActionListener(new PlatformActionListener() {
             @Override
